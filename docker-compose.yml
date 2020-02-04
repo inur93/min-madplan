@@ -1,0 +1,31 @@
+version: "3.7"
+
+services:
+ cms:
+  image: strapi/strapi
+  ports:
+   - 1337:1337
+  volumes:
+   - ./cms:/srv/app
+     
+ # gatsby:
+  # image: gatsby-cli
+  # build:
+   # context: gatsby-cli
+  # command: sh -c "cd app && CHOKIDAR_USEPOLLING=1 gatsby develop --host=0.0.0.0"
+  # ports:
+   # - 8000:8000
+  # volumes:
+   # - ./app:/app
+  # links:
+   # - cms
+  
+  
+  
+  
+  
+  
+  
+#  docker run -it -p 1337:1337 -v ${pwd}/cms:/srv/app strapi/strapi
+  
+#  docker run -ti --rm -p 8000:8000 -v ${PWD}/app:/app vormadal/gatsby-cli sh -c "cd app && gatsby develop --host=0.0.0.0"
