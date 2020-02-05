@@ -9,3 +9,10 @@
 7. Create some dummy data in each of the 3 content types.
 8. Stop the containers with `Ctrl+C` and run `docker-compose up` again.
 9. Now you should see the front page at [localhost:8000](http://localhost:8000) listing the dummy data from Recipe Item content type and at [localhost:8000/___graphql](http://localhost:8000/___graphql) you can build your graphql queries. 
+
+# Deploy to Heroku #
+(this only includes the Strapi application.)
+Before going further make sure:
+* that heroku client is installed fx by running `heroku -v`
+
+to be continued...
