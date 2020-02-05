@@ -2,23 +2,32 @@ version: "3.7"
 
 services:
  cms:
-  image: strapi/strapi
+  image: min-madplan/strapi
+  build:
+   context: ./cms
+   dockerfile: Dev.Dockerfile
+  command: sh -c "chokidar_usepolling=1 strapi develop"
   ports:
    - 1337:1337
   volumes:
-   - ./cms:/srv/app
+   - ./cms:/cms
+   - /cms/node_modules
      
- # gatsby:
-  # image: gatsby-cli
-  # build:
-   # context: gatsby-cli
-  # command: sh -c "cd app && CHOKIDAR_USEPOLLING=1 gatsby develop --host=0.0.0.0"
-  # ports:
-   # - 8000:8000
-  # volumes:
-   # - ./app:/app
-  # links:
-   # - cms
+ gatsby:
+  image: min-madplan/gatsby-app
+  build:
+   context: ./app
+   dockerfile: Dev.Dockerfile
+  command: sh -c "chokidar_usepolling=1 gatsby develop --host=0.0.0.0"
+  ports:
+   - 8000:8000
+  volumes:
+   - ./app:/app
+   - /app/node_modules
+  environment:
+   - STRAPI_URL=http://cms:1337
+  links:
+   - cms
   
   
   
