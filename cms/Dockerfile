@@ -12,6 +12,9 @@ COPY . .
 #set production mode
 ENV NODE_ENV production
 
+#builds the admin interface
+RUN yarn run build
+
 #Heroku does not support Expose the app should instead use the PORT env variable
 #EXPOSE 1337
 
