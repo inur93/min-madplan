@@ -1,29 +1,18 @@
-import { useRouter } from 'next/router';
-import useSWR from 'swr';
+import MenuContainer from '../components/menu/MenuContainer';
+import MenuItem from '../components/menu/MenuItem';
+import { HeroItemsApi } from './api/heroItemsApi';
+import { auth } from './api/auth';
+import Router from 'next/router';
 
-function fetcher(url) {
-  return fetch(url).then(r => r.json());
-}
-
-export default function Index() {
-  const { query } = useRouter();
-  const { data, error } = useSWR(
-    `/api/randomQuote${query.author ? '?author=' + query.author : ''}`,
-    fetcher
-  );
-  // The following line has optional chaining, added in Next.js v9.1.5,
-  // is the same as `data && data.author`
-  const author = data?.author;
-  let quote = data?.quote;
-
-  if (!data) quote = 'Loading...';
-  if (error) quote = 'Failed to fetch the quote.';
-
+const IndexPage = function ({ heroItems }) {
   return (
     <main className="center">
-      <div className="quote">{quote}</div>
-      {author && <span className="author">- {author}</span>}
-
+      <MenuContainer>
+        {heroItems.map(item => <MenuItem key={item.id}
+          image={item.image}
+          title={item.title}
+          link={item.link} />)}
+      </MenuContainer>
       <style jsx>{`
         main {
           width: 90%;
@@ -46,3 +35,13 @@ export default function Index() {
     </main>
   );
 }
+
+IndexPage.getInitialProps = async function (ctx) {
+  const token = auth(ctx);
+  const items = await HeroItemsApi().heroItems();
+  return {
+    token,
+    heroItems: items
+  };
+}
+export default IndexPage;

@@ -1,0 +1,36 @@
+{
+  "connection": "default",
+  "collectionName": "shopping_lists",
+  "info": {
+    "name": "shopping list"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "owner": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "shared_with": {
+      "plugin": "users-permissions",
+      "collection": "user",
+      "via": "shopping_lists",
+      "dominant": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "validFrom": {
+      "type": "date",
+      "required": true
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "product.shopping-item"
+    }
+  }
+}

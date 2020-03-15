@@ -53,13 +53,9 @@
       "plugin": "users-permissions",
       "configurable": false
     },
-    "shoppinglists": {
-      "via": "owner",
-      "collection": "shoppinglist"
-    },
-    "shoppinglist": {
-      "via": "sharedWith",
-      "model": "shoppinglist"
+    "shopping_lists": {
+      "via": "shared_with",
+      "collection": "shopping-list"
     }
   }
 }

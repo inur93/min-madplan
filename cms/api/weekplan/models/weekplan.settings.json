@@ -1,0 +1,16 @@
+{
+  "info": {
+    "name": "weekplan"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "startDate": {
+      "type": "date"
+    }
+  },
+  "connection": "default",
+  "collectionName": "weekplans"
+}

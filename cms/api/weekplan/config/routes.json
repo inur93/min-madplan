@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/weekplans",
+      "handler": "weekplan.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/weekplans/count",
+      "handler": "weekplan.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/weekplans/:id",
+      "handler": "weekplan.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/weekplans",
+      "handler": "weekplan.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/weekplans/:id",
+      "handler": "weekplan.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/weekplans/:id",
+      "handler": "weekplan.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

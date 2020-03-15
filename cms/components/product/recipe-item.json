@@ -1,0 +1,23 @@
+{
+  "connection": "default",
+  "collectionName": "components_product_recipe_items",
+  "info": {
+    "name": "recipeItem",
+    "icon": "book"
+  },
+  "options": {},
+  "attributes": {
+    "amount": {
+      "type": "decimal"
+    },
+    "description": {
+      "type": "string"
+    },
+    "baseInfo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "product.product",
+      "required": true
+    }
+  }
+}

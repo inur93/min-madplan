@@ -1,0 +1,24 @@
+{
+  "connection": "default",
+  "collectionName": "units",
+  "info": {
+    "name": "unit"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "conversiontable": {
+      "type": "json"
+    },
+    "order": {
+      "type": "integer"
+    }
+  }
+}

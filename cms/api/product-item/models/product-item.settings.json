@@ -1,0 +1,19 @@
+{
+  "connection": "default",
+  "collectionName": "product_items",
+  "info": {
+    "name": "productItem"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "baseInfo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "product.product",
+      "required": true
+    }
+  }
+}
