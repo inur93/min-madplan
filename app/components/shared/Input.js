@@ -60,11 +60,11 @@ export function ActionDropdown({ options, defaultOptionValue, defaultValue, plac
     )
 }
 
-const renderRecipeItem = (suggestion) => {
+const renderProductItem = (suggestion) => {
     return <span>{suggestion.name}</span>;
 }
 
-const getRecipeItemValue = (suggestion) => {
+const getProductItemValue = (suggestion) => {
     return suggestion.name;
 }
 export const AutoComplete = function ({ placeholder, getSuggestions, renderSuggestion, getSuggestionValue, onSelect }) {
@@ -115,6 +115,7 @@ export const AutoComplete = function ({ placeholder, getSuggestions, renderSugge
         <style jsx>{`
             :global(.react-autosuggest__input){
                 position: absolute;
+                padding-left: 1rem;
                 bottom: 1rem;
                 width: calc(100% - 1rem);
                 height: 30px;
@@ -168,6 +169,6 @@ export const AutoComplete = function ({ placeholder, getSuggestions, renderSugge
     </div>
 }
 
-export const RecipeItemAutoComplete = function (props) {
-    return <AutoComplete {...props} renderSuggestion={renderRecipeItem} getSuggestionValue={getRecipeItemValue} />;
+export const ProductItemAutoComplete = function (props) {
+    return <AutoComplete {...props} renderSuggestion={renderProductItem} getSuggestionValue={getProductItemValue} />;
 }

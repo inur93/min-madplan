@@ -14,11 +14,13 @@
       "required": true,
       "unique": true
     },
-    "conversiontable": {
-      "type": "json"
-    },
     "order": {
       "type": "integer"
+    },
+    "conversionList": {
+      "type": "component",
+      "repeatable": true,
+      "component": "product.conversion"
     }
   }
 }

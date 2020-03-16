@@ -39,9 +39,9 @@ export const ShoppingListItem = function ({ id, name, unit, amount, onClick, rem
 
     const action = (type) => () => onClick(type, id);
     return (
-        <ListSUI.Item onClick={action('edit')}>
+        <ListSUI.Item >
             <ListSUI.Content>
-                <ListSUI.Header className="shopping-list-item-header" as='h3'>
+                <ListSUI.Header onClick={action('edit')} className="shopping-list-item-header" as='h3'>
                     <span className="shopping-list-item-amount">{amount} {unit}</span>
                     {name}
                 </ListSUI.Header>

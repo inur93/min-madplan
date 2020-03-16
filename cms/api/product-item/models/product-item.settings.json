@@ -9,11 +9,15 @@
     "timestamps": true
   },
   "attributes": {
-    "baseInfo": {
-      "type": "component",
-      "repeatable": false,
-      "component": "product.product",
+    "name": {
+      "type": "string",
       "required": true
+    },
+    "defaultUnit": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
     }
   }
 }

@@ -10,11 +10,12 @@
     "amount": {
       "type": "decimal"
     },
-    "baseInfo": {
-      "type": "component",
-      "repeatable": false,
-      "component": "product.product",
+    "name": {
+      "type": "string",
       "required": true
+    },
+    "unit": {
+      "type": "string"
     }
   }
 }

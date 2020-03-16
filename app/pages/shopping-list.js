@@ -10,8 +10,8 @@ import { formatDate } from '../stores/dateStore';
 const ShoppinglistListItem = function({item}){
   const format = "d. MMM";
   const validFrom = new Date(item.validFrom);
-  const validTo = new Date(item.validTo);
-  const description = `${formatDate(validFrom, format)} - ${formatDate(validTo, format)}`;
+  //const validTo = new Date(item.validTo);
+  const description = `${formatDate(validFrom, format)}`;
   const link = `/shopping-list/${item.id}`;
   return <ListItem title={item.name} description={description} link={link}/>;
 }

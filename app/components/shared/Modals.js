@@ -5,9 +5,9 @@ import { Form } from './Form';
 import { Input, ActionDropdown } from './Input';
 
 export function EditShoppingItem({ item, unitOptions, onComplete }) {
-    const {amount: defaultAmount, unit: defaultUnit, name} = item;
-    const [amount, setAmount] = useState(defaultAmount);
-    const [unit, setUnit] = useState(defaultUnit);
+    const {name} = item;
+    const [amount, setAmount] = useState(item.amount);
+    const [unit, setUnit] = useState(item.unit);
     const handleAction = type => () => onComplete(type, { amount, unit });
     const handleChange = ({ input, action }) => {
         setAmount(input);
@@ -20,8 +20,8 @@ export function EditShoppingItem({ item, unitOptions, onComplete }) {
             <Form>
                 <ActionDropdown name="amount"
                     onChange={handleChange}
-                    defaultValue={defaultAmount}
-                    defaultOptionValue={defaultUnit}
+                    defaultValue={item.amount}
+                    defaultOptionValue={item.unit}
                     options={unitOptions.map(unit => unit.name)} />
             </Form>
         </Modal.Content>

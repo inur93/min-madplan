@@ -1,0 +1,18 @@
+{
+  "info": {
+    "name": "conversion",
+    "icon": "arrows-alt-h"
+  },
+  "options": {},
+  "attributes": {
+    "unit": {
+      "model": "unit"
+    },
+    "scale": {
+      "type": "decimal",
+      "required": true
+    }
+  },
+  "connection": "default",
+  "collectionName": "components_product_conversions"
+}
