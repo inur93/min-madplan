@@ -1,4 +1,4 @@
-import { List as ListSUI, Icon as IconSUI } from 'semantic-ui-react';
+import { List as ListSUI, Icon as IconSUI, Image } from 'semantic-ui-react';
 import { useRouter } from 'next/router';
 
 export const List = function ({ children, ...otherProps }) {
@@ -42,7 +42,10 @@ export const ShoppingListItem = function ({ id, name, unit, amount, onClick, rem
         <ListSUI.Item >
             <ListSUI.Content>
                 <ListSUI.Header onClick={action('edit')} className="shopping-list-item-header" as='h3'>
-                    <span className="shopping-list-item-amount">{amount} {unit}</span>
+                    <span className="shopping-list-item-amount">
+                        {amount}{' '}
+                        {amount && unit}
+                    </span>
                     {name}
                 </ListSUI.Header>
                 {removable && <IconSUI onClick={action('delete')} name='remove' size='large' />}
@@ -57,6 +60,18 @@ export const ShoppingListItem = function ({ id, name, unit, amount, onClick, rem
                     width: calc(100% - 3rem);
                 }
                 `}</style>
+        </ListSUI.Item>
+    )
+}
+
+export const RecipeListItem = function ({ id, title, onClick }) {
+
+    return (
+        <ListSUI.Item onClick={() => onClick(id)}>
+            <Image />
+            <ListSUI.Content>
+                <ListSUI.Header>{title}</ListSUI.Header>
+            </ListSUI.Content>
         </ListSUI.Item>
     )
 }

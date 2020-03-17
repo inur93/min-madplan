@@ -9,6 +9,7 @@ import { GetProductItemsApi } from "../api/productItemsApi";
 import { GetUnitsApi } from '../api/unitsApi';
 import { useState, useEffect } from "react";
 import { EditShoppingItem } from '../../components/shared/Modals';
+import { ContainerFixed } from "../../components/shared/Container";
 
 function Page({ id }) {
     const api = GetShoppingListApi();
@@ -24,7 +25,7 @@ function Page({ id }) {
 
     const getSuggestions = async (value) => {
         const { data } = await GetProductItemsApi().find(value);
-        const suggestions = data.map(({_id, name, defaultUnit}) => ({_id, name, unit : defaultUnit}));
+        const suggestions = data.map(({ _id, name, defaultUnit }) => ({ _id, name, unit: defaultUnit }));
         return [...suggestions, { name: `${value} ` }]; //add a space to enable auto-suggest to trigger change event onClick
     }
 
@@ -34,7 +35,7 @@ function Page({ id }) {
         });
         setShoppinglist(data);
     }
-    const onSelect = async ({_id, ...value}) => await updateList([...items, value]);
+    const onSelect = async ({ _id, ...value }) => await updateList([...items, value]);
 
     const onClick = async (type, _id) => {
         switch (type) {
@@ -68,9 +69,11 @@ function Page({ id }) {
         <List className="shopping-list-container">
             {items.map(({ _id, ...item }) => <ShoppingListItem key={_id} removable {...item} id={_id} onClick={onClick} />)}
         </List>
-        <ProductItemAutoComplete getSuggestions={getSuggestions}
-            onSelect={onSelect}
-            placeholder="Hvad skal du handle?" />
+        <ContainerFixed>
+            <ProductItemAutoComplete getSuggestions={getSuggestions}
+                onSelect={onSelect}
+                placeholder="Hvad skal du handle?" />
+        </ContainerFixed>
         {editItem && <EditShoppingItem item={editItem}
             unitOptions={unitOptions}
             onComplete={handleUpdateItem} />}

@@ -12,7 +12,7 @@ export const Button = function ({ type, primary, secondary, children, ...otherPr
 export const ButtonBack = function ({ children, type, ...otherProps }) {
     const router = useRouter();
     const handleClick = () => router.back();
-    return <Button {...otherProps} type='button' basic color='none' onClick={handleClick} icon='bars' />
+    return <Button {...otherProps} type='button' basic onClick={handleClick} icon='bars' />
 }
 
 const ButtonAction = function ({ children, type, ...otherProps }) {

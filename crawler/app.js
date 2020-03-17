@@ -16,7 +16,8 @@ client.connect(async function (err) {
     //const crawler = new Crawler(db);
     //await crawler.crawl('https://www.valdemarsro.dk');
     //await new DataCleaner(db).clean();
-    await new Migrater(db, targetDb).migrateRecipeItems();
+    // await new Migrater(db, targetDb).migrateRecipeItems();
+    await new Migrater(db, targetDb).migrateRecipes();
     client.close();
 });
 

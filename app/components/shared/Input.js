@@ -114,10 +114,8 @@ export const AutoComplete = function ({ placeholder, getSuggestions, renderSugge
         />
         <style jsx>{`
             :global(.react-autosuggest__input){
-                position: absolute;
                 padding-left: 1rem;
-                bottom: 1rem;
-                width: calc(100% - 1rem);
+                width: 100%;
                 height: 30px;
                 border: 1px solid #aaa;
                 border-radius: 4px;
@@ -171,4 +169,8 @@ export const AutoComplete = function ({ placeholder, getSuggestions, renderSugge
 
 export const ProductItemAutoComplete = function (props) {
     return <AutoComplete {...props} renderSuggestion={renderProductItem} getSuggestionValue={getProductItemValue} />;
+}
+
+export const SearchInput = function ({placeholder, onChange, ...otherProps}) {
+    return <Input icon='search' placeholder={placeholder} onChange={e => onChange(e.target.value)} {...otherProps} />;
 }

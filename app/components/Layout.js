@@ -1,6 +1,7 @@
 import Header from './Header';
 import Head from 'next/head';
 import Loading from './Loading';
+import { Button } from 'semantic-ui-react';
 
 const layoutStyle = {
     // margin: 20,
@@ -31,11 +32,29 @@ const Layout = ({ children, showBackBtn, title, simple }) =>
         <div className="content">
             {children}
         </div>
+        <div className="actions-button-group">
+            <Button.Group className="actions-group">
+                <Button>Ingredienser</Button>
+                <Button>Opskrift</Button>
+            </Button.Group>
+        </div>
         <style jsx>{`
             .content {
                 margin-left: 0.5rem;
                 margin-right: 0.5rem;
                 margin: 0.5rem;
+            }
+            .actions-button-group {
+                display: flex;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+            }
+            :global(.actions-group){
+                width: 100%;
+                display: flex;
+                align-items: stretch;
             }
         `}</style>
     </div>);
