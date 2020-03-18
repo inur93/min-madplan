@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Lifecycle callbacks for the `weekplan` model.
+ * Lifecycle callbacks for the `food-plan` model.
  */
 
 module.exports = {

@@ -1,5 +1,6 @@
 import { List as ListSUI, Icon as IconSUI, Image } from 'semantic-ui-react';
 import { useRouter } from 'next/router';
+import { formatDay } from '../../stores/dateStore';
 
 export const List = function ({ children, ...otherProps }) {
     return (
@@ -23,14 +24,13 @@ export const ListItem = function ({ icon, title, description, link, ...otherProp
     )
 }
 
-export const WeekplanListItem = function () {
+export const WeekplanListItem = function ({ date, title }) {
     return (<ListSUI.Item>
         <ListSUI.Content>
-            <ListSUI.Header as="a">Mandag</ListSUI.Header>
+            <ListSUI.Header as="a">{formatDay(date)}</ListSUI.Header>
         </ListSUI.Content>
         <ListSUI.List>
-            <ListSUI.Description >Spaghetti kødsovs</ListSUI.Description>
-            <ListSUI.Description >brød</ListSUI.Description>
+            <ListSUI.Header as="h2" >{title}</ListSUI.Header>
         </ListSUI.List>
     </ListSUI.Item>)
 }

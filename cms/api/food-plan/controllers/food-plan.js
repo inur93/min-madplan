@@ -1,13 +1,14 @@
 'use strict';
+
 const { sanitizeEntity, buildQuery, parseMultipartData } = require('strapi-utils');
 const ObjectId = require('bson-objectid');
-const MODEL_ID = "shopping-list";
-
-const getUserId = (ctx) => ObjectId(ctx.state.user.id);
+const MODEL_ID = "food-plan";
 /**
  * Read the documentation (https://strapi.io/documentation/3.0.0-beta.x/concepts/controllers.html#core-controllers)
  * to customize this controller
  */
+
+const getUserId = (ctx) => ObjectId(ctx.state.user.id);
 
 module.exports = {
     async find(ctx) {
@@ -27,11 +28,6 @@ module.exports = {
     async create(ctx) {
         let entity;
         const userId = getUserId(ctx);
-        // if (ctx.is('multipart')) {
-        //     const { data, files } = parseMultipartData(ctx);
-        //     data.owner = userId;
-        //     entity = await strapi.services[MODEL_ID].create(data, { files });
-        // } else {
         const data = ctx.request.body;
         data.owner = userId;
         entity = await strapi.services[MODEL_ID].create(data);

@@ -20,7 +20,7 @@ export const withStyles = Page => {
         </div>
     )
 }
-const Layout = ({ children, showBackBtn, title, simple }) =>
+const Layout = ({ children, showBackBtn, title, simple, actions }) =>
 
     (<div style={layoutStyle}>
         <Head>
@@ -33,9 +33,15 @@ const Layout = ({ children, showBackBtn, title, simple }) =>
             {children}
         </div>
         <div className="actions-button-group">
+
             <Button.Group className="actions-group">
-                <Button>Ingredienser</Button>
-                <Button>Opskrift</Button>
+                {(actions || []).map(action =>
+                    <Button key={action.name}
+                        className="action-button"
+                        primary>
+                        {action.name}
+                    </Button>
+                )}
             </Button.Group>
         </div>
         <style jsx>{`
@@ -50,6 +56,9 @@ const Layout = ({ children, showBackBtn, title, simple }) =>
                 bottom: 0;
                 left: 0;
                 width: 100%;
+            }
+            :global(.action-button){
+                flex: 1 1 0;
             }
             :global(.actions-group){
                 width: 100%;
