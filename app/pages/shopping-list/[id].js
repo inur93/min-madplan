@@ -1,7 +1,7 @@
-import Layout from "../../components/Layout";
+import Layout, { Actions, Content } from "../../components/layout/Layout";
 import { auth } from "../api/auth";
 import { GetShoppingListApi } from "../api/shoppingListsApi";
-import { ButtonAdd } from "../../components/shared/Button";
+import { ButtonAdd, Button } from "../../components/shared/Button";
 import { Router } from "next/router";
 import { List, ListItem, ShoppingListItem } from '../../components/shared/List';
 import { ProductItemAutoComplete } from "../../components/shared/Input";
@@ -66,23 +66,23 @@ function Page({ id }) {
         }
     }
     return (<Layout showBackBtn={true} title={name}>
-        <List className="shopping-list-container">
-            {items.map(({ _id, ...item }) => <ShoppingListItem key={_id} removable {...item} id={_id} onClick={onClick} />)}
-        </List>
-        <ContainerFixed>
+        <Content>
+            <List className="shopping-list-container">
+                {items.map(({ _id, ...item }) => <ShoppingListItem key={_id} removable {...item} id={_id} onClick={onClick} />)}
+            </List>
             <ProductItemAutoComplete getSuggestions={getSuggestions}
                 onSelect={onSelect}
                 placeholder="Hvad skal du handle?" />
-        </ContainerFixed>
+        </Content>
+        <Actions>
+            <Button icon='ordered list' />
+            <Button icon='calendar alternate outline' />
+            <Button icon='add' />
+        </Actions>
         {editItem && <EditShoppingItem item={editItem}
             unitOptions={unitOptions}
             onComplete={handleUpdateItem} />}
-        <style jsx>{`
-            :global(.shopping-list-container){
-                height: 76vh;
-                overflow: overlay;
-            }
-            `}</style>
+
     </Layout>)
 }
 

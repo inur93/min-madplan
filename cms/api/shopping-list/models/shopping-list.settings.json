@@ -13,12 +13,6 @@
       "plugin": "users-permissions",
       "model": "user"
     },
-    "shared_with": {
-      "plugin": "users-permissions",
-      "collection": "user",
-      "via": "shopping_lists",
-      "dominant": true
-    },
     "name": {
       "type": "string",
       "required": true
@@ -31,6 +25,13 @@
       "type": "component",
       "repeatable": true,
       "component": "product.shopping-item"
+    },
+    "group": {
+      "model": "group"
+    },
+    "food_plan": {
+      "via": "shopping_list",
+      "model": "food-plan"
     }
   }
 }

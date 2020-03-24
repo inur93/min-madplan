@@ -6,32 +6,13 @@ import Router from 'next/router';
 
 const IndexPage = function ({ heroItems }) {
   return (
-    <main className="center">
+    <main>
       <MenuContainer>
         {heroItems.map(item => <MenuItem key={item.id}
           image={item.image}
           title={item.title}
           link={item.link} />)}
       </MenuContainer>
-      <style jsx>{`
-        main {
-          width: 90%;
-          max-width: 900px;
-          margin: 300px auto;
-          text-align: center;
-        }
-        .quote {
-          font-family: cursive;
-          color: #e243de;
-          font-size: 24px;
-          padding-bottom: 10px;
-        }
-        .author {
-          font-family: sans-serif;
-          color: #559834;
-          font-size: 20px;
-        }
-      `}</style>
     </main>
   );
 }

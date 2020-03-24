@@ -16,6 +16,13 @@
     },
     "unit": {
       "type": "string"
+    },
+    "comment": {
+      "type": "string"
+    },
+    "checked": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

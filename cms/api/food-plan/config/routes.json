@@ -47,6 +47,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "POST",
+      "path": "/food-plans/:id/shopping-list",
+      "handler": "food-plan.createShoppingList",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }

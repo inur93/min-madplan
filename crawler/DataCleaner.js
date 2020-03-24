@@ -1,9 +1,10 @@
-
-
-
+const responseHandler = (resolver) => (err, result) => {
+    if (resolver) resolver(result);
+    if (err) {
+        console.log('an error occurred', err);
+    }
+}
 class DataCleaner {
-
-    resolver;
 
     productCollection;
     ingredientsCollection;
@@ -11,38 +12,22 @@ class DataCleaner {
     units;
     recipesCollection;
     constructor(db) {
+        this.rawCollection = db.collection('raw_recipes');
+
         this.recipesCollection = db.collection('recipes_clean');
         this.productCollection = db.collection('product_clean');
-        this.rawCollection = db.collection('raw_recipes');
         this.ingredientsCollection = db.collection('ingredients');
         this.unitsCollection = db.collection('possible_units');
     }
 
-    clean = () => {
+    preprocessRawData = () => {
+        console.log('processing raw recipes...');
         const self = this;
-
+        let resolver;
         const run = () => {
             this.rawCollection.find({}).toArray(function (err, docs) {
-                docs.forEach(doc => {
-                    const title = doc.title.trim();
-                    const ingredients = self.cleanIngredients(doc);
-                    const stats = self.cleanStats(doc);
-                    const instructions = doc.instructions.trim();
-                    self.productCollection.insertMany(ingredients.map(x => ({
-                        _id: x.name,
-                        unit: x.unit,
-                        name: x.name,
-                        category: x.category
-                    })))
-                    self.recipesCollection.insertOne({
-                        _id: title,
-                        title,
-                        stats,
-                        ingredients,
-                        instructions
-                    });
-                });
-                self.resolver();
+                docs.forEach(doc => self.parseRecipe(doc));
+                resolver();
             });
         }
         this.unitsCollection.find({}).toArray(function (err, docs) {
@@ -50,12 +35,32 @@ class DataCleaner {
             run();
         })
 
-        return new Promise((resolve) => {
-            self.resolver = resolve;
-        });
+        return new Promise((resolve) => resolver = resolve);
     }
 
-    cleanStats = (doc) => {
+    parseRecipe = (doc) => {
+        const self = this;
+        const title = doc.title.trim();
+        const ingredients = self.parseIngredients(doc);
+        const stats = self.parseStats(doc);
+        const instructions = doc.instructions.trim();
+
+        self.productCollection.insertMany(ingredients.map(x => ({
+            _id: x.name,
+            unit: x.unit,
+            name: x.name,
+            category: x.category
+        })), responseHandler())
+        self.recipesCollection.insertOne({
+            _id: title,
+            title,
+            stats,
+            ingredients,
+            instructions
+        }, responseHandler());
+    }
+
+    parseStats = (doc) => {
         const parts = doc.stats.split('\n');
 
         const findStats = (index, list, amount, amountUnit, hours, minutes) => {
@@ -94,43 +99,56 @@ class DataCleaner {
         return findStats(0, parts);
     }
 
-    cleanIngredients = (doc) => {
+    parseIngredients = (doc) => {
         let possibleUnits = [];
         let possibleIngredients = [];
         const self = this;
         for (let i in doc.ingredients) {
-            const ingredient = doc.ingredients[i].trim();
+            let ingredient = doc.ingredients[i].trim();
             // check if contains additional description
-            const parts = ingredient.split(',');
+            // amount might be with ',' 
 
             let desc = "";
-            if (parts.length >= 2) {
-                desc = parts.slice(1).join(',');
+            let descParts = ingredient.substring(3, ingredient.length).split(',');
+            if (descParts.length >= 2) {
+                desc = descParts.slice(1).join(',');
+                ingredient = ingredient.replace(desc, "");
             }
 
-            const findUnit = (index, list, amount, unit) => {
+            const processParts = (index, list, amount, unit) => {
                 const data = {
                     amount,
                     unit,
                     name: '',
                     category: 'food'
                 }
+                //can only be name
                 if (index > list.length - 1) {
-                    data.name = list[index - 1];
+                    data.name = list[index - 1].replace(",", "");
                     return data;
                 }
-                if (/\d/.test(list[index])) {
-                    return findUnit(index + 1, list, list[index]);
+                //find amount
+                if (/\d+((\.|\,|\/)\d+)?/.test(list[index])) {
+                    let value = list[index].replace(',', '.');
+                    if (value.includes("/")) {
+                        const parts = value.trim().split("/");
+                        value = Number.parseInt(parts[0]) / Number.parseInt(parts[1]);
+                    } else {
+                        value = Number.parseFloat(value);
+                    }
+                    return processParts(index + 1, list, value);
                 }
+                //find unit
                 if (amount && index < 2 && self.units.includes(list[index])) {
-                    return findUnit(index + 1, list, amount, list[index]);
+                    return processParts(index + 1, list, amount, list[index]);
                 }
 
-                data.name = list.slice(index).join(' ');
+                //found the name
+                data.name = list.slice(index).join(' ').replace(",", "");
                 return data;
             }
 
-            const obj = findUnit(0, parts[0].split(' '));
+            const obj = processParts(0, ingredient.split(' '));
             obj.description = desc;
 
             //obj._id = obj.name;

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import Layout from '../components/Layout';
+import Layout from '../components/layout/Layout';
 import {GetShoppingListApi} from './api/shoppingListsApi';
 import { List, ListItem } from '../components/shared/List';
 import {ButtonAdd} from '../components/shared/Button';

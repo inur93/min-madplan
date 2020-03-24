@@ -1,4 +1,12 @@
 
+
+const responseHandler = (resolver) => (err, result) => {
+    if (resolver) resolver(result);
+    if (err) {
+        console.log('an error occurred', err);
+    }
+}
+
 class MigrateData {
 
     recipeItemsTarget;
@@ -10,31 +18,43 @@ class MigrateData {
 
     resolver;
     constructor(sourcedb, targetdb) {
-        this.recipeItemsTarget = targetdb.collection('product_items');
         this.recipeItemsSource = sourcedb.collection('product_clean');
-
-        this.recipeIngredientsTarget = targetdb.collection('components_product_recipe_items');
-        this.recipesTarget = targetdb.collection('recipes');
         this.recipeSource = sourcedb.collection('recipes_clean');
+
+        this.recipeItemsTarget = targetdb.collection('product_items');
+        this.recipesTarget = targetdb.collection('recipes');
+        this.recipeIngredientsTarget = targetdb.collection('components_product_recipe_items');
+    }
+
+    migrateRecipeItems = () => {
+        console.log('populating strapi with recipe items...');
+        const self = this;
+        this.recipeItemsSource.find({}).toArray(function (err, docs) {
+            self.recipeItemsTarget.insertMany(docs.map(doc => ({
+                defaultUnit: doc.unit,
+                name: doc.name,
+                category: doc.category
+            })), responseHandler());
+            self.resolver();
+        })
+        return new Promise(resolve => self.resolver = resolve);
     }
 
     migrateRecipes = async () => {
+        console.log('populating strapi with recipes...');
         const self = this;
-        let resolver;
-        const docs = await this.getDocuments();
+        const docs = await this.getDocumentsFromSource();
 
         for (let i = 0; i < docs.length; i++) {
             const doc = docs[i];
             const items = await self.insertRecipeItems(doc);
-            const result = await self.insertRecipe(doc, items.insertedIds);
-
-            console.log('result', result);
+            await self.insertRecipeToTarget(doc, items.insertedIds);
         }
     }
 
-    insertRecipe = ({ title, introduction, instructions }, items) => {
+    insertRecipeToTarget = ({ title, introduction, instructions }, items) => {
         let resolver;
-
+        const promise = new Promise(resolve => resolver = resolve);
         this.recipesTarget.insertOne({
             title, introduction, instructions,
             ingredients: Object.keys(items).map((key) => {
@@ -45,60 +65,27 @@ class MigrateData {
                     kind: 'ComponentProductRecipeItem'
                 }
             })
-        }, function (err, result) {
-            resolver();
-        })
-        return new Promise(resolve => {
-            resolver = resolve;
-        })
-    }
-    getDocuments = () => {
-        let resolver;
-        this.recipeSource.find({}).toArray(function (err, docs) {
-            resolver(docs);
-        })
-        return new Promise(resolve => {
-            resolver = resolve;
-        })
+        }, responseHandler(resolver))
+
+        return promise;
     }
 
     insertRecipeItems = (doc) => {
         let resolver;
-        this.recipeIngredientsTarget.insertMany(doc.ingredients.map(({ name, description, amount, unit }) => ({
-            name, description, amount, unit
-        })), function (err, result) {
-            if (err) {
-                console.log('error', err);
-            } else {
-                resolver(result);
-            }
-        });
-        return new Promise(resolve => {
-            resolver = resolve;
-        })
+        const promise = new Promise(resolve => resolver = resolve);
+        this.recipeIngredientsTarget.insertMany(
+            doc.ingredients.map(({ name, description, amount, unit }) => ({
+                name, description, amount, unit
+            })), responseHandler(resolver));
+        return promise;
     }
 
-    migrateRecipeItems = () => {
-        const self = this;
-
-        this.recipeItemsSource.find({}).toArray(function (err, docs) {
-            self.recipeItemsTarget.insertMany(docs.map(doc => ({
-                defaultUnit: doc.unit,
-                name: doc.name,
-                category: doc.category
-            })), function (err, result) {
-                if (err) {
-                    console.log('error', err);
-                }
-            });
-            self.resolver();
-        })
-
-        return new Promise(resolve => {
-            self.resolver = resolve;
-        });
+    getDocumentsFromSource = () => {
+        let resolver;
+        const promise = new Promise(resolve => resolver = resolve);
+        this.recipeSource.find({}).toArray(responseHandler(resolver));
+        return promise;
     }
-
 }
 
 module.exports = MigrateData;

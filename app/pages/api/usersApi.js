@@ -1,15 +1,17 @@
 import useSWR from 'swr';
-import {api} from './api';
+import { getApi } from './api';
 
-export function self(){
-    const {data} = useSWR('/users', path => {
-        return api.get(path);
-    });
-    
-    if(!data) return {isLoading: true};
+const getPath = (path, query) => `/users/${path || ''}?${query || ''}`;
+
+export const GetUsersApi = (ctx) => {
+    const api = getApi(ctx);
 
     return {
-        isLoading: false,
-        me: data || []
-    };
+        async self() {
+            return await (await api.get(getPath("me"))).data;
+        },
+        async update(id, data) {
+            return await (await api.put(getPath(id), data));
+        }
+    }
 }

@@ -1,0 +1,32 @@
+{
+  "connection": "default",
+  "collectionName": "groups",
+  "info": {
+    "name": "group"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "users": {
+      "via": "groups",
+      "plugin": "users-permissions",
+      "collection": "user",
+      "dominant": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "groupInvites": {
+      "type": "component",
+      "repeatable": true,
+      "component": "links.group-invites"
+    },
+    "owner": {
+      "plugin": "users-permissions",
+      "model": "user"
+    }
+  }
+}

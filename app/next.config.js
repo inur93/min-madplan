@@ -1,6 +1,7 @@
 const withSourceMaps = require('@zeit/next-source-maps')
-module.exports = withSourceMaps({
+const withSass = require('@zeit/next-sass');
+module.exports = withSass(withSourceMaps({
   webpack(config, options) {
     return config
   }
-})
+}))

@@ -7,19 +7,58 @@ const url = 'mongodb://localhost:27017';
 const dbName = 'min-madplan-crawler';
 const targetDbName = 'development';
 
-const client = new MongoClient(url);
 
+
+async function clearData(srcDb, targetDb) {
+    const clear = function (list) {
+        console.log('clearing data...');
+        let promises = [];
+        list.forEach(element => {
+            let resolver;
+            const promise = new Promise(resolve => resolver = resolve);
+            element.deleteMany({}, function () {
+                resolver();
+            });
+            promises.push(promise);
+        });
+        return promises;
+    }
+    return await Promise.all(clear([srcDb.collection('recipes_clean'),
+    srcDb.collection('product_clean'),
+    targetDb.collection('components_product_recipe_items'),
+    targetDb.collection('components_links_recipe_links'),
+    targetDb.collection('components_product_shopping_items'),
+    targetDb.collection('product_items'),
+    targetDb.collection('recipes'),
+    targetDb.collection('shopping_lists')]));
+}
+
+function getDbs() {
+    return {
+        src: client.db(dbName),
+        target: client.db(targetDbName)
+    }
+}
+const client = new MongoClient(url);
 client.connect(async function (err) {
 
-    const db = client.db(dbName);
-    const targetDb = client.db(targetDbName);
+    const { src, target } = getDbs();
     //const crawler = new Crawler(db);
     //await crawler.crawl('https://www.valdemarsro.dk');
-    //await new DataCleaner(db).clean();
-    // await new Migrater(db, targetDb).migrateRecipeItems();
-    await new Migrater(db, targetDb).migrateRecipes();
+
+    try {
+        // await clearData(src, target);
+        // await new DataCleaner(src).preprocessRawData();
+        // await new Migrater(src, target).migrateRecipeItems();
+        await new Migrater(src, target).migrateRecipes();
+    } catch (err) {
+        console.log('completed with errors', err);
+    }
     client.close();
+    console.log('Complete!');
 });
+
+
 
 
 class Crawler {
@@ -35,8 +74,8 @@ class Crawler {
         const domain = new UrlParse(url).hostname;
         const distinctUrls = new Set(urls.filter(x => new UrlParse(x).hostname === domain));
         if (ingredients.length > 0 && title && instructions) {
-            this.collection.insertMany([{title, ingredients, instructions, url, stats}], function(err, result){
-            
+            this.collection.insertMany([{ title, ingredients, instructions, url, stats }], function (err, result) {
+
             });
         }
         let promises = [];
@@ -48,7 +87,7 @@ class Crawler {
         }
 
         await Promise.all(promises);
-        
+
 
         // 
     }

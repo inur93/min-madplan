@@ -26,7 +26,7 @@
     "length": {
       "type": "integer",
       "required": true,
-      "default": 6
+      "default": 7
     },
     "plan": {
       "type": "component",
@@ -41,9 +41,12 @@
       "plugin": "users-permissions",
       "model": "user"
     },
-    "shared_with": {
-      "plugin": "users-permissions",
-      "collection": "user"
+    "group": {
+      "model": "group"
+    },
+    "shopping_list": {
+      "model": "shopping-list",
+      "via": "food_plan"
     }
   }
 }
