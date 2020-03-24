@@ -1,0 +1,33 @@
+@import "../../styles/variables.scss";
+
+.mmp-content {
+  margin-top: $header-height;
+  margin-left: $body-margin;
+  margin-right: $body-margin;
+
+  font-family: $font-family;
+
+  display: flex;
+  flex-flow: column;
+  align-items: stretch;
+  height: 87vh;
+
+  .mmp-main-area {
+    flex: 1 1 auto;
+    overflow: auto;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.mmp-actions-bottom {
+  bottom: 1rem;
+  flex: 0 1 auto;
+  margin-top: 1rem;
+  width: 100%;
+  display: flex;
+
+  button.button {
+    flex: 1 1 0 !important;
+  }
+  // background-color: red;
+}

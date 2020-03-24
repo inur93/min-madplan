@@ -2,13 +2,12 @@
   "defaultConnection": "default",
   "connections": {
     "default": {
-      "connector": "bookshelf",
+      "connector": "mongoose",
       "settings": {
-        "client": "sqlite",
-        "filename": ".tmp/data.db",
-        "host": "",
-        "port": "",
-        "database": "",
+        "client": "mongo",
+        "host": "db",
+        "port": "27017",
+        "database": "development",
         "username": "",
         "password": "",
         "ssl": false

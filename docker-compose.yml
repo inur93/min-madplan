@@ -1,26 +1,37 @@
 version: "3.7"
 
 services:
+ db:
+  image: mongo:4.2.3
+  ports:
+   - 27017:27017
+  volumes:
+   - mongo-db:/data/db
  cms:
   image: min-madplan/strapi
   build:
    context: ./cms
    dockerfile: Dev.Dockerfile
-  command: sh -c "chokidar_usepolling=1 strapi develop"
+#  command: sh -c "chokidar_usepolling=1 NODE_OPTIONS=--inspect=0.0.0.0:9230 node node_modules/.bin/strapi develop"
+  command: sh -c "chokidar_usepolling=1 node --inspect=0.0.0.0:9230 node_modules/.bin/strapi develop"
   ports:
    - 1337:1337
+   - 9230-9300:9230-9300
   volumes:
    - ./cms:/cms
    - /cms/node_modules
+  links:
+   - db
      
- gatsby:
-  image: min-madplan/gatsby-app
+ nextjs:
+  image: min-madplan/webapp
   build:
    context: ./app
    dockerfile: Dev.Dockerfile
-  command: sh -c "chokidar_usepolling=1 gatsby develop --host=0.0.0.0"
+  command: sh -c "chokidar_usepolling=1 NODE_OPTIONS=--inspect=0.0.0.0:9229 node node_modules/.bin/next dev"
   ports:
-   - 8000:8000
+   - 3000:3000
+   - 9229:9229
   volumes:
    - ./app:/app
    - /app/node_modules
@@ -29,6 +40,9 @@ services:
   links:
    - cms
   
+volumes: 
+ mongo-db:
+  driver: local
   
   
   

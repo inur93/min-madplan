@@ -1,0 +1,37 @@
+{
+  "connection": "default",
+  "collectionName": "recipes",
+  "info": {
+    "name": "recipe"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "author": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "introduction": {
+      "type": "richtext"
+    },
+    "instructions": {
+      "type": "richtext",
+      "required": true
+    },
+    "ingredients": {
+      "type": "component",
+      "repeatable": true,
+      "component": "product.recipe-item",
+      "required": true
+    },
+    "source": {
+      "type": "string"
+    }
+  }
+}

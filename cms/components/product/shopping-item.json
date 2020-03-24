@@ -1,0 +1,28 @@
+{
+  "connection": "default",
+  "collectionName": "components_product_shopping_items",
+  "info": {
+    "name": "shoppingItem",
+    "icon": "dollar-sign"
+  },
+  "options": {},
+  "attributes": {
+    "amount": {
+      "type": "decimal"
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "unit": {
+      "type": "string"
+    },
+    "comment": {
+      "type": "string"
+    },
+    "checked": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

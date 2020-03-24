@@ -1,0 +1,43 @@
+@import "../../styles/variables.scss";
+.shopping-list-item {
+  color: red;
+  h3.header {
+    display: inline-block !important;
+    width: calc(100% - 2.5rem);
+  }
+  div.content {
+    display: flex;
+
+    flex-flow: row;
+    .checkbox {
+      margin: auto 0;
+      margin-right: 1rem;
+    }
+  }
+}
+
+.shopping-list-item-amount {
+  margin-right: 1rem;
+}
+
+.mmp-list-item-delete {
+  border-bottom: 1px solid $border-color;
+  padding-bottom: 1rem !important;
+  .content {
+    display: inline-block;
+    width: calc(100% - 2rem);
+  }
+
+  .icon {
+    display: inline-block !important;
+  }
+}
+
+.mmp-plan-list-item {
+  h2 {
+    font-size: medium;
+  }
+  .content h2.mmp-empty.header {
+    color: red;
+  }
+}

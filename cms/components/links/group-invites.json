@@ -1,0 +1,27 @@
+{
+  "connection": "default",
+  "collectionName": "components_links_group_invites",
+  "info": {
+    "name": "groupInvites",
+    "icon": "address-book"
+  },
+  "options": {},
+  "attributes": {
+    "email": {
+      "type": "string",
+      "required": true
+    },
+    "inviteSent": {
+      "type": "datetime"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "accepted",
+        "declined"
+      ],
+      "default": "pending"
+    }
+  }
+}

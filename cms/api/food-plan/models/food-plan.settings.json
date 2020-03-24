@@ -1,0 +1,52 @@
+{
+  "connection": "default",
+  "collectionName": "food_plans",
+  "info": {
+    "name": "Food Plan"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "validFrom": {
+      "type": "date",
+      "required": true
+    },
+    "durationType": {
+      "type": "enumeration",
+      "enum": [
+        "days",
+        "weeks",
+        "months"
+      ],
+      "default": "days",
+      "required": true
+    },
+    "length": {
+      "type": "integer",
+      "required": true,
+      "default": 7
+    },
+    "plan": {
+      "type": "component",
+      "repeatable": true,
+      "component": "links.recipe-link"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "owner": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "group": {
+      "model": "group"
+    },
+    "shopping_list": {
+      "model": "shopping-list",
+      "via": "food_plan"
+    }
+  }
+}

@@ -53,13 +53,18 @@
       "plugin": "users-permissions",
       "configurable": false
     },
-    "shoppinglists": {
-      "via": "owner",
-      "collection": "shoppinglist"
+    "groups": {
+      "collection": "group",
+      "via": "users"
     },
-    "shoppinglist": {
-      "via": "sharedWith",
-      "model": "shoppinglist"
+    "selectedGroup": {
+      "model": "group"
+    },
+    "firstname": {
+      "type": "string"
+    },
+    "lastname": {
+      "type": "string"
     }
   }
 }

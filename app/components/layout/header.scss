@@ -1,0 +1,33 @@
+@import '../../styles/variables.scss';
+
+.mmp-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    margin-left: -$body-margin;
+    margin-right: -$body-margin;
+
+    z-index: 10;
+
+    h1 {
+        margin-bottom: 0 !important;
+        margin-left: 1rem !important;
+    }
+
+    .settings-icon{
+        position: absolute;
+        right: 1rem !important;
+        top: 1.5rem !important;
+        font-size: 1.3rem;
+
+        div.text{
+            display: none;
+        }
+        .visible.menu{
+            right: 0;
+            left: auto;
+        }
+    }
+    // background-color: blue;
+}

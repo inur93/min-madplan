@@ -1,0 +1,17 @@
+{
+  "info": {
+    "name": "recipeLink",
+    "icon": "atlas"
+  },
+  "options": {},
+  "attributes": {
+    "date": {
+      "type": "date"
+    },
+    "recipe": {
+      "model": "recipe"
+    }
+  },
+  "connection": "default",
+  "collectionName": "components_links_recipe_links"
+}

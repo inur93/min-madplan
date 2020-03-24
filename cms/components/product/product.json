@@ -1,0 +1,23 @@
+{
+  "connection": "default",
+  "collectionName": "components_product_products",
+  "info": {
+    "name": "Product",
+    "icon": "align-left"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "unit": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "excludeFromShoppingList": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,3 +1,5 @@
 build:
  docker:
   web: cms/Dockerfile
+  #possible values are: web, worker, urgentworker, clock. web is the only able to receive external http traffic.
+  # see details here: https://devcenter.heroku.com/articles/procfile#procfile-format

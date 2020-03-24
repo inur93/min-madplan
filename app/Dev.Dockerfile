@@ -1,16 +1,16 @@
-FROM alpine:latest
-
-EXPOSE 8000
-
-RUN apk add --update nodejs-current npm
-RUN npm install --global gatsby-cli
+FROM node:10.11-alpine
+#FROM node:12.13.0-alpine
 
 WORKDIR /app
 COPY ./package.json ./
-COPY ./package-lock.json ./
-RUN npm install
+COPY ./yarn.lock ./
+RUN yarn install
 
 #not necessary if running with a volume
 COPY . .
 
-CMD ["gatsby", "develop"]
+EXPOSE 3000
+EXPOSE 9229
+#debug port
+
+CMD ["yarn", "run", "dev"]

@@ -1,0 +1,23 @@
+{
+  "connection": "default",
+  "collectionName": "product_items",
+  "info": {
+    "name": "productItem"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "defaultUnit": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    }
+  }
+}
