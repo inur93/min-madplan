@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import Layout, { withStyles } from '../components/Layout';
+import Layout from '../components/layout/Layout';
 import { Input } from '../components/shared/Input';
 import { Form, FormField, FormError } from '../components/shared/Form';
 import { Button } from '../components/shared/Button';
@@ -35,7 +35,7 @@ const Page = function () {
     );
 }
 
-const LoginPage = withStyles(Page);
+const LoginPage = Page;
 
 LoginPage.getInitialProps = async ctx => {
     const cookies = nextCookie(ctx);

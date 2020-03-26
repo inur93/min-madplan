@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import Layout from '../../components/Layout';
+import Layout from '../../components/layout/Layout';
 import { auth } from '../api/auth';
 import { Form, FormField } from '../../components/shared/Form';
 import { ButtonSave } from '../../components/shared/Button';
