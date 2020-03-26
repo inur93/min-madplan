@@ -4,7 +4,7 @@ import ServerCookie from 'next-cookies';
 
 const getCookie = (ctx) => ctx ? ServerCookie(ctx).jwt : cookie.get('jwt');
 const getBaseUrl = () => {
-    if (process.env === 'Production') {
+    if (process.env.NODE_ENV === 'production') {
         return 'https://min-madplan.herokuapp.com/';
     }
     return process.browser ? 'http://localhost:1337/' : 'http://cms:1337/';

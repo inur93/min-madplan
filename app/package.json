@@ -18,7 +18,7 @@
   },
   "scripts": {
     "dev": "next",
-    "build": "next build",
+    "build": "NODE_ENV=production next build",
     "start": "next start"
   }
 }
