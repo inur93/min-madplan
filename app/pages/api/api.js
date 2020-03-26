@@ -3,9 +3,15 @@ import cookie from 'js-cookie';
 import ServerCookie from 'next-cookies';
 
 const getCookie = (ctx) => ctx ? ServerCookie(ctx).jwt : cookie.get('jwt');
+const getBaseUrl = () => {
+    if (process.env === 'Production') {
+        return 'https://min-madplan.herokuapp.com/';
+    }
+    return process.browser ? 'http://localhost:1337/' : 'http://cms:1337/';
+}
 
 export const getApi = (ctx) => axios.create({
-    baseURL: process.browser ? 'http://localhost:1337/' : 'http://cms:1337/',
+    baseURL: getBaseUrl(),
     transformRequest: [function (data, headers) {
         const jwt = getCookie(ctx);
         console.log("jwt", jwt);
