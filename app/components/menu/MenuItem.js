@@ -1,12 +1,12 @@
 import { Header } from 'semantic-ui-react';
 import Link from 'next/link';
+import { absUrl } from '../../functions/imageFunctions';
 
 
 export default function MenuItem({ image, title, link }) {
+    const {url} = image || {};
 
-    console.log(image);
-    const url = "http://localhost:1337" + image.url;
-    return <div className="menu-item" style={{backgroundImage: `url('${url}')`}}>
+    return <div className="menu-item" style={{backgroundImage: `url('${absUrl(url)}')`}}>
         <Header className="menu-item-header" as="a">
             {title}
         </Header>

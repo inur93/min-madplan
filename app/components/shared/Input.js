@@ -108,5 +108,5 @@ export const ProductItemAutoComplete = function (props) {
 }
 
 export const SearchInput = function ({ placeholder, onChange, ...otherProps }) {
-    return <Input icon='search' placeholder={placeholder} onChange={e => onChange(e.target.value)} {...otherProps} />;
+    return <Input {...otherProps} icon='search' placeholder={placeholder} onChange={e => onChange(e.target.value)} />;
 }

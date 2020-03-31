@@ -31,5 +31,8 @@ module.exports = {
             const num = (!val || isNaN(val)) ? 0 : Number.parseFloat(val);
             return total + num;
         }, 0);
+    },
+    getUserService(strapi){
+        return strapi.plugins['users-permissions'].controllers['user'];
     }
 }

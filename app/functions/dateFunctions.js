@@ -5,8 +5,19 @@ import {
     addDays as addDaysDF,
     endOfWeek as endOfWeekDF
 } from 'date-fns';
-
 import da from 'date-fns/locale/da';
+
+export function getPlanLength(amount, type) {
+    switch (type) {
+        case 'days':
+            return amount;
+        case 'weeks':
+            return amount * 7;
+        case 'months':
+            return amount * 28;
+    }
+}
+
 
 const options = {
     weekStartsOn: 1,
@@ -29,6 +40,8 @@ export const formatDay = (date) => formatDF(date, dayFormat, options);
 export const addDays = (date, amount) => addDaysDF(date, amount);
 
 export const endOfWeek = (date) => endOfWeekDF(date, options);
+
+export const startOfNextWeek = () => addDays(endOfWeek(new Date()), 1);
 
 //for queries
 export const formatDateForQuery = (date) => formatDF(date, dateFormat);

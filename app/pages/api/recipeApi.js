@@ -8,7 +8,8 @@ export const GetRecipesApi = (ctx) => {
 
     return {
         async find(query){
-            return await api.get(getPath("", `_limit=10&title_contains=${query || ""}`));
+
+            return await (await api.get(getPath("", `_limit=10&title_contains=${query || ""}`))).data;
         },
         async findOne(id) {
             return await (await api.get(getPath(id))).data;

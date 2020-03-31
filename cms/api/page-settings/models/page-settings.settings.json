@@ -1,0 +1,18 @@
+{
+  "info": {
+    "name": "pageSettings"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "frontPage": {
+      "type": "component",
+      "repeatable": false,
+      "component": "pages.front-page"
+    }
+  },
+  "connection": "default",
+  "collectionName": "page_settings"
+}

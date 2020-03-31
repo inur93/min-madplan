@@ -1,0 +1,29 @@
+{
+  "info": {
+    "name": "frontPage",
+    "icon": "file-alt"
+  },
+  "options": {},
+  "attributes": {
+    "shoppingListImage": {
+      "model": "file",
+      "via": "related",
+      "plugin": "upload",
+      "required": false
+    },
+    "recipesImage": {
+      "model": "file",
+      "via": "related",
+      "plugin": "upload",
+      "required": false
+    },
+    "planImage": {
+      "model": "file",
+      "via": "related",
+      "plugin": "upload",
+      "required": false
+    }
+  },
+  "connection": "default",
+  "collectionName": "components_pages_front_pages"
+}

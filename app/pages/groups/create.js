@@ -5,13 +5,21 @@ import { useState } from "react";
 import { ButtonSave, ButtonSuccess } from "../../components/shared/Button";
 import { List, ListItem, ListItemDelete } from "../../components/shared/List";
 import { GetGroupsApi } from "../api/groupsApi";
+import { auth } from "../api/auth";
+import { useRouter } from "next/router";
+import { useSelf } from "../../hooks/useSelf";
+import { GetUsersApi } from "../api/usersApi";
 
 
-function Page({ }) {
+function Page({ firstTime }) {
     const [name, setName] = useState("");
     const [sharedWith, setSharedWith] = useState([]);
     const [userValue, setUserValue] = useState("");
+    const router = useRouter();
     const api = GetGroupsApi();
+    const usersApi = GetUsersApi();
+    const [self, revalidate] = useSelf();
+
     const addUser = (e) => {
         e.preventDefault();
         if (!userValue) return;
@@ -25,19 +33,30 @@ function Page({ }) {
     }
 
     const create = async () => {
-        await api.create({
+        const group = await api.create({
             name,
             groupInvites: sharedWith.map(email => ({ email }))
         });
+        if (firstTime) {
+            await usersApi.update(self._id, {
+                selectedGroup: group._id
+            });
+            router.push(`/plan?firstTime=true`);
+        } else {
+            router.push('/');
+        }
 
     }
     return (
         <Layout title="Opret gruppe">
             <form onSubmit={addUser}>
                 <Content>
+
                     <p>
-                        Opret en gruppe så du kan dele din madplan og indkøbsliste med din lækkerbisken.
-                </p>
+                        {firstTime ? "For at komme i gang, opret en gruppe, hvor du kan invitere dine venner, familie eller kolleger. Så kan I alle se madplanen for ugen og klare indkøb"
+                            : "Opret en gruppe så du kan dele din madplan og indkøbsliste med din lækkerbisken."
+                        }
+                    </p>
                     <Input name="name"
                         required
                         value={name}
@@ -65,4 +84,11 @@ function Page({ }) {
     )
 }
 
+Page.getInitialProps = async function (ctx) {
+    auth(ctx);
+    const { firstTime } = ctx.query;
+    return {
+        firstTime: firstTime == 'true'
+    }
+}
 export default Page;

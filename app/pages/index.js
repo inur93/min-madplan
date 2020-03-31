@@ -1,28 +1,39 @@
 import MenuContainer from '../components/menu/MenuContainer';
 import MenuItem from '../components/menu/MenuItem';
-import { HeroItemsApi } from './api/heroItemsApi';
-import { auth } from './api/auth';
-import Router from 'next/router';
+import { GetUsersApi, auth, GetPageSettingsApi } from './api';
 
-const IndexPage = function ({ heroItems }) {
+const IndexPage = function ({ shoppingListImage, planImage, recipesImage }) {
   return (
     <main>
       <MenuContainer>
-        {heroItems.map(item => <MenuItem key={item.id}
-          image={item.image}
-          title={item.title}
-          link={item.link} />)}
+        <MenuItem image={shoppingListImage}
+          title="Indkøbsliste"
+          link="/shopping-list" />
+        <MenuItem image={planImage}
+          title="Ugeplan"
+          link="/plan" />
+        <MenuItem image={recipesImage}
+          title="Opskrifter"
+          link="/recipes" />
       </MenuContainer>
     </main>
   );
 }
 
 IndexPage.getInitialProps = async function (ctx) {
-  const token = auth(ctx);
-  const items = await HeroItemsApi().heroItems();
+  auth(ctx); //make sure user is logged in - will automatically be redirected to login if not
+
+  const [self, frontPage] = await Promise.all([
+    GetUsersApi(ctx).self(),
+    GetPageSettingsApi(ctx).frontPage()
+  ]);
+
+  if (!self.selectedGroup) {
+    ctx.res.writeHead(302, { Location: '/groups/create?firstTime=true' })
+    ctx.res.end()
+  }
   return {
-    token,
-    heroItems: items
+    ...frontPage,
   };
 }
 export default IndexPage;

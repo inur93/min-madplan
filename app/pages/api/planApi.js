@@ -1,7 +1,5 @@
-import useSWR from 'swr';
 import { getApi } from './api';
-import { formatDateForQuery } from '../../stores/dateStore';
-import { addDays } from '../../stores/dateStore';
+import { addDays, formatDateForQuery } from '../../functions/dateFunctions';
 
 const getPath = (path, query) => `/food-plans/${path || ''}?${query || ''}`;
 
@@ -11,10 +9,12 @@ export const GetPlanApi = (ctx) => {
     return {
         async findCurrent() {
             const yesterday = addDays(new Date(), -1);
-            return await (await api.get(getPath("", `validFrom_gt=${formatDateForQuery(yesterday)}`))).data;
+            const data = await (await api.get(getPath("", `validFrom_gt=${formatDateForQuery(yesterday)}`))).data;
+            if(data && data.length > 0) return data[0];
+            return null;
         },
-        async find(query) {
-            return await api.get(getPath("", `_limit=10&title_contains=${query || ""}`));
+        async find() {
+            return await (await api.get(getPath("", `_limit=10&_sort=validFrom_asc`))).data || [];
         },
         async findOne(id) {
             return await (await api.get(getPath(id))).data;
@@ -26,7 +26,7 @@ export const GetPlanApi = (ctx) => {
             return await (await api.put(getPath(id), plan)).data;
         },
         async createShoppingList(id) {
-            return await (await api.post(getPath(`${id}/shopping-list`)));
+            return await (await api.post(getPath(`${id}/shopping-list`))).data;
         }
     }
 }

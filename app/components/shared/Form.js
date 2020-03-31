@@ -1,5 +1,5 @@
 import { Form as FormSUI, Message } from 'semantic-ui-react';
-import { formatDate, formatDateTime } from '../../stores/dateStore';
+import { formatDate, formatDateTime } from '../../functions/dateFunctions';
 const handleSubmit = (callback) => (e) => {
     e.preventDefault();
     const data = GetFormData(e.target);

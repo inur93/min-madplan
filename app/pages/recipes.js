@@ -1,86 +1,65 @@
-import { useRouter } from 'next/router';
 import Layout, { Actions, Content } from '../components/layout/Layout';
-import { GetRecipesApi } from './api/recipeApi';
-import { useState, useEffect } from 'react';
-import { RecipeListItem, List } from '../components/shared/List';
+import { List } from '../components/shared/List';
 import { SearchInput } from '../components/shared/Input';
-import { GetPlanApi } from './api/planApi';
-import { Message } from 'semantic-ui-react';
-import { formatDay } from '../stores/dateStore';
+import { formatDay } from "../functions/dateFunctions";
+import { Message, Icon, List as ListSUI } from 'semantic-ui-react';
+import { useRecipes } from '../hooks/useRecipes';
 
-function RenderPlanDate({ validFrom, plan }, date) {
+function PlanDate({ plan, date }) {
     const selected = plan.find(x => x.date === date);
     return <Message info
         header={formatDay(new Date(date))}
         content={selected ? selected.recipe.title : 'Vælg en opskrift...'} />
 }
 
-const Page = () => {
-    const api = GetRecipesApi();
-    const planApi = GetPlanApi();
-    const router = useRouter();
-    const [recipes, setRecipes] = useState([]);
-    const [query, setQuery] = useState("");
-    const [plan, setPlan] = useState(null);
 
-    const planId = router.query.plan;
-    const planDate = router.query.date;
+function RecipeListItem({ id, title, onClick }) {
+    return (<ListSUI.Item onClick={() => onClick(id)}>
+            <ListSUI.Content>
+                <ListSUI.Header>{title}</ListSUI.Header>
+                <Icon name='list ol' />
+                <Icon name='check circle outline' />
+            </ListSUI.Content>
+        </ListSUI.Item>)
+}
 
-    const updateRecipes = (query) => {
-        api.find(query).then(({ data }) => setRecipes(data));
-    }
+const Page = (props) => {
 
-    useEffect(() => {
-        updateRecipes();
-        const loadPlan = async (planId) => {
-            const result = await planApi.findOne(planId);
-            setPlan(result);
-        }
-        if (planId && planDate) loadPlan(planId);
-    }, []);
+    const [state, handlers, actions] = useRecipes(props);
 
-    const search = (query) => {
-        setQuery(query);
-        updateRecipes(query);
-    }
 
-    const selectRecipe = async (id) => {
-        if (plan) {
-            const list = plan.plan || [];
-            let selected = (list).find(x => x.date === planDate);
-            if (!selected) {
-                selected = { date: planDate }
-            } else {
-                list.splice(list.indexOf(selected), 1);
-            }
-            selected.recipe = id;
-            list.push(selected);
-
-            await planApi.update(plan._id, {
-                plan: list
-            });
-            router.push(`/plan?id=${plan._id}`);
-        } else {
-            router.push(`/recipes/${id}`);
-        }
-    }
+    const { query, date, plan, recipes, selected, visibility } = state;
+    const { setQuery, onClick } = handlers;
 
     return (
         <Layout title="Opskrifter">
             <Content>
-                {plan && RenderPlanDate(plan, router.query.date)}
-                <List selection verticalAlign='middle'>
-                    {recipes.map(recipe => <RecipeListItem key={recipe._id}
-                        id={recipe._id}
-                        title={recipe.title}
-                        onClick={selectRecipe} />)}
-                </List>
+                {visibility.showPlanDay && <PlanDate plan={plan.plan} date={date} />}
+                {visibility.view && <Instructions source={selected.instructions} />}
+                {visibility.search &&
+                    <List selection verticalAlign='middle'>
+                        {recipes.map(recipe => <RecipeListItem key={recipe._id}
+                            id={recipe._id}
+                            title={recipe.title}
+                            onClick={onClick(actions.select)} />)}
+                    </List>}
             </Content>
             <Actions>
-                <SearchInput value={query} onChange={search} placeholder="Søg efter opskrift..." />
+                <SearchInput value={query} onChange={setQuery} placeholder="Søg efter opskrift..." />
             </Actions>
         </Layout>
     )
 }
+Page.getInitialProps = async (ctx) => {
+    const { id, view, plan, date, firstTime, query } = ctx.query;
 
+    return {
+        id,
+        view,
+        firstTime: !!firstTime,
+        plan,
+        date,
+        query
+    }
+}
 export default Page;

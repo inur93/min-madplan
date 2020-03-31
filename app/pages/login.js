@@ -1,9 +1,8 @@
 import { useRouter } from 'next/router';
 import Layout from '../components/layout/Layout';
-import { Input } from '../components/shared/Input';
 import { Form, FormField, FormError } from '../components/shared/Form';
 import { Button } from '../components/shared/Button';
-import { login } from './api/auth';
+import { login } from './api';
 import { useState } from 'react';
 import nextCookie from 'next-cookies';
 
@@ -39,9 +38,6 @@ const LoginPage = Page;
 
 LoginPage.getInitialProps = async ctx => {
     const cookies = nextCookie(ctx);
-    console.log('jwt', {
-        cookies
-    });
     const jwt = cookies.jwt;
     if (ctx.req && jwt) {
         ctx.res.writeHead(302, { Location: '/' })

@@ -1,8 +1,9 @@
 'use strict';
 const { sanitizeEntity, buildQuery, parseMultipartData } = require('strapi-utils');
 const ObjectId = require('bson-objectid');
-const getUserId = require('../../../config/functions/helperFunctions').getUserId;
+const {getUserId, getUserService} = require('../../../config/functions/helperFunctions');
 const MODEL_ID = "group";
+const MODEL_ID_USER = "users";
 
 /**
  * Read the documentation (https://strapi.io/documentation/3.0.0-beta.x/concepts/controllers.html#core-controllers)
@@ -26,7 +27,6 @@ module.exports = {
 
         data.owner = userId;
         data.users = [userId];
-
         const entity = await strapi.services[MODEL_ID].create(data);
         return sanitizeEntity(entity, { model: strapi.models[MODEL_ID] })
     }

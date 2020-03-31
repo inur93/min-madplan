@@ -25,15 +25,12 @@ export const login = async function ({ username, password }) {
 
 export const auth = ctx => {
     const { jwt: token } = nextCookie(ctx);
-    console.log('auth: ', {token})
     if (ctx.req && !token) {
-        console.log('redirecting to login...');
         ctx.res.writeHead(302, { Location: '/login' })
         ctx.res.end()
         return
     }
     cookie.set('jwt', token, {expires: 7});
-    console.log("all is good.. returning token");
     return token;
 }
 

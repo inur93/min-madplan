@@ -11,7 +11,5 @@ export function useSelf() {
             console.log('error');
         })
     });
-
-    console.log('self', self);
     return [self.data, self.revalidate];
 }

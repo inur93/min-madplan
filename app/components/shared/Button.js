@@ -45,15 +45,3 @@ export const ButtonSave = function ({ children, ...otherProps }) {
 export const ButtonSuccess = function ({ onClick }) {
     return <Button positive icon='checkmark' onClick={onClick} />
 }
-
-export const ButtonCreateShoppingList = function ({ onClick, ...otherProps }) {
-    return <Button {...otherProps} icon='add to cart' onClick={onClick} />
-}
-
-export const ButtonOpenShoppingList = function ({ onClick, ...otherProps }) {
-    return <Button {...otherProps} icon='shopping cart' onClick={onClick} />;
-}
-
-export const ButtonCreatePlan = function ({ onClick, ...otherProps }) {
-    return <Button {...otherProps} icon='calendar plus outline' onClick={onClick} />;
-}

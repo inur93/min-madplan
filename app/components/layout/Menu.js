@@ -1,12 +1,11 @@
 import { Menu as MenuSUI, Sidebar, Segment, Image, Dropdown, Icon } from 'semantic-ui-react';
 import { useRouter } from 'next/router';
 import './menu.scss';
-import { absUrl } from '../../stores/imageStore';
+import { absUrl } from '../../functions/imageFunctions';
 import { ButtonClose } from '../shared/Button';
 import { useSelf } from '../../hooks/useSelf';
 import { useData } from '../../hooks/useData';
-import { GetGroupsApi } from '../../pages/api/groupsApi';
-import { GetUsersApi } from '../../pages/api/usersApi';
+import { GetGroupsApi, GetUsersApi } from '../../pages/api';
 
 const fullname = (firstname, lastname) => `${firstname || ""} ${lastname || ""}`;
 const getSelectedGroupName = (groups, current) => {

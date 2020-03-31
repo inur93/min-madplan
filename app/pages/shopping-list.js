@@ -1,10 +1,9 @@
 import { useRouter } from 'next/router';
 import Layout from '../components/layout/Layout';
-import {GetShoppingListApi} from './api/shoppingListsApi';
 import { List, ListItem } from '../components/shared/List';
 import {ButtonAdd} from '../components/shared/Button';
-import { auth } from './api/auth';
-import { formatDate } from '../stores/dateStore';
+import { auth, GetShoppingListApi } from './api';
+import { formatDate } from '../functions/dateFunctions';
 
 
 const ShoppinglistListItem = function({item}){

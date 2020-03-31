@@ -5,7 +5,7 @@ import {Instructions} from '../../components/recipe/Instructions';
 
 const Recipe = ({ recipe }) => (
   <Layout title={recipe.title}>
-    <Instructions source={recipe.instructions} />
+    
   </Layout>
 );
 
