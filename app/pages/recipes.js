@@ -4,6 +4,7 @@ import { SearchInput } from '../components/shared/Input';
 import { formatDay } from "../functions/dateFunctions";
 import { Message, Icon, List as ListSUI } from 'semantic-ui-react';
 import { useRecipes } from '../hooks/useRecipes';
+import { auth } from './api';
 
 function PlanDate({ plan, date }) {
     const selected = plan.find(x => x.date === date);
@@ -52,6 +53,7 @@ const Page = (props) => {
 }
 Page.getInitialProps = async (ctx) => {
     const { id, view, plan, date, firstTime, query } = ctx.query;
+    auth(ctx);
 
     return {
         id,

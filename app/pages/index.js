@@ -1,21 +1,29 @@
 import MenuContainer from '../components/menu/MenuContainer';
 import MenuItem from '../components/menu/MenuItem';
 import { GetUsersApi, auth, GetPageSettingsApi } from './api';
+import { GroupCreate } from '../components/group/GroupCreate';
+import { Content } from '../components/layout/Layout';
+import { Segment } from 'semantic-ui-react';
 
-const IndexPage = function ({ shoppingListImage, planImage, recipesImage }) {
+const IndexPage = function ({ self, shoppingListImage, planImage, recipesImage }) {
+
+  const firstTime = !self.selectedGroup;
   return (
     <main>
-      <MenuContainer>
-        <MenuItem image={shoppingListImage}
-          title="Indkøbsliste"
-          link="/shopping-list" />
-        <MenuItem image={planImage}
-          title="Ugeplan"
-          link="/plan" />
-        <MenuItem image={recipesImage}
-          title="Opskrifter"
-          link="/recipes" />
-      </MenuContainer>
+      {firstTime ?
+        <Segment><GroupCreate firstTime /></Segment> :
+        <MenuContainer>
+          <MenuItem image={shoppingListImage}
+            title="Indkøbsliste"
+            link="/shopping-list" />
+          <MenuItem image={planImage}
+            title="Ugeplan"
+            link="/plan" />
+          <MenuItem image={recipesImage}
+            title="Opskrifter"
+            link="/recipes" />
+        </MenuContainer>
+      }
     </main>
   );
 }
@@ -28,11 +36,9 @@ IndexPage.getInitialProps = async function (ctx) {
     GetPageSettingsApi(ctx).frontPage()
   ]);
 
-  if (!self.selectedGroup) {
-    ctx.res.writeHead(302, { Location: '/groups/create?firstTime=true' })
-    ctx.res.end()
-  }
+  console.log('frontpage', { frontPage });
   return {
+    self,
     ...frontPage,
   };
 }

@@ -7,13 +7,13 @@ export const GetPageSettingsApi = (ctx) => {
     return {
         async frontPage() {
             try {
-                const { data } = await api.get('/page-settings');
+                const { data, ...others } = await api.get('/page-settings');
                 if(data){
                     return data.frontPage;
                 }
                 return {};
             }catch(e){
-                console.log('error', e);
+                console.log('error getting front page settings');
             }
             return {};
         }

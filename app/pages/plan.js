@@ -7,6 +7,7 @@ import { PlanView } from "../components/plan/PlanOverview";
 import { PlanHistoryList } from "../components/plan/PlanHistoryList";
 import { useRouter } from "next/router";
 import { PlanCreate } from "../components/plan/PlanCreate";
+import { auth } from "./api";
 
 const FirstTimeMessage = () => (<p>
     Tilføj de retter du ønsker at lave den kommende uge.
@@ -46,7 +47,8 @@ function Page(props) {
 
 Page.getInitialProps = (ctx) => {
     const { id, view, firstTime } = ctx.query;
-
+    auth(ctx);
+    
     return {
         planId: id,
         view,

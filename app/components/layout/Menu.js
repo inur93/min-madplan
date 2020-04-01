@@ -5,7 +5,7 @@ import { absUrl } from '../../functions/imageFunctions';
 import { ButtonClose } from '../shared/Button';
 import { useSelf } from '../../hooks/useSelf';
 import { useData } from '../../hooks/useData';
-import { GetGroupsApi, GetUsersApi } from '../../pages/api';
+import { GetGroupsApi, GetUsersApi, logout } from '../../pages/api';
 
 const fullname = (firstname, lastname) => `${firstname || ""} ${lastname || ""}`;
 const getSelectedGroupName = (groups, current) => {
@@ -74,6 +74,7 @@ const Menu = function ({ visible, onHide }) {
                 </MenuSUI.Item>
             </MenuSUI.Menu>
         </MenuSUI.Item>
+        <MenuSUI.Item name='Log ud' onClick={logout} />
     </Sidebar>);
 };
 export default Menu;

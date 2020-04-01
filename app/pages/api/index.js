@@ -1,4 +1,4 @@
-import { getApi, isAuthenticated } from "./api";
+import { getApi } from "./api";
 import { auth, login, logout } from "./auth";
 import { GetGroupsApi } from "./groupsApi";
 import { GetPageSettingsApi } from './pageSettingsApi';
@@ -10,7 +10,6 @@ import { GetUnitsApi } from "./unitsApi";
 import { GetUsersApi } from "./usersApi";
 
 export {
-    isAuthenticated,
     auth,
     login,
     logout,
