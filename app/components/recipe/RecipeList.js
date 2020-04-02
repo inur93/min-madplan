@@ -3,8 +3,8 @@ import { Message, Icon, List as ListSUI } from 'semantic-ui-react';
 import { List } from '../shared/List';
 
 function RecipeListItem({ id, title, onClick, onShowDetails }) {
-    const onSelect = () => onClick(id);
-    const showDetails = () => onShowDetails(id);
+    const onSelect = () => onClick({id});
+    const showDetails = () => onShowDetails({id});
     return (<ListSUI.Item className='recipe-list-item'>
         <ListSUI.Content>
             <ListSUI.Header onClick={onSelect}>{title}</ListSUI.Header>

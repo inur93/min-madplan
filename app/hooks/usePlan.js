@@ -131,13 +131,12 @@ export function usePlan(defaultState) {
                 value = 'Opret ugeplan';
                 break;
             default:
-                value = currentPlan ? currentPlan.title : 'Ugeplan';
+                value = currentPlan ? currentPlan.name : 'Ugeplan';
                 break;
         }
         setTitle(value);
     }, [router.query.view, currentPlan]);
 
-    console.log('history', history);
     const state = {
         planId: router.query.id,
         loading,

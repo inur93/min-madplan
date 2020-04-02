@@ -1,44 +1,55 @@
-import { useRouter } from 'next/router';
-import Layout from '../components/layout/Layout';
-import { List, ListItem } from '../components/shared/List';
-import {ButtonAdd} from '../components/shared/Button';
-import { auth, GetShoppingListApi } from './api';
-import { formatDate } from '../functions/dateFunctions';
+import Layout, { Content, Actions } from '../components/layout/Layout';
+import { List } from '../components/shared/List';
+import { ButtonAdd, Button } from '../components/shared/Button';
+import { auth } from './api';
+import { useShoppingList } from '../hooks/useShoppingList';
+import { ShoppingListOverview } from '../components/shoppingList/ShoppingListOverview';
+import { ProductItemAutoComplete } from '../components/shared/Input';
+import { ShoppingListCreate } from '../components/shoppingList/ShoppingListCreate';
+import { Icon } from 'semantic-ui-react';
 
-
-const ShoppinglistListItem = function({item}){
-  const format = "d. MMM";
-  const validFrom = new Date(item.validFrom);
-  //const validTo = new Date(item.validTo);
-  const description = `${formatDate(validFrom, format)}`;
-  const link = `/shopping-list/${item.id}`;
-  return <ListItem title={item.name} description={description} link={link}/>;
+function MessageEmptyHistory() {
+  return <p>Du har ikke noget indkøbsliste endnu.
+    Opret en ved at trykke på <Icon name='add' /> nedenfor.
+    Eller opret en madplan og efterfølgende opret en indkøbsliste derfra.</p>
 }
-
 const Page = () => {
-    const router = useRouter();
-    const handleCreateNew = () => router.push("/shopping-list/create");
-    var data = GetShoppingListApi().myShoppingLists();
-    const {shoppingLists, isLoading} = data;
-    
-    if (isLoading) return "loading...";
 
-    const isEmpty = !shoppingLists || shoppingLists.length == 0;
-    return (
-        <Layout showBackBtn={true} title='Indkøbsliste'>
-          {isEmpty && <p>Du har ikke noget indkøbsliste endnu. Opret en ved at trykke på + nedenfor</p>}
-            <List>
-                {shoppingLists.map(list => <ShoppinglistListItem key={list.id} item={list} />)}
-            </List>
-            <ButtonAdd onClick={handleCreateNew} />
-        </Layout>
-    )
+  const [state, handlers, actions] = useShoppingList();
+
+  const { history, selected, selectedItem, unitOptions, show, isEmpty } = state;
+  const { onClick, getSuggestions } = handlers;
+
+  console.log('show', show);
+
+  return (
+    <Layout showBackBtn={true} title='Indkøbsliste'>
+      {(show.view && selected) && <ProductItemAutoComplete getSuggestions={getSuggestions}
+        onSelect={onClick(actions.selectItem)}
+        placeholder="Hvad skal du handle?" />}
+      <Content>
+        {isEmpty && <MessageEmptyHistory />}
+
+        {show.history && <ShoppingListOverview lists={history} onClick={onClick(actions.showView)} />}
+        {show.create && <ShoppingListCreate onSave={onClick(actions.createList)} />}
+        {selectedItem && <ShoppingItemEdit item={selectedItem}
+          unitOptions={unitOptions}
+          onComplete={onClick(actions.updateItem)} />}
+
+
+      </Content>
+      <Actions>
+        <Button icon='history' onClick={onClick(actions.showHistory)} />
+        <Button icon='add' onClick={onClick(actions.showCreate)} />
+      </Actions>
+    </Layout >
+  )
 }
 
 Page.getInitialProps = async (ctx) => {
-    const token = auth(ctx);
-    return {}
-  }
+  const token = auth(ctx);
+  return {}
+}
 export default Page;
 
 

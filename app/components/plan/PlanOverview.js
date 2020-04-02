@@ -1,25 +1,27 @@
-import { List } from "semantic-ui-react";
+import { List, Icon } from "semantic-ui-react";
 import { getPlanLength, addDays, formatDateForQuery, formatDay } from '../../functions/dateFunctions';
 import './plan-overview.scss';
 
 const ListItem = function ({ date, recipe, onClick }) {
     const isEmpty = !recipe;
     return (<List.Item className="mmp-plan-list-item" onClick={onClick}>
+        <List.Header as="a">{formatDay(date)}</List.Header>
         <List.Content>
-            <List.Header as="a">{formatDay(date)}</List.Header>
             <List.Header className={isEmpty ? 'mmp-empty' : ''} as="h2" >
                 {isEmpty ?
                     "Tilføj en opskrift..."
                     : recipe.title
                 }
             </List.Header>
+            {!isEmpty && <Icon name='edit' />}
+            {!isEmpty && <Icon name='info circle' />}
+            {!isEmpty && <Icon name='remove' />}
         </List.Content>
     </List.Item>)
 }
 
 export function PlanView({ plan, onClick }) {
 
-    console.log('plan', plan);
     const { _id, validFrom, length, durationType } = plan;
     if (!validFrom) return <p>empty...</p>;
     let days = new Array(getPlanLength(length, durationType)).fill(null);

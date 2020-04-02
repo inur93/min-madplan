@@ -46,7 +46,7 @@ module.exports = {
     async createShoppingList(ctx) {
         const group = getCurrentGroup(ctx);
         const userId = getUserId(ctx);
-        const { _id, title, plan, validFrom } = await strapi.services[MODEL_ID].findOne(ctx.params);
+        const { _id, name, plan, validFrom } = await strapi.services[MODEL_ID].findOne(ctx.params);
 
         const rawList = plan.map(p => p.recipe && p.recipe.ingredients);
         let ingredients = [].concat(...rawList);
@@ -68,7 +68,7 @@ module.exports = {
 
         const shoppingList = {
             validFrom,
-            name: title,
+            name,
             group,
             owner: userId,
             items,

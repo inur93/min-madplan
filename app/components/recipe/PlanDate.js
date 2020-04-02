@@ -5,7 +5,8 @@ import { formatDay } from '../../functions/dateFunctions';
 export function PlanDate({ loading, plan, date }) {
     if (loading) return null;
     const selected = plan.find(x => x.date === date);
+    console.log('selected', {selected});
     return <Message info
         header={formatDay(new Date(date))}
-        content={selected ? selected.recipe.title : 'Vælg en opskrift...'} />
+        content={selected ? selected.recipe.name : 'Vælg en opskrift...'} />
 }
