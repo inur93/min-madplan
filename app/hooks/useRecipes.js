@@ -4,12 +4,18 @@ import { useState, useEffect } from "react";
 import { routeUpdate } from "../functions/routerFunctions";
 
 const actions = {
-    select: 'select'
+    select: 'select',
+    showDetails: 'showDetails',
+    showInstructions: 'showInstructions',
+    showIngredients: 'showIngredients',
+
 }
 
 const views = {
     view: 'view',
-    search: 'search'
+    search: 'search',
+    instructions: 'instructions',
+    ingredients: 'ingredients'
 }
 export function useRecipes(defaultState) {
     //api's
@@ -40,12 +46,27 @@ export function useRecipes(defaultState) {
         updateRecipes();
     }, [router.query.query]);
 
+    useEffect(() => {
+        const id = router.query.id;
+        const load = async () => {
+            if (id) {
+                setLoadingSelected(true);
+                const result = await api.findOne(id);
+                setSelected(result);
+                setLoadingSelected(false);
+            }
+        }
+        load();
+    }, [router.query.id])
+
     //handle plan day
     useEffect(() => {
         const { date, plan } = router.query;
         const loadPlan = async () => {
             setLoadingPlan(true);
-            setPlan((await planApi.findOne(plan)));
+            console.log('what???', planApi);
+            const result = await planApi.findOne(plan);
+            setPlan(result);
             setLoadingPlan(false);
         }
         if (plan && date) loadPlan();
@@ -57,10 +78,12 @@ export function useRecipes(defaultState) {
     }, [router.query.view, plan]);
 
     //handles actions
-    const onClick = (action) => async (id) => {
+    const onClick = (action) => async (data) => {
         switch (action) {
             case actions.select:
                 if (plan) {
+                    // id can be implicit in query.
+                    const id = data.id || router.query.id;
                     await planApi.update(plan._id, {
                         plan: getUpdatedPlan(plan, router.query.date, id)
                     });
@@ -68,6 +91,22 @@ export function useRecipes(defaultState) {
                 } else {
                     routeUpdate(router, { id })
                 }
+                break;
+            case actions.showDetails:
+                router.push({
+                    pathname: '/recipes',
+                    query: {
+                        ...router.query,
+                        view: views.view,
+                        id
+                    }
+                });
+                break;
+            case actions.showIngredients:
+                routeUpdate(router, { view: views.ingredients });
+                break;
+            case actions.showInstructions:
+                routeUpdate(router, { view: views.instructions });
                 break;
             default:
                 console.error('unknown action', { action });
@@ -79,6 +118,7 @@ export function useRecipes(defaultState) {
         loading: (isLoadingPlan || isLoadingRecipes),
         query: router.query.query,
         date: router.query.date,
+        selected,
         plan: plan || [],
         recipes,
         title,
@@ -116,6 +156,8 @@ const getVisibility = (view, plan) => {
     const showView = {
         [views.search]: false,
         [views.view]: false,
+        [views.instructions]: false,
+        [views.ingredients]: false,
         showPlanDay: false
     }
 

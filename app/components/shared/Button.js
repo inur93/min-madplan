@@ -42,6 +42,6 @@ export const ButtonSave = function ({ children, ...otherProps }) {
     return <ButtonAction {...otherProps} icon="save" />;
 }
 
-export const ButtonSuccess = function ({ onClick }) {
-    return <Button positive icon='checkmark' onClick={onClick} />
+export const ButtonSuccess = function ({ onClick, ...otherProps }) {
+    return <Button {...otherProps} positive icon='checkmark' onClick={onClick} />
 }

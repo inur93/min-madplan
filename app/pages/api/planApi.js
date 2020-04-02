@@ -1,7 +1,7 @@
 import { getApi } from './api';
 import { addDays, formatDateForQuery } from '../../functions/dateFunctions';
 
-const getPath = (path, query) => `/food-plans/${path || ''}?${query || ''}`;
+const getPath = (path, query) => `/food-plans/${path || ''}${query ? '?' : ''}${query || ''}`;
 
 export const GetPlanApi = (ctx) => {
     const api = getApi(ctx);

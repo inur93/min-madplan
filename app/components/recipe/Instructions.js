@@ -1,7 +1,9 @@
 import Markdown from 'react-markdown';
 
-export const Instructions = function({ source }) {
+export const Instructions = function({loading, recipe }) {
+
+    if(loading || !recipe) return null;
     return (
-        <Markdown source={source} />
+        <Markdown source={recipe.instructions} />
     )
 }

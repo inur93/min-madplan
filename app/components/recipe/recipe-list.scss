@@ -1,0 +1,27 @@
+@import '../../styles/variables.scss';
+div.item.recipe-list-item .content {
+    display: flex;
+    flex-flow: row;
+    align-items: stretch;
+
+    font-size: 18px;
+    .header {
+        flex: auto 1 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-right: 0.5rem;
+    }
+
+    .icon {
+        flex: auto 0 1;
+        padding: unset;
+        margin: auto 0;
+        padding-left: 0.5rem;
+
+        &.check {
+            color: $color-positive;
+        }
+        
+    }
+}

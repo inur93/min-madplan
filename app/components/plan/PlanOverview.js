@@ -19,11 +19,12 @@ const ListItem = function ({ date, recipe, onClick }) {
 
 export function PlanView({ plan, onClick }) {
 
+    console.log('plan', plan);
     const { _id, validFrom, length, durationType } = plan;
     if (!validFrom) return <p>empty...</p>;
     let days = new Array(getPlanLength(length, durationType)).fill(null);
     let baseDate = new Date(validFrom);
-    const handleClick = (date) => () => onClick(_id, date);
+    const handleClick = (date) => () => onClick({ id: _id, date });
     return (<List>
         {days.map((val, i) => {
             const date = addDays(baseDate, i);

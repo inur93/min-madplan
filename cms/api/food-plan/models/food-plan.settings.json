@@ -33,7 +33,7 @@
       "repeatable": true,
       "component": "links.recipe-link"
     },
-    "title": {
+    "name": {
       "type": "string",
       "required": true
     },

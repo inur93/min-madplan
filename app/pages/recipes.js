@@ -1,52 +1,39 @@
 import Layout, { Actions, Content } from '../components/layout/Layout';
-import { List } from '../components/shared/List';
 import { SearchInput } from '../components/shared/Input';
-import { formatDay } from "../functions/dateFunctions";
-import { Message, Icon, List as ListSUI } from 'semantic-ui-react';
 import { useRecipes } from '../hooks/useRecipes';
 import { auth } from './api';
-
-function PlanDate({ plan, date }) {
-    const selected = plan.find(x => x.date === date);
-    return <Message info
-        header={formatDay(new Date(date))}
-        content={selected ? selected.recipe.title : 'Vælg en opskrift...'} />
-}
-
-
-function RecipeListItem({ id, title, onClick }) {
-    return (<ListSUI.Item onClick={() => onClick(id)}>
-            <ListSUI.Content>
-                <ListSUI.Header>{title}</ListSUI.Header>
-                <Icon name='list ol' />
-                <Icon name='check circle outline' />
-            </ListSUI.Content>
-        </ListSUI.Item>)
-}
+import { PlanDate } from '../components/recipe/PlanDate';
+import { RecipeList } from '../components/recipe/RecipeList';
+import { Instructions } from '../components/recipe/Instructions';
+import { Button, ButtonSuccess } from '../components/shared/Button';
+import { Ingredients } from '../components/recipe/Ingredients';
+import { RecipeDetails } from '../components/recipe/RecipeDetails';
 
 const Page = (props) => {
 
     const [state, handlers, actions] = useRecipes(props);
 
 
-    const { query, date, plan, recipes, selected, visibility } = state;
+    const { loading, query, date, plan, recipes, selected, visibility } = state;
     const { setQuery, onClick } = handlers;
 
     return (
         <Layout title="Opskrifter">
+            {visibility.showPlanDay && <PlanDate loading={loading} plan={plan.plan} date={date} />}
             <Content>
-                {visibility.showPlanDay && <PlanDate plan={plan.plan} date={date} />}
-                {visibility.view && <Instructions source={selected.instructions} />}
-                {visibility.search &&
-                    <List selection verticalAlign='middle'>
-                        {recipes.map(recipe => <RecipeListItem key={recipe._id}
-                            id={recipe._id}
-                            title={recipe.title}
-                            onClick={onClick(actions.select)} />)}
-                    </List>}
+                {visibility.instructions && <Instructions loading={loading} recipe={selected} />}
+                {visibility.ingredients && <Ingredients loading={loading} recipe={selected} />}
+                {visibility.view && <RecipeDetails loading={loading} recipe={selected} />}
+                {visibility.search && <RecipeList recipes={recipes}
+                    onClick={onClick(actions.select)}
+                    onShowDetails={onClick(actions.showDetails)} />}
             </Content>
             <Actions>
-                <SearchInput value={query} onChange={setQuery} placeholder="Søg efter opskrift..." />
+                {visibility.search && <SearchInput value={query} onChange={setQuery} placeholder="Søg efter opskrift..." />}
+                {!visibility.search && <Button icon='info' onClick={onClick(actions.showDetails)} />}
+                {!visibility.search && <Button icon='clipboard list' onClick={onClick(actions.showIngredients)} />}
+                {!visibility.search && <Button icon='numbered list' onClick={onClick(actions.showInstructions)} />}
+                {(!visibility.search && plan) && <ButtonSuccess onClick={onClick(actions.select)} />}
             </Actions>
         </Layout>
     )

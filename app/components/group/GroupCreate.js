@@ -25,6 +25,7 @@ export function GroupCreate(firstTime) {
 
             <Input value={email}
                 type="email"
+                name='email'
                 onChange={e => setEmail(e.target.value)}
                 placeholder="Tilføj mail på en du vil dele med"
                 labelPosition='right'
