@@ -30,6 +30,7 @@ export function useShoppingList() {
 
     const router = useRouter();
 
+    const [editSelected, setEditSelected] = useState(false);
     const [show, setShow] = useState({});
     const [unitOptions, setUnitOptions] = useState([]);
     const [history, setHistory] = useState([]);
@@ -64,12 +65,14 @@ export function useShoppingList() {
     //selected shopping list
     useEffect(() => {
         const load = async () => {
-            if (router.query.id) {
-                setLoadingSelected(true);
-                const list = await api.getShoppingList(router.query.id);
-                setSelected(list);
-                setLoadingSelected(false);
-            }
+            const id = router.query.id;
+            setLoadingSelected(true);
+            const list = await (id
+                ? api.getShoppingList(id)
+                : api.latestShoppingList());
+            console.log('list', list);
+            setSelected(list);
+            setLoadingSelected(false);
         }
         load();
     }, [router.query.id]);
@@ -82,26 +85,34 @@ export function useShoppingList() {
     }
 
     const updateItemList = async (id, list) => {
-        const { data } = await api.updateShoppingList(id, {
+        const data = await api.updateShoppingList(id, {
             items: list
         });
-        setShoppinglist(data);
+        if (data) {
+            setSelected(data);
+        } else {
+            setSelected({ ...selected, list });
+        }
+        return true;
     }
-    // const onSelect = async ({ _id, ...value }) => await updateItemList([...items, value]);
+    // const onSelect = async ({ _id, ...value }) => 
 
 
     const onClick = (action) => async (data) => {
 
         switch (action) {
+            case actions.selectItem:
+                await updateItemList(selected._id, [...selected.items, { name: data.name }]);
+                break;
             case actions.updateItems:
-                await updateItemList(router.query.id, data.list);
+                await updateItemList(selected._id, data.items);
                 break;
             case actions.editItem:
                 setSelectedItem(items.find(x => x._id === data.id));
                 break;
             case actions.deleteItem:
                 const { items } = selected;
-                updateItemList(router.query.id, items.filter(x => x._id != _id));
+                updateItemList(selected._id, items.filter(x => x._id != _id));
                 break;
             case actions.showCreate:
                 break;
@@ -119,20 +130,24 @@ export function useShoppingList() {
                 break;
         }
 
+        return true;
     }
 
     const state = {
         loadingHistory,
         loadingSelected,
+        selected,
         history,
         views,
-        isEmpty: !history || history.length <= 0,
-        show
+        isEmpty: (!history || history.length <= 0) && !selected,
+        show,
+        editSelected
     }
 
     const handlers = {
         getSuggestions,
-        onClick
+        onClick,
+        setEditSelected
     }
 
     return [state, handlers, actions];

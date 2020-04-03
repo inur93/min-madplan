@@ -1,0 +1,14 @@
+.item.shopping-list-view-item {
+    .content {
+        display: flex;
+        flex-flow: row;
+
+        .checkbox {
+            flex: auto 0 1;
+            margin-right: 1rem;
+        }
+        .header {
+            flex: auto 1 0;
+        }
+    }
+}

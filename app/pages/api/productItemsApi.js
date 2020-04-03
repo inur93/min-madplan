@@ -8,7 +8,7 @@ export const GetProductItemsApi = (ctx) => {
 
     return {
         async find(query) {
-            return await api.get(getPath('', `name_contains=${query}`));
+            return await api.get(getPath('', `name_contains=${query}&_limit=10`));
         },
     }
 }

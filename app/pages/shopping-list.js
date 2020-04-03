@@ -18,20 +18,21 @@ const Page = () => {
 
   const [state, handlers, actions] = useShoppingList();
 
-  const { history, selected, selectedItem, unitOptions, show, isEmpty } = state;
-  const { onClick, getSuggestions } = handlers;
+  const { history, selected, selectedItem,
+    editSelected, unitOptions, show, isEmpty } = state;
+  const { onClick, getSuggestions, setEditSelected } = handlers;
 
   console.log('show', show);
 
   return (
     <Layout showBackBtn={true} title='Indkøbsliste'>
-      {(show.view && selected) && <ProductItemAutoComplete getSuggestions={getSuggestions}
+      {(editSelected) && <ProductItemAutoComplete getSuggestions={getSuggestions}
         onSelect={onClick(actions.selectItem)}
         placeholder="Hvad skal du handle?" />}
       <Content>
         {isEmpty && <MessageEmptyHistory />}
 
-        {show.view && <ShoppingListView list={selected} />}
+        {show.view && <ShoppingListView editMode={editSelected} list={selected} onClick={onClick(actions.updateItems)} />}
         {show.history && <ShoppingListOverview lists={history} onClick={onClick(actions.showView)} />}
         {show.create && <ShoppingListCreate onSave={onClick(actions.createList)} />}
         {selectedItem && <ShoppingItemEdit item={selectedItem}
@@ -42,6 +43,7 @@ const Page = () => {
       </Content>
       <Actions>
         <Button icon='history' onClick={onClick(actions.showHistory)} />
+        <Button icon='edit' onClick={() => setEditSelected(!editSelected)} />
         <Button icon='add' onClick={onClick(actions.showCreate)} />
       </Actions>
     </Layout >
