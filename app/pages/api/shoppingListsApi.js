@@ -10,7 +10,9 @@ export const GetShoppingListApi = (ctx) => {
         async myShoppingLists() {
             return await (await api.get(getPath())).data;
         },
-
+        async latestShoppingList() {
+            
+        },
         async createShoppingList(shoppingList) {
             return await (await api.post(getPath(), shoppingList)).data;
         },

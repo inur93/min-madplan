@@ -1,4 +1,4 @@
-import { List, ListItem } from '../shared/List';
+import { List } from '../shared/List';
 import { formatDate } from '../../functions/dateFunctions'
 import { List as ListSUI } from 'semantic-ui-react';
 

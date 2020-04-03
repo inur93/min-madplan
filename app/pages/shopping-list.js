@@ -7,6 +7,7 @@ import { ShoppingListOverview } from '../components/shoppingList/ShoppingListOve
 import { ProductItemAutoComplete } from '../components/shared/Input';
 import { ShoppingListCreate } from '../components/shoppingList/ShoppingListCreate';
 import { Icon } from 'semantic-ui-react';
+import { ShoppingListView } from '../components/shoppingList/ShoppingListView';
 
 function MessageEmptyHistory() {
   return <p>Du har ikke noget indkøbsliste endnu.
@@ -30,6 +31,7 @@ const Page = () => {
       <Content>
         {isEmpty && <MessageEmptyHistory />}
 
+        {show.view && <ShoppingListView list={selected} />}
         {show.history && <ShoppingListOverview lists={history} onClick={onClick(actions.showView)} />}
         {show.create && <ShoppingListCreate onSave={onClick(actions.createList)} />}
         {selectedItem && <ShoppingItemEdit item={selectedItem}

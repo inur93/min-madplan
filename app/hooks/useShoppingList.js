@@ -49,7 +49,6 @@ export function useShoppingList() {
         const load = async () => {
             setLoadingHistory(true);
             const data = await api.myShoppingLists();
-            console.log('history', {data});
             setHistory(data);
             setLoadingHistory(false);
         }
