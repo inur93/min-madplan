@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
-import { Header, Modal } from 'semantic-ui-react';
-import { Button } from './Button';
-import { Form } from './Form';
-import { Input, ActionDropdown } from './Input';
+import { Header, Modal, Button } from 'semantic-ui-react';
+import { Form } from '../shared/Form';
+import { ActionDropdown } from '../shared/Input';
+import { useUnitOptions } from '../../hooks/useUnitOptions';
 
-export function ShoppingItemEdit({ item, unitOptions, onComplete }) {
+export function ShoppingItemEdit({ item, onSave, onCancel }) {
     const { name } = item;
     const [amount, setAmount] = useState(item.amount);
     const [unit, setUnit] = useState(item.unit);
-    const handleAction = type => () => onComplete(type, { amount, unit });
+    const [unitOptions] = useUnitOptions();
+    const handleSave = () => {
+        onSave({
+            item: {
+                ...item,
+                amount: amount,
+                unit
+            }
+        });
+    }
     const handleChange = ({ input, action }) => {
         setAmount(input);
         setUnit(action);
@@ -26,8 +35,8 @@ export function ShoppingItemEdit({ item, unitOptions, onComplete }) {
             </Form>
         </Modal.Content>
         <Modal.Actions>
-            <Button negative icon="cancel" onClick={handleAction('cancel')} />
-            <Button positive icon='checkmark' onClick={handleAction('save')} />
+            <Button negative icon="cancel" onClick={onCancel} />
+            <Button positive icon='checkmark' onClick={handleSave} />
         </Modal.Actions>
     </Modal>);
 } 

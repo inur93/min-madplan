@@ -1,6 +1,7 @@
 import './recipe-list.scss';
 import { Message, Icon, List as ListSUI } from 'semantic-ui-react';
 import { List } from '../shared/List';
+import { IconInfoCircle } from '../shared/Icon';
 
 function RecipeListItem({ id, title, onClick, onShowDetails }) {
     const onSelect = () => onClick({id});
@@ -8,7 +9,7 @@ function RecipeListItem({ id, title, onClick, onShowDetails }) {
     return (<ListSUI.Item className='recipe-list-item'>
         <ListSUI.Content>
             <ListSUI.Header onClick={onSelect}>{title}</ListSUI.Header>
-            <Icon name='ordered list' onClick={showDetails} />
+            <Icon color='blue' name='info circle' onClick={showDetails} />
             <Icon name='check circle outline' onClick={onSelect} />
         </ListSUI.Content>
     </ListSUI.Item>)

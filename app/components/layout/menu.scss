@@ -1,7 +1,7 @@
 @import "../../styles/variables.scss";
 
 .ui.wide.left.sidebar {
-  width: 60vw;
+  width: 70vw;
 }
 .ui.sidebar {
   overflow: visible !important;
@@ -12,12 +12,18 @@
   border-bottom: 1px solid $border-color;
 
   .mmp-profile-image {
+    flex: auto 0 1;
     margin: auto 1rem;
+    // width: 28px;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
   }
 
   .mmp-info {
+    flex: auto 1 0;
     text-align: left;
     margin-bottom: 1rem;
+    text-overflow: ellipsis;
   }
   h3 {
     margin-top: 1rem;
@@ -25,7 +31,12 @@
   }
 }
 .mmp-sidebar .mmp-btn-close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
+  flex: auto 0 1;
+  margin: auto 0;
+  margin-left: 1rem;
+  margin-right: 1rem;
+
+  // position: absolute;
+  // top: 1rem;
+  // right: 1rem;
 }

@@ -98,7 +98,7 @@ export function useRecipes(defaultState) {
                     query: {
                         ...router.query,
                         view: views.view,
-                        id
+                        id: data.id || router.query.id
                     }
                 });
                 break;

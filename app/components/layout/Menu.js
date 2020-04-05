@@ -1,4 +1,4 @@
-import { Menu as MenuSUI, Sidebar, Segment, Image, Dropdown, Icon } from 'semantic-ui-react';
+import { Menu as MenuSUI, Sidebar, Segment, Image, Dropdown, Icon, Label } from 'semantic-ui-react';
 import { useRouter } from 'next/router';
 import './menu.scss';
 import { absUrl } from '../../functions/imageFunctions';
@@ -57,7 +57,8 @@ const Menu = function ({ visible, onHide }) {
         <MenuSUI.Item>
             Profil
         </MenuSUI.Item>
-        <MenuSUI.Item>
+        <MenuSUI.Item onClick={goto('/groups')}>
+            <Label>1</Label>
             Grupper
             <MenuSUI.Menu>
                 <Dropdown item text={getSelectedGroupName(groups, selectedGroup)}>

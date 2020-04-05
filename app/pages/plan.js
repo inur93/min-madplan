@@ -41,7 +41,11 @@ function Page(props) {
             {(noCurrentPlan && !isFirstTime) && <NoCurrentPlanMessage loading={loading} />}
 
             {visibility.create && <PlanCreate loading={loading} onCreate={onClick(actions.createPlan)} />}
-            {visibility.view && currentPlan && <PlanView plan={currentPlan} onClick={onClick(actions.editPlanDay)} />}
+            {visibility.view && currentPlan && <PlanView
+                plan={currentPlan}
+                onClick={onClick(actions.editPlanDay)}
+                onRemove={onClick(actions.removePlanDay)}
+                onInfo={onClick(actions.showRecipeInfo)} />}
             {visibility.history && <PlanHistoryList list={planHistory} onClick={onClick(actions.showPlan)} />}
         </Content>
         <Actions>

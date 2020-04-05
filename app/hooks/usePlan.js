@@ -4,13 +4,18 @@ import { useState, useEffect } from "react";
 import { routeUpdate } from "../functions/routerFunctions";
 import { useData } from "./useData";
 import useSWR from "swr";
+import { splice } from "../functions/arrayFunctions";
+import { formatDateForQuery } from "../functions/dateFunctions";
+import { format } from "date-fns";
 
 const actions = {
     createShoppingList: 'create-shopping-list',
     openCurrentShoppingList: 'open-current-shoppinglist',
     editPlanDay: 'edit-list-item',
+    removePlanDay: 'remove-list-item',
     createPlan: 'create-plan',
 
+    showRecipeInfo: 'show-recipe-info',
     showCreate: 'view-create',
     showHistory: 'history',
     showPlan: 'navigate-plan'
@@ -31,19 +36,16 @@ export function usePlan(defaultState) {
     const router = useRouter();
 
     //loading
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const [loadingCurrent, setLoadingCurrent] = useState(false);
 
     //data
     const [title, setTitle] = useState("");
     const [currentPlan, setCurrentPlan] = useState(null);
-    //const [planHistory, setPlanHistory] = useState([]);
     const history = useSWR('history', () => api.find());
     const [visibility, setVisibility] = useState(getVisibility(defaultState.view));
 
     //props
-    // const [view, setView] = useState(defaultState.view || views.view);
-    // const [planId, setPlanId] = useState(defaultState.planId);
-
     const [noCurrentPlan, setNoCurrentPlan] = useState(false);
     const [isFirstTime, setFirstTime] = useState(defaultState.firstTime);
     const [disableOpenCurrent, setDisableOpenCurrent] = useState(true);
@@ -75,24 +77,42 @@ export function usePlan(defaultState) {
                 const shoppingList = await api.createShoppingList(currentPlan._id);
                 shoppingListId = shoppingList._id;
             case actions.openCurrentShoppingList:
-                router.push(getRoute(`/shopping-list/${shoppingListId || currentPlan.shopping_list}`));
+                router.push(getRoute(`/shopping-list?id=${shoppingListId || currentPlan.shopping_list}`));
                 break;
             case actions.editPlanDay:
-                const { id, date } = data;
-                router.push(getRoute(`/recipes?plan=${id}&date=${date}`));
+                {
+                    const { id, date } = data;
+                    router.push(getRoute(`/recipes?plan=${id}&date=${date}`));
+                    break;
+                }
+            case actions.removePlanDay:
+                setLoadingCurrent(true);
+                const updated = splice(currentPlan.plan, x => x.date === formatDateForQuery(data.date));
+                const plan = await api.update(currentPlan._id, {
+                    plan: updated
+                });
+                setCurrentPlan(plan);
+                setLoadingCurrent(false);
+                break;
+            case actions.showInfo:
+            case actions.showRecipeInfo:
+                {
+                    const { recipe, date } = data;
+                    router.push(getRoute(`/recipes?view=view&plan=${currentPlan._id}&id=${recipe}&date=${formatDateForQuery(date)}`));
+                }
                 break;
             case actions.createPlan:
                 const { name, validFrom } = data;
                 setLoading(true);
-                const plan = await api.create({
+                const createdPlan = await api.create({
                     name,
                     validFrom,
                     durationType: 'days',
                     length: 7
                 });
-                setCurrentPlan(plan);
+                routeUpdate(router, { view: views.view, id: createdPlan._id });
                 setLoading(false);
-                routeUpdate(router, { view: views.view });
+
                 break;
             case actions.showCreate:
                 routeUpdate(router, { view: views.create });
@@ -100,7 +120,7 @@ export function usePlan(defaultState) {
             case actions.showPlan:
                 routeUpdate(router, {
                     view: views.view,
-                    id
+                    id: data.id || router.query.id
                 })
                 break;
             case actions.showHistory:

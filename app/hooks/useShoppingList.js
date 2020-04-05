@@ -2,6 +2,7 @@ import { GetShoppingListApi, GetUnitsApi, GetProductItemsApi } from "../pages/ap
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { routeUpdate } from "../functions/routerFunctions";
+import { splice } from "../functions/arrayFunctions";
 
 const actions = {
     updateItems: 'updateItems',
@@ -108,7 +109,13 @@ export function useShoppingList() {
                 await updateItemList(selected._id, data.items);
                 break;
             case actions.editItem:
-                setSelectedItem(items.find(x => x._id === data.id));
+                setSelectedItem(selected.items.find(x => x._id === data.id));
+                break;
+            case actions.updateItem:
+                const updatedList = splice(selected.items, x => x._id === data.item._id);
+                updatedList.push(data.item);
+                await updateItemList(selected._id, updatedList);
+                setSelectedItem(null);
                 break;
             case actions.deleteItem:
                 const { items } = selected;
@@ -126,7 +133,7 @@ export function useShoppingList() {
                 routeUpdate(router, { view: views.history });
                 break;
             default:
-                console.error('unknown action', action);
+                console.error('unknown action', { action, data });
                 break;
         }
 
@@ -141,13 +148,15 @@ export function useShoppingList() {
         views,
         isEmpty: (!history || history.length <= 0) && !selected,
         show,
-        editSelected
+        editSelected,
+        selectedItem
     }
 
     const handlers = {
         getSuggestions,
         onClick,
-        setEditSelected
+        setEditSelected,
+        setSelectedItem
     }
 
     return [state, handlers, actions];

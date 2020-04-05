@@ -8,6 +8,7 @@ import { ProductItemAutoComplete } from '../components/shared/Input';
 import { ShoppingListCreate } from '../components/shoppingList/ShoppingListCreate';
 import { Icon } from 'semantic-ui-react';
 import { ShoppingListView } from '../components/shoppingList/ShoppingListView';
+import { ShoppingItemEdit } from '../components/shoppingList/ShoppingItemEdit';
 
 function MessageEmptyHistory() {
   return <p>Du har ikke noget indkøbsliste endnu.
@@ -20,24 +21,28 @@ const Page = () => {
 
   const { history, selected, selectedItem,
     editSelected, unitOptions, show, isEmpty } = state;
-  const { onClick, getSuggestions, setEditSelected } = handlers;
+  const { onClick, getSuggestions, setEditSelected, setSelectedItem } = handlers;
 
   console.log('show', show);
 
   return (
     <Layout showBackBtn={true} title='Indkøbsliste'>
-      {(editSelected) && <ProductItemAutoComplete getSuggestions={getSuggestions}
+      {(show.view && editSelected) && <ProductItemAutoComplete getSuggestions={getSuggestions}
         onSelect={onClick(actions.selectItem)}
         placeholder="Hvad skal du handle?" />}
       <Content>
         {isEmpty && <MessageEmptyHistory />}
 
-        {show.view && <ShoppingListView editMode={editSelected} list={selected} onClick={onClick(actions.updateItems)} />}
+        {show.view && <ShoppingListView editMode={editSelected}
+          list={selected}
+          onClick={onClick(actions.updateItems)}
+          onEdit={onClick(actions.editItem)} />}
         {show.history && <ShoppingListOverview lists={history} onClick={onClick(actions.showView)} />}
         {show.create && <ShoppingListCreate onSave={onClick(actions.createList)} />}
         {selectedItem && <ShoppingItemEdit item={selectedItem}
           unitOptions={unitOptions}
-          onComplete={onClick(actions.updateItem)} />}
+          onSave={onClick(actions.updateItem)}
+          onCancel={() => setSelectedItem(null)} />}
 
 
       </Content>
