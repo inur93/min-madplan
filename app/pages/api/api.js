@@ -14,7 +14,6 @@ function parseJwt(token) {
 const validateCookie = (token) => {
     try {
         const parsed = parseJwt(token);
-        console.log('parsed token', parsed);
         return true;
     } catch (e) {
         console.log('error in cookie', e);
@@ -47,7 +46,6 @@ export const getApi = (ctx) => axios.create({
     baseURL: getBaseUrl(),
     transformRequest: [function (data, headers) {
         const jwt = getCookie(ctx);
-        console.log("jwt", jwt);
         if (jwt) {
             headers.common['Authorization'] = `Bearer ${jwt}`;
             //headers.common['cookie'] = 

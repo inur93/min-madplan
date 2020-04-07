@@ -71,7 +71,6 @@ export function useShoppingList() {
             const list = await (id
                 ? api.getShoppingList(id)
                 : api.latestShoppingList());
-            console.log('list', list);
             setSelected(list);
             setLoadingSelected(false);
         }

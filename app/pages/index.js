@@ -43,7 +43,6 @@ IndexPage.getInitialProps = async function (ctx) {
     GetPageSettingsApi(ctx).frontPage()
   ]);
 
-  console.log('frontpage', { frontPage });
   return {
     self,
     ...frontPage,

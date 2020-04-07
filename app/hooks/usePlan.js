@@ -181,6 +181,5 @@ function getVisibility(view) {
 
     showViews[view] = true;
 
-    console.log('calculate visibility', { view, showViews });
     return showViews;
 }

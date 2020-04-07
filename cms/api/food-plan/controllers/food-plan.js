@@ -51,7 +51,6 @@ module.exports = {
         const rawList = plan.map(p => p.recipe && p.recipe.ingredients);
         let ingredients = [].concat(...rawList);
 
-        console.log('ingredients', ingredients);
         const itemsGrouped = groupBy(ingredients.map(i => ({
             name: i.name,
             unit: i.unit,

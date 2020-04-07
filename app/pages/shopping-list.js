@@ -23,8 +23,6 @@ const Page = () => {
     editSelected, unitOptions, show, isEmpty } = state;
   const { onClick, getSuggestions, setEditSelected, setSelectedItem } = handlers;
 
-  console.log('show', show);
-
   return (
     <Layout showBackBtn={true} title='Indkøbsliste'>
       {(show.view && editSelected) && <ProductItemAutoComplete getSuggestions={getSuggestions}

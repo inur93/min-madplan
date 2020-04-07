@@ -51,7 +51,6 @@ export function ShoppingListView({ editMode, list, onClick, onEdit }) {
         }
         return 0;
     });
-    console.log('items list sorted->', items);
     return (<List>
         {items.map(item => <ListElement key={item._id}
             editMode={editMode}

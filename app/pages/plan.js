@@ -34,7 +34,6 @@ function Page(props) {
 
     const { shopping_list } = currentPlan || {};
 
-    console.log('planhistory', planHistory);
     return (<Layout title={title}>
         <Content>
             {isFirstTime && <FirstTimeMessage hasCurrentPlan={!noCurrentPlan} loading={loading} />}

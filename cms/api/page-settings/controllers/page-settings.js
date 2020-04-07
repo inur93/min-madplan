@@ -12,7 +12,7 @@ module.exports = {
 
     async find(ctx){
         const entities = await strapi.query(MODEL_ID).model.find({});
-        console.log('entities', entities);
+    
         const entity = entities.length > 0 ? entities[0] : null;
         return sanitizeEntity(entity, { model: strapi.models[MODEL_ID] });
     }

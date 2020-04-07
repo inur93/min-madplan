@@ -64,7 +64,6 @@ export function useRecipes(defaultState) {
         const { date, plan } = router.query;
         const loadPlan = async () => {
             setLoadingPlan(true);
-            console.log('what???', planApi);
             const result = await planApi.findOne(plan);
             setPlan(result);
             setLoadingPlan(false);
