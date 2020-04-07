@@ -8,6 +8,7 @@ import { GetRecipesApi } from "./recipeApi";
 import { GetShoppingListApi } from "./shoppingListsApi";
 import { GetUnitsApi } from "./unitsApi";
 import { GetUsersApi } from "./usersApi";
+import { GetGroupInvitesApi } from "./groupInvitesApi";
 
 export {
     auth,
@@ -21,5 +22,6 @@ export {
     GetRecipesApi,
     GetShoppingListApi,
     GetUnitsApi,
-    GetUsersApi
+    GetUsersApi,
+    GetGroupInvitesApi
 }

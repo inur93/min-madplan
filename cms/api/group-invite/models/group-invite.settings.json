@@ -21,8 +21,8 @@
         "declined"
       ]
     },
-    "food_plan": {
-      "model": "food-plan"
+    "group": {
+      "model": "group"
     },
     "from": {
       "plugin": "users-permissions",

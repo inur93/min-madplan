@@ -6,7 +6,7 @@ import { useState } from 'react';
 import Menu from './Menu';
 
 export default function Layout({ children, showBackBtn, title, simple, actions }) {
-    const [showMenu, setShowMenu] = useState(true);
+    const [showMenu, setShowMenu] = useState(false);
     return (<div>
         <Loading />
         <Sidebar.Pushable as={Segment}>

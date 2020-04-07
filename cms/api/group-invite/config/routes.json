@@ -47,6 +47,22 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "PUT",
+      "path": "/group-invites/:id/accept",
+      "handler": "group-invite.accept",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/group-invites/:id/decline",
+      "handler": "group-invite.decline",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }

@@ -100,7 +100,7 @@ export function useShoppingList() {
 
 
     const onClick = (action) => async (data) => {
-
+        console.log('shopping list action', {action, data});
         switch (action) {
             case actions.selectItem:
                 await updateItemList(selected._id, [...selected.items, { name: data.name }]);

@@ -29,7 +29,7 @@ export function GroupCreate(firstTime) {
                 onChange={e => setEmail(e.target.value)}
                 placeholder="Tilføj mail på en du vil dele med"
                 labelPosition='right'
-                label={<Button onClick={e => onClick(actions.addEmail)({e})} >Tilføj</Button>} />
+                label={<Button onClick={e => onClick(actions.addEmail)({ e })} >Tilføj</Button>} />
 
             <h3>Inviterede medlemmer</h3>
             {sharedWith.length == 0 && <p>Du har endnu ikke inviteret nogen med i gruppen</p>}

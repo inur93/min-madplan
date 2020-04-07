@@ -1,0 +1,16 @@
+
+.list div.invite-list-item.item {
+ 
+    display: flex;
+    flex-flow: row;
+
+    .invite-headers {
+        flex: auto 1 0;
+    }
+
+    .invite-actions {
+        flex: auto 0 1;
+        font-size: 20px;
+        margin: auto 0;
+    }
+}

@@ -5,6 +5,9 @@ module.exports = {
     getUserId(ctx) {
         return ObjectId(ctx.state.user.id);
     },
+    getUserEmail(ctx) {
+        return ctx.state.user.email;
+    },
     getCurrentGroup(ctx) {
         return ctx.state.user.selectedGroup && ObjectId(ctx.state.user.selectedGroup);
     },
@@ -32,7 +35,7 @@ module.exports = {
             return total + num;
         }, 0);
     },
-    getUserService(strapi){
+    getUserService(strapi) {
         return strapi.plugins['users-permissions'].controllers['user'];
     }
 }

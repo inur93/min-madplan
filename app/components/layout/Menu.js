@@ -6,6 +6,7 @@ import { ButtonClose } from '../shared/Button';
 import { useSelf } from '../../hooks/useSelf';
 import { useData } from '../../hooks/useData';
 import { GetGroupsApi, GetUsersApi, logout } from '../../pages/api';
+import { useInvitesCount } from '../../hooks/useInvitesCount';
 
 const fullname = (firstname, lastname) => `${firstname || ""} ${lastname || ""}`;
 const getSelectedGroupName = (groups, current) => {
@@ -15,6 +16,7 @@ const getSelectedGroupName = (groups, current) => {
 }
 const Menu = function ({ visible, onHide }) {
     const router = useRouter();
+    const invitesCount = useInvitesCount();
     const [self, revalidate] = useSelf();
     const { firstname, lastname, selectedGroup, _id } = self || {};
     const groups = useData('groups', GetGroupsApi().find) || [];
@@ -57,23 +59,25 @@ const Menu = function ({ visible, onHide }) {
         <MenuSUI.Item>
             Profil
         </MenuSUI.Item>
-        <MenuSUI.Item onClick={goto('/groups')}>
-            <Label>1</Label>
+        <MenuSUI.Item >
+
             Grupper
-            <MenuSUI.Menu>
-                <Dropdown item text={getSelectedGroupName(groups, selectedGroup)}>
-                    <Dropdown.Menu>
-                        {groups.map(group =>
-                            <Dropdown.Item key={group._id} onClick={selectGroup(group._id)}>
-                                {group.name}
-                            </Dropdown.Item>)}
-                    </Dropdown.Menu>
-                </Dropdown>
-                <MenuSUI.Item onClick={goto('/groups/create')} >
-                    Opret gruppe
+            <MenuSUI.Item onClick={goto('/groups?view=invites')}>
+                Invitationer
+                <Label>{invitesCount.data}</Label>
+            </MenuSUI.Item>
+            <Dropdown item text={getSelectedGroupName(groups, selectedGroup)}>
+                <Dropdown.Menu>
+                    {groups.map(group =>
+                        <Dropdown.Item key={group._id} onClick={selectGroup(group._id)}>
+                            {group.name}
+                        </Dropdown.Item>)}
+                </Dropdown.Menu>
+            </Dropdown>
+            <MenuSUI.Item onClick={goto('/groups/create')} >
+                Opret gruppe
                     <Icon name="add" />
-                </MenuSUI.Item>
-            </MenuSUI.Menu>
+            </MenuSUI.Item>
         </MenuSUI.Item>
         <MenuSUI.Item name='Log ud' onClick={logout} />
     </Sidebar>);

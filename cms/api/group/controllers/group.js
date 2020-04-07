@@ -29,11 +29,12 @@ module.exports = {
         data.users = [userId];
         const entity = await strapi.services[MODEL_ID].create(data);
         let promises = [];
-        for (let i = 0; i < entity.groupInvites.length; i++) {
+        for (let i = 0; i < data.groupInvites.length; i++) {
             let invite = {
                 status: 'sent',
-                foodPlan: entity._id,
-                email: data.groupInvites[i].email
+                group: entity._id,
+                email: data.groupInvites[i].email,
+                from: userId
             }
             let p = strapi.services[MODEL_ID_INVITE].create(invite);
             promises.push(p);
