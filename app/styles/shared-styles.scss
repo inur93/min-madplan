@@ -1,0 +1,33 @@
+body {
+    overflow: hidden;
+}
+div.ui.list div.item {
+    display: flex;
+    flex-flow: row;
+    align-items: stretch;
+    margin-bottom: 0.5rem;
+    min-width: 0;
+
+    .content:first-child {
+        flex: auto 1 1;
+        margin-right: 0.5rem;
+        font-size: 1rem;
+
+        overflow: hidden;
+        > * {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+    .content:last-child {
+        flex: auto 0 1;
+        margin: auto 0;
+        white-space: nowrap;
+    }
+    .icon {
+        padding: unset;
+        margin-left: 0.75rem;
+        font-size: 1.25rem;
+    }
+}

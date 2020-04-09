@@ -5,7 +5,7 @@ import { auth } from './api';
 import { PlanDate } from '../components/recipe/PlanDate';
 import { RecipeList } from '../components/recipe/RecipeList';
 import { Instructions } from '../components/recipe/Instructions';
-import { Button, ButtonSuccess } from '../components/shared/Button';
+import { Button, ButtonSuccess, ButtonAction } from '../components/shared/Button';
 import { Ingredients } from '../components/recipe/Ingredients';
 import { RecipeDetails } from '../components/recipe/RecipeDetails';
 
@@ -14,26 +14,27 @@ const Page = (props) => {
     const [state, handlers, actions] = useRecipes(props);
 
 
-    const { loading, query, date, plan, recipes, selected, visibility } = state;
+    const { loading, query, date, plan, recipes, selected, show, showSelect } = state;
     const { setQuery, onClick } = handlers;
 
     return (
-        <Layout title="Opskrifter">
-            {visibility.showPlanDay && <PlanDate loading={loading} plan={plan.plan} date={date} />}
+        <Layout loading={loading} title="Opskrifter">
+            {show.planDay && <PlanDate loading={loading} plan={plan.plan} date={date} />}
+            {show.search && <SearchInput defaultValue={query} onChange={setQuery} placeholder="Søg efter opskrift..." />}
             <Content>
-                {visibility.instructions && <Instructions loading={loading} recipe={selected} />}
-                {visibility.ingredients && <Ingredients loading={loading} recipe={selected} />}
-                {visibility.view && <RecipeDetails loading={loading} recipe={selected} />}
-                {visibility.search && <RecipeList recipes={recipes}
+                {show.instructions && <Instructions loading={loading} recipe={selected} />}
+                {show.ingredients && <Ingredients loading={loading} recipe={selected} />}
+                {show.view && <RecipeDetails loading={loading} recipe={selected} />}
+                {show.search && <RecipeList recipes={recipes}
+                    showActions={show.planDay}
                     onClick={onClick(actions.select)}
                     onShowDetails={onClick(actions.showDetails)} />}
             </Content>
             <Actions>
-                {visibility.search && <SearchInput value={query} onChange={setQuery} placeholder="Søg efter opskrift..." />}
-                {!visibility.search && <Button icon='info' onClick={onClick(actions.showDetails)} />}
-                {!visibility.search && <Button icon='clipboard list' onClick={onClick(actions.showIngredients)} />}
-                {!visibility.search && <Button icon='numbered list' onClick={onClick(actions.showInstructions)} />}
-                {(!visibility.search && plan) && <ButtonSuccess onClick={onClick(actions.select)} />}
+                {!show.search && <ButtonAction view='view' icon='info' onClick={onClick(actions.showDetails)} />}
+                {!show.search && <ButtonAction view='ingredients'  icon='clipboard list' onClick={onClick(actions.showIngredients)} />}
+                {!show.search && <ButtonAction view='instructions' icon='numbered list' onClick={onClick(actions.showInstructions)} />}
+                {(showSelect) && <ButtonSuccess onClick={onClick(actions.select)} />}
             </Actions>
         </Layout>
     )

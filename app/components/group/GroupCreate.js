@@ -1,9 +1,9 @@
 import { Content, Actions } from "../../components/layout/Layout";
 import { Input } from "../../components/shared/Input";
 import { ButtonSuccess } from "../../components/shared/Button";
-import { List, ListItemDelete } from "../../components/shared/List";
+import { ListItemDelete } from "../../components/shared/List";
 import { useGroupCreate } from "../../hooks/useGroupCreate";
-import { Button } from "semantic-ui-react";
+import { Button, List } from "semantic-ui-react";
 
 export function GroupCreate(firstTime) {
     const [state, handlers, actions] = useGroupCreate(firstTime);

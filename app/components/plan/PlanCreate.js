@@ -16,6 +16,6 @@ export function PlanCreate({ onCreate, loading }) {
         <Input name="validFrom"
             required
             defaultValue={defaultDateValue} />
-        <ButtonSuccess disabled={loading} fluid type='submit' name='submit' icon='success' />
+        <ButtonSuccess disabled={loading} />
     </Form>
 }

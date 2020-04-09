@@ -2,7 +2,7 @@ import Layout, { Content, Actions } from "../components/layout/Layout";
 import { useEffect } from "react";
 import { Icon } from "semantic-ui-react";
 import { usePlan } from "../hooks/usePlan";
-import { Button } from "../components/shared/Button";
+import { Button, ButtonAction } from "../components/shared/Button";
 import { PlanView } from "../components/plan/PlanOverview";
 import { PlanHistoryList } from "../components/plan/PlanHistoryList";
 import { useRouter } from "next/router";
@@ -30,29 +30,28 @@ function Page(props) {
     const [state, onClick, actions] = usePlan(props);
 
     const { title, currentPlan, planHistory,
-        loading, isFirstTime, noCurrentPlan, visibility } = state;
+        loading, isFirstTime, noCurrentPlan, show } = state;
 
     const { shopping_list } = currentPlan || {};
 
-    return (<Layout title={title}>
+    return (<Layout loading={loading} title={title}>
         <Content>
             {isFirstTime && <FirstTimeMessage hasCurrentPlan={!noCurrentPlan} loading={loading} />}
             {(noCurrentPlan && !isFirstTime) && <NoCurrentPlanMessage loading={loading} />}
 
-            {visibility.create && <PlanCreate loading={loading} onCreate={onClick(actions.createPlan)} />}
-            {visibility.view && currentPlan && <PlanView
+            {show.create && <PlanCreate loading={loading} onCreate={onClick(actions.createPlan)} />}
+            {show.view && currentPlan && <PlanView
                 plan={currentPlan}
                 onClick={onClick(actions.editPlanDay)}
                 onRemove={onClick(actions.removePlanDay)}
                 onInfo={onClick(actions.showRecipeInfo)} />}
-            {visibility.history && <PlanHistoryList list={planHistory} onClick={onClick(actions.showPlan)} />}
+            {show.history && <PlanHistoryList list={planHistory} onClick={onClick(actions.showPlan)} />}
         </Content>
         <Actions>
-            <Button disabled={loading} icon='history' onClick={onClick(actions.showHistory)} />
-            {shopping_list ?
-                <Button disabled={loading} icon='shopping cart' onClick={onClick(actions.openCurrentShoppingList)} /> :
-                <Button disabled={loading} icon='add to cart' onClick={onClick(actions.createShoppingList)} />}
-            <Button disabled={loading} icon='calendar plus outline' onClick={onClick(actions.showCreate)} />
+            <ButtonAction view='history' disabled={loading} icon='history' onClick={onClick(actions.showHistory)} />
+            {(show.view && shopping_list) && <Button disabled={loading} icon='shopping cart' onClick={onClick(actions.openCurrentShoppingList)} />}
+            {(show.view && !shopping_list) && <Button disabled={loading} icon='add to cart' onClick={onClick(actions.createShoppingList)} />}
+            <ButtonAction view='create' disabled={loading} icon='calendar plus outline' onClick={onClick(actions.showCreate)} />
         </Actions>
     </Layout>)
 }

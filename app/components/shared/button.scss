@@ -1,0 +1,10 @@
+@import "../../styles/variables.scss";
+.mmp-actions-bottom {
+    button.button.primary.button-action {
+        &.active {
+            color: $color-primary;
+            background-color: white;
+            border: 1px solid;
+        }
+    }
+}

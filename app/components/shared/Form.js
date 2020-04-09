@@ -2,11 +2,11 @@ import { Form as FormSUI, Message } from 'semantic-ui-react';
 import { formatDate, formatDateTime } from '../../functions/dateFunctions';
 const handleSubmit = (callback) => (e) => {
     e.preventDefault();
-    if(!callback) return;
+    if (!callback) return;
     const data = GetFormData(e.target);
     callback(data, e);
 }
-export const Form = function ({ children, onSubmit, cover, ...otherProps }) {
+const Form = function ({ children, onSubmit, cover, ...otherProps }) {
     return <FormSUI {...otherProps} onSubmit={handleSubmit(onSubmit)} className={cover ? "form-cover" : ""}>
         {children}
         <style jsx>{`
@@ -17,6 +17,10 @@ export const Form = function ({ children, onSubmit, cover, ...otherProps }) {
     </FormSUI>
 }
 
+Form.Field = FormSUI.Field;
+export {
+    Form
+}
 export const FormField = function (props) {
     return <FormSUI.Input {...props} />;
 }

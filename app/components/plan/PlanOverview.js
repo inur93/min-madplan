@@ -1,24 +1,27 @@
-import { List, Icon } from "semantic-ui-react";
+import { List } from "semantic-ui-react";
 import { getPlanLength, addDays, formatDateForQuery, formatDay } from '../../functions/dateFunctions';
 import './plan-overview.scss';
+import { IconInfo, IconRemove, IconEdit } from "../shared/Icon";
 
 const ListItem = function ({ date, recipe, onClick, onEdit, onRemove, onInfo }) {
     const isEmpty = !recipe;
     const handleInfo = () => onInfo({ recipe: recipe._id, date });
     // const handleEdit = () => onEdit({ date });
     const handleRemove = () => onRemove({ date });
-    return (<List.Item className="mmp-plan-list-item">
-        <List.Header as="a">{formatDay(date)}</List.Header>
+    return (<List.Item>
         <List.Content>
-            <List.Header onClick={onClick} className={isEmpty ? 'mmp-empty' : ''} as="h2" >
+            <List.Header as="a">{formatDay(date)}</List.Header>
+            <List.Header onClick={onClick} className={isEmpty ? 'mmp-empty' : ''} >
                 {isEmpty ?
                     "Tilføj en opskrift..."
                     : recipe.title
                 }
             </List.Header>
-            <Icon name='edit' onClick={onClick} />
-            {!isEmpty && <Icon name='info circle' onClick={handleInfo} />}
-            {!isEmpty && <Icon name='remove' onClick={handleRemove} />}
+        </List.Content>
+        <List.Content>
+            <IconEdit onClick={onClick} />
+            {!isEmpty && <IconInfo onClick={handleInfo} />}
+            {!isEmpty && <IconRemove onClick={handleRemove} />}
         </List.Content>
     </List.Item>)
 }

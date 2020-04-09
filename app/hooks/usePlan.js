@@ -36,30 +36,37 @@ export function usePlan(defaultState) {
     const router = useRouter();
 
     //loading
-    const [loading, setLoading] = useState(false);
     const [loadingCurrent, setLoadingCurrent] = useState(false);
+    const [loadingShoppingList, setLoadingShoppingList] = useState(false);
 
     //data
     const [title, setTitle] = useState("");
     const [currentPlan, setCurrentPlan] = useState(null);
     const history = useSWR('history', () => api.find());
-    const [visibility, setVisibility] = useState(getVisibility(defaultState.view));
+    const [show, setShow] = useState(getVisibility(defaultState.view));
 
     //props
     const [noCurrentPlan, setNoCurrentPlan] = useState(false);
     const [isFirstTime, setFirstTime] = useState(defaultState.firstTime);
-    const [disableOpenCurrent, setDisableOpenCurrent] = useState(true);
-
 
     useEffect(() => {
         const loadPlan = async (id) => {
-            setLoading(true);
+            setLoadingCurrent(true);
             const current = await (id ? api.findOne(id) : api.findCurrent());
             setCurrentPlan(current);
-            setLoading(false);
+            setLoadingCurrent(false);
         }
         loadPlan(router.query.id);
     }, [router.query.id])
+
+    useEffect(() => {
+        const planNextWeek = (history.data || []).find(x => new Date(x.validFrom) > new Date());
+        setNoCurrentPlan(!planNextWeek);
+    }, [history.data]);
+
+    useEffect(() => {
+        setShow(getVisibility(router.query.view || views.view, currentPlan));
+    }, [router.query.view, currentPlan]);
 
     const getRoute = (prefix) => {
         let route = prefix;
@@ -74,10 +81,16 @@ export function usePlan(defaultState) {
         console.log('useplan action', { type, ...data });
         switch (type) {
             case actions.createShoppingList:
+                setLoadingShoppingList(true);
                 const shoppingList = await api.createShoppingList(currentPlan._id);
                 shoppingListId = shoppingList._id;
+                setLoadingShoppingList(false);
             case actions.openCurrentShoppingList:
-                router.push(getRoute(`/shopping-list?id=${shoppingListId || currentPlan.shopping_list}`));
+                router.push(getRoute(`/shopping-list?id=${shoppingListId // if new shopping list has been created
+                    || currentPlan.shopping_list._id // if plan is fetched by id
+                    || currentPlan.shopping_list // if plan object is taken from history list
+            }`));
+
                 break;
             case actions.editPlanDay:
                 {
@@ -103,7 +116,7 @@ export function usePlan(defaultState) {
                 break;
             case actions.createPlan:
                 const { name, validFrom } = data;
-                setLoading(true);
+                setLoadingCurrent(true);
                 const createdPlan = await api.create({
                     name,
                     validFrom,
@@ -111,7 +124,7 @@ export function usePlan(defaultState) {
                     length: 7
                 });
                 routeUpdate(router, { view: views.view, id: createdPlan._id });
-                setLoading(false);
+                setLoadingCurrent(false);
 
                 break;
             case actions.showCreate:
@@ -132,14 +145,7 @@ export function usePlan(defaultState) {
         }
     }
 
-    useEffect(() => {
-        const planNextWeek = (history.data || []).find(x => new Date(x.validFrom) > new Date());
-        setNoCurrentPlan(!loading && !planNextWeek);
-    }, [history.data, loading]);
 
-    useEffect(() => {
-        setVisibility(getVisibility(router.query.view || views.view, currentPlan));
-    }, [router.query.view, currentPlan]);
 
     useEffect(() => {
         let value;
@@ -159,13 +165,13 @@ export function usePlan(defaultState) {
 
     const state = {
         planId: router.query.id,
-        loading,
+        loading: loadingCurrent || loadingShoppingList,
         isFirstTime,
         currentPlan,
         planHistory: history.data,
         noCurrentPlan,
         title,
-        visibility
+        show
     }
 
     return [state, onClick, actions];

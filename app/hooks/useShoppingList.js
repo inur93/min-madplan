@@ -1,8 +1,9 @@
-import { GetShoppingListApi, GetUnitsApi, GetProductItemsApi } from "../pages/api";
+import { GetShoppingListApi, GetProductItemsApi } from "../pages/api";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { routeUpdate } from "../functions/routerFunctions";
 import { splice } from "../functions/arrayFunctions";
+import { route } from "next/dist/next-server/server/router";
 
 const actions = {
     updateItems: 'updateItems',
@@ -26,14 +27,13 @@ const views = {
 
 export function useShoppingList() {
     const api = GetShoppingListApi();
-    const unitsApi = GetUnitsApi();
     const productItemsApi = GetProductItemsApi();
 
     const router = useRouter();
 
+    const [title, setTitle] = useState('Indkøbsliste');
     const [editSelected, setEditSelected] = useState(false);
     const [show, setShow] = useState({});
-    const [unitOptions, setUnitOptions] = useState([]);
     const [history, setHistory] = useState([]);
     const [selected, setSelected] = useState(null);
     const [selectedItem, setSelectedItem] = useState(null);
@@ -41,11 +41,6 @@ export function useShoppingList() {
     //loading
     const [loadingSelected, setLoadingSelected] = useState(false);
     const [loadingHistory, setLoadingHistory] = useState(false);
-
-    //load units only on Mount
-    useEffect(() => {
-        unitsApi.getAll().then((data) => setUnitOptions(data));
-    }, []);
 
     useEffect(() => {
         const load = async () => {
@@ -58,6 +53,12 @@ export function useShoppingList() {
             load();
         }
     }, [router.query.view]);
+
+    useEffect(() => {
+        if (show.history) setTitle('Indkøbslister');
+        else if (show.view) setTitle(selected ? selected.name : 'Indkøbsliste');
+        else if (show.create) setTitle('Indkøbsliste');
+    }, [show, selected])
 
     useEffect(() => {
         setShow(getVisibility(router.query.view || views.view));
@@ -95,11 +96,9 @@ export function useShoppingList() {
         }
         return true;
     }
-    // const onSelect = async ({ _id, ...value }) => 
-
 
     const onClick = (action) => async (data) => {
-        console.log('shopping list action', {action, data});
+        console.log('shopping list action', { action, data });
         switch (action) {
             case actions.selectItem:
                 await updateItemList(selected._id, [...selected.items, { name: data.name }]);
@@ -118,9 +117,18 @@ export function useShoppingList() {
                 break;
             case actions.deleteItem:
                 const { items } = selected;
-                updateItemList(selected._id, items.filter(x => x._id != _id));
+                updateItemList(selected._id, items.filter(x => x._id != data._id));
                 break;
             case actions.showCreate:
+                routeUpdate(router, {
+                    view: views.create
+                })
+                break;
+            case actions.createList:
+                setLoadingSelected(true);
+                const created = await api.createShoppingList(data);
+                setLoadingSelected(false);
+                routeUpdate(router, { view: views.view, id: created._id });
                 break;
             case actions.showView:
                 routeUpdate(router, {
@@ -140,12 +148,14 @@ export function useShoppingList() {
     }
 
     const state = {
+        title,
         loadingHistory,
         loadingSelected,
+        loading: loadingHistory || loadingSelected,
         selected,
         history,
         views,
-        isEmpty: (!history || history.length <= 0) && !selected,
+        isEmpty: !loadingHistory && loadingSelected && (!history || history.length <= 0) && !selected,
         show,
         editSelected,
         selectedItem

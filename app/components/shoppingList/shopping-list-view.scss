@@ -1,14 +1,15 @@
 .item.shopping-list-view-item {
     .content {
-        display: flex;
-        flex-flow: row;
-
-        .checkbox {
-            flex: auto 0 1;
+        .loader {
+            top: unset;
             margin-right: 1rem;
+            vertical-align: unset;
         }
-        .header {
-            flex: auto 1 0;
+        .checkbox {
+            margin-right: 0.5rem;
+            input:checked~label:after {
+                color: green;
+            }
         }
     }
 }

@@ -2,30 +2,6 @@
   h2 {
     font-size: medium;
   }
-
-  .content {
-    display: flex;
-    flex-flow: row;
-    align-items: stretch;
-
-    
-    font-size: 18px;
-    .header {
-      flex: auto 1 1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin-right: 0.5rem;
-    }
-
-    .icon {
-      flex: auto 0 1;
-      padding: unset;
-      margin: auto 0;
-      margin-left: 0.75rem;
-    }
-  }
-
   .content h2.mmp-empty.header {
     color: red;
   }

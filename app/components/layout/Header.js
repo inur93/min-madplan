@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import Link from 'next/link'
 import { useRouter } from 'next/router';
-import { Segment, Header as HeaderSUI, Dropdown, Button } from 'semantic-ui-react';
+import { Segment, Header as HeaderSUI, Dropdown, Button, Progress } from 'semantic-ui-react';
 import { ButtonBack, ButtonMenu } from '../shared/Button';
 import Menu from './Menu';
 
 import './header.scss';
 
-const Header = ({ showBackBtn, title, showMenu, ...otherProps }) => {
+const Header = ({ showBackBtn, title, showMenu, loading, ...otherProps }) => {
     const { pathname } = useRouter();
     //indkøbsliste
     //ugeplan
@@ -16,7 +16,7 @@ const Header = ({ showBackBtn, title, showMenu, ...otherProps }) => {
         <div className="mmp-header">
             <Segment clearing>
                 <ButtonMenu onClick={showMenu} />
-                
+
                 <HeaderSUI className="custom-header" as='h1' floated='left'>
                     {title}
                 </HeaderSUI>
@@ -30,6 +30,7 @@ const Header = ({ showBackBtn, title, showMenu, ...otherProps }) => {
                         { key: 'edit', text: 'edit', value: 'edit' }
                     ]} />
             </Segment>
+            {loading && <Progress percent={100} active size='tiny' color='blue' />}
         </div>)
 }
 

@@ -1,20 +1,20 @@
 import { List, ListDescription, Icon } from "semantic-ui-react";
-import './group-invites.scss';
 import { useInvites } from "../../hooks/useInvites";
 import useInviteActions from "../../hooks/useInviteActions";
+import { IconCheck, IconRemove } from "../shared/Icon";
 
 
 function Invite({ invite, onAccept, onDecline }) {
     const handleAccept = () => onAccept({ id: invite._id });
     const handleDecline = () => onDecline({ id: invite._id });
-    return <List.Item className='invite-list-item'>
-        <List.Content className='invite-headers'>
+    return <List.Item>
+        <List.Content>
             <List.Header>{invite.group.name}</List.Header>
-            <ListDescription as='a'>{invite.from.firstname}</ListDescription>
+            <ListDescription>{invite.from.firstname}</ListDescription>
         </List.Content>
-        <List.Content className='invite-actions'>
-            <Icon name='check circle outline' color='green' onClick={handleAccept} />
-            <Icon name='remove circle' color='red' onClick={handleDecline} />
+        <List.Content>
+            <IconCheck onClick={handleAccept} />
+            <IconRemove onClick={handleDecline} />
         </List.Content>
     </List.Item>
 }
@@ -38,7 +38,10 @@ export function GroupInvitesWrapped() {
     const [state, handlers, actions] = useInviteActions(revalidate);
     const { onClick } = handlers;
 
-    return <GroupInvites invites={invites}
+    return <div>
+        {(invites && invites.length > 0) && <p>Du har en invititation liggende. Godkend invitationen for at komme i gang og planlægge madplanen for næste uge.</p>}
+        <GroupInvites invites={invites}
         onAccept={onClick(actions.accept)}
         onDecline={onClick(actions.decline)} />
+    </div>
 }

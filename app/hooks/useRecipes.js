@@ -31,7 +31,7 @@ export function useRecipes(defaultState) {
 
     //data
     const [title, setTitle] = useState("");
-    const [visibility, setVisibility] = useState(getVisibility(defaultState.view));
+    const [show, setVisibility] = useState(getVisibility(defaultState.view));
     const [recipes, setRecipes] = useState([]);
     const [selected, setSelected] = useState(null);
     const [plan, setPlan] = useState(null);
@@ -86,9 +86,15 @@ export function useRecipes(defaultState) {
                     await planApi.update(plan._id, {
                         plan: getUpdatedPlan(plan, router.query.date, id)
                     });
-                    router.push(`/plan?id=${plan._id}`);
+                    router.push(`/plan?view=view&id=${plan._id}`);
                 } else {
-                    routeUpdate(router, { id })
+                    router.replace({
+                        pathname: '/recipes',
+                        query: {
+                            view: views.view,
+                            id: data.id
+                        }
+                    });
                 }
                 break;
             case actions.showDetails:
@@ -114,14 +120,15 @@ export function useRecipes(defaultState) {
     }
 
     const state = {
-        loading: (isLoadingPlan || isLoadingRecipes),
+        loading: (isLoadingPlan || isLoadingRecipes || isLoadingSelected),
         query: router.query.query,
         date: router.query.date,
         selected,
         plan: plan || [],
         recipes,
         title,
-        visibility
+        show,
+        showSelect: !!(plan && !show.search)
     }
 
     const setQuery = (query) => {
@@ -157,13 +164,13 @@ const getVisibility = (view, plan) => {
         [views.view]: false,
         [views.instructions]: false,
         [views.ingredients]: false,
-        showPlanDay: false
+        planDay: false
     }
 
     showView[view] = true;
 
     if (plan) {
-        showView.showPlanDay = true;
+        showView.planDay = true;
     }
 
     return showView;

@@ -1,16 +1,22 @@
 @import "../../styles/variables.scss";
 
+.mmp-header {
+  div.segment {
+    margin-bottom: -0.5rem;
+  }
+}
 .mmp-content {
-  margin-top: $header-height;
+  margin-top: -2rem; //to negate the margin on segment
   margin-left: $body-margin;
   margin-right: $body-margin;
 
+  padding-top: $header-height;
   font-family: $font-family;
 
   display: flex;
   flex-flow: column;
   align-items: stretch;
-  height: 87vh;
+  height: 100vh;
 
   .mmp-main-area {
     flex: 1 1 auto;

@@ -5,12 +5,12 @@ import "./layout.scss";
 import { useState } from 'react';
 import Menu from './Menu';
 
-export default function Layout({ children, showBackBtn, title, simple, actions }) {
+export default function Layout({ children, showBackBtn, title, simple, loading, actions }) {
     const [showMenu, setShowMenu] = useState(false);
-    return (<div>
+    return (<div className='app-window'>
         <Loading />
         <Sidebar.Pushable as={Segment}>
-            {!simple && <Header className="mmp-header" showMenu={() => setShowMenu(true)} showBackBtn={showBackBtn} title={title} />}
+            {!simple && <Header loading={loading} className="mmp-header" showMenu={() => setShowMenu(true)} showBackBtn={showBackBtn} title={title} />}
 
             <Menu visible={showMenu} onHide={() => setShowMenu(false)} />
             <Sidebar.Pusher dimmed={showMenu}>

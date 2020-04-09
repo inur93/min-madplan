@@ -1,4 +1,4 @@
-import { List, ListHeader } from "semantic-ui-react";
+import { List, ListHeader, Loader } from "semantic-ui-react";
 
 
 const ListItem = ({ ingredient }) => {
@@ -14,6 +14,7 @@ const ListItem = ({ ingredient }) => {
 
 export function Ingredients({ loading, recipe }) {
 
+    if(loading) return <Loader  />;
     return <List>
         {recipe.ingredients.map(
             i => <ListItem key={i._id} ingredient={i} />
