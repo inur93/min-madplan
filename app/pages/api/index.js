@@ -1,5 +1,4 @@
-import { getApi } from "./api";
-import { auth, login, logout } from "./auth";
+import { getApi, auth, login, logout } from "./api";
 import { GetGroupsApi } from "./groupsApi";
 import { GetPageSettingsApi } from './pageSettingsApi';
 import { GetPlanApi } from './planApi';
