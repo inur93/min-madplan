@@ -1980,10 +1980,10 @@ browserslist@^4.8.3, browserslist@^4.8.5:
     electron-to-chromium "^1.3.341"
     node-releases "^1.1.47"
 
-bson@^0.1.9:
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/bson/-/bson-0.1.9.tgz#7528f81ed770e6d630ca8c2ccdf5394a4096db14"
-  integrity sha1-dSj4Htdw5tYwyowszfU5SkCW2xQ=
+bson-objectid@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/bson-objectid/-/bson-objectid-1.3.0.tgz#f0f4c7c949fece975f12790510d75d7fe39fb456"
+  integrity sha512-YcB+lRJEEEIcHNLKyhmHujW7OCVE3+xr9IpEhlprBZnXgF3hqeePeexIsAaOtu1SbkgZRlJVUxvYZ3ngUOyIew==
 
 bson@^1.1.1, bson@~1.1.1:
   version "1.1.3"
@@ -6118,13 +6118,6 @@ object.values@^1.0.4, object.values@^1.1.0:
     function-bind "^1.1.1"
     has "^1.0.3"
 
-objectid@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/objectid/-/objectid-3.2.1.tgz#a3b7a2b4d65f3a8348ef8497f023069b5cb019de"
-  integrity sha1-o7eitNZfOoNI74SX8CMGm1ywGd4=
-  dependencies:
-    bson "^0.1.9"
-
 obuf@^1.0.0, obuf@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/obuf/-/obuf-1.1.2.tgz#09bea3343d41859ebd446292d11c9d4db619084e"
@@ -8364,6 +8357,11 @@ strapi-plugin-email@3.0.0-beta.18.7:
     strapi-provider-email-sendmail "3.0.0-beta.18.7"
     strapi-utils "3.0.0-beta.18.7"
 
+strapi-plugin-mongodb-files@^3.0.0-beta.18.5:
+  version "3.0.0-beta.18.5"
+  resolved "https://registry.yarnpkg.com/strapi-plugin-mongodb-files/-/strapi-plugin-mongodb-files-3.0.0-beta.18.5.tgz#ddf04aa5dfcfe1a033fbbc1f4fbab87aa825d619"
+  integrity sha512-Fy2gSaoTke7eFW1ZKHSKuUDyPDq9JU7nhFwk5BqME1dTQxMZJuhOgCjI8npRSkLVYA9sWE9wNcIqp39vaGOpYA==
+
 strapi-plugin-upload@3.0.0-beta.18.7:
   version "3.0.0-beta.18.7"
   resolved "https://registry.yarnpkg.com/strapi-plugin-upload/-/strapi-plugin-upload-3.0.0-beta.18.7.tgz#e066c7cebd4837d16854d940f33d3e46799a6e39"
@@ -8428,6 +8426,11 @@ strapi-provider-upload-local@3.0.0-beta.18.7:
   version "3.0.0-beta.18.7"
   resolved "https://registry.yarnpkg.com/strapi-provider-upload-local/-/strapi-provider-upload-local-3.0.0-beta.18.7.tgz#a71d4eb245b0cc514c58eafced81d5128ee0fe34"
   integrity sha512-kRPhoFqF2TB/bDQwepeRl6+6vAKamJBHdhmwYPDV7TCMVdyDScZU5+v4+uWrXlRP5XVKedCwR5bJhtxPzl4ogA==
+
+strapi-provider-upload-mongodb@^3.0.0-beta.18.5:
+  version "3.0.0-beta.18.5"
+  resolved "https://registry.yarnpkg.com/strapi-provider-upload-mongodb/-/strapi-provider-upload-mongodb-3.0.0-beta.18.5.tgz#d71726d8a24af7fe2da4274e2a8f0e43e8e73f33"
+  integrity sha512-AnRY7e2GZz/H1a+tVwLwkq+pQSkF3AJejOFYhrbC62/FI+nzD2h3JFZjcJlyRbaQjPDRCos79S7uMvi7tTqqzA==
 
 strapi-utils@3.0.0-beta.18.7:
   version "3.0.0-beta.18.7"
