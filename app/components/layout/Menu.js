@@ -7,6 +7,7 @@ import { useSelf } from '../../hooks/useSelf';
 import { useData } from '../../hooks/useData';
 import { GetGroupsApi, GetUsersApi, logout } from '../../pages/api';
 import { useInvitesCount } from '../../hooks/useInvitesCount';
+import { usePageSettings } from '../../hooks/usePageSettings';
 
 const fullname = (firstname, lastname) => `${firstname || ""} ${lastname || ""}`;
 const getSelectedGroupName = (groups, current) => {
@@ -18,6 +19,7 @@ const Menu = function ({ visible, onHide }) {
     const router = useRouter();
     const invitesCount = useInvitesCount();
     const [self, revalidate] = useSelf();
+    const settings = usePageSettings('profile');
     const { firstname, lastname, selectedGroup, _id } = self || {};
     const groups = useData('groups', GetGroupsApi().find) || [];
 
@@ -32,6 +34,7 @@ const Menu = function ({ visible, onHide }) {
         onHide();
     }
 
+    const {fallbackProfileImage} = (settings || {fallbackProfileImage: {}});
     return (<Sidebar as={MenuSUI}
         className="mmp-sidebar"
         animation='overlay'
@@ -39,10 +42,9 @@ const Menu = function ({ visible, onHide }) {
         visible={visible}
         width='wide'
         vertical>
-
         <div className="mmp-menu-item-profile">
             <div className="mmp-profile-image">
-                <Image src={absUrl("/uploads/448301d4d2494c56b1b498eb817e4f0a.jpg")} avatar />
+                <Image src={absUrl(fallbackProfileImage.url)} avatar />
             </div>
             <div className="mmp-info">
                 <h3>{fullname(firstname, lastname)}</h3>

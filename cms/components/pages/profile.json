@@ -1,0 +1,17 @@
+{
+  "info": {
+    "name": "profile",
+    "icon": "address-card"
+  },
+  "options": {},
+  "attributes": {
+    "fallbackProfileImage": {
+      "model": "file",
+      "via": "related",
+      "plugin": "upload",
+      "required": false
+    }
+  },
+  "connection": "default",
+  "collectionName": "components_pages_profiles"
+}

@@ -1,6 +1,8 @@
 {
+  "connection": "default",
+  "collectionName": "page_settings",
   "info": {
-    "name": "pageSettings"
+    "name": "Page Settings"
   },
   "options": {
     "increments": true,
@@ -11,8 +13,11 @@
       "type": "component",
       "repeatable": false,
       "component": "pages.front-page"
+    },
+    "profile": {
+      "type": "component",
+      "repeatable": false,
+      "component": "pages.profile"
     }
-  },
-  "connection": "default",
-  "collectionName": "page_settings"
+  }
 }
