@@ -18,6 +18,7 @@ const Form = function ({ children, onSubmit, cover, ...otherProps }) {
 }
 
 Form.Field = FormSUI.Field;
+Form.Select = FormSUI.Select;
 export {
     Form
 }

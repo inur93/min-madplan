@@ -1,0 +1,8 @@
+.image-actions {
+    display: flex;
+    flex-flow: row;
+    > * {
+        flex: auto 1 1;
+        text-align: center;
+    }
+}

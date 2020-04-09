@@ -33,11 +33,10 @@ const Menu = function ({ visible, onHide }) {
         });
         router.push('/');
         onHide();
-
     }
 
-
     const { fallbackProfileImage } = (settings || { fallbackProfileImage: {} });
+    const profileImage = (self && self.avatar) || fallbackProfileImage;
     return (<Sidebar as={MenuSUI}
         className="mmp-sidebar"
         animation='overlay'
@@ -47,11 +46,11 @@ const Menu = function ({ visible, onHide }) {
         vertical>
         <div className="mmp-menu-item-profile">
             <div className="mmp-profile-image">
-                <Image src={absUrl(fallbackProfileImage.url)} avatar />
+                <Image src={absUrl(profileImage.url)} avatar />
             </div>
             <div className="mmp-info">
                 <h3>{fullname(firstname, lastname)}</h3>
-                <a>View profile</a>
+                <a onClick={goto('/profile')}>View profile</a>
             </div>
             <ButtonClose onClick={onHide} />
 

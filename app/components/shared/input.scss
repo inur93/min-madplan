@@ -1,4 +1,4 @@
-@import '../../styles/variables.scss';
+@import "../../styles/variables.scss";
 
 $input-height: 30px;
 
@@ -21,7 +21,7 @@ $input-height: 30px;
     padding-left: 1rem;
 }
 
-.react-autosuggest__input--focused{
+.react-autosuggest__input--focused {
     outline: none;
 }
 
@@ -59,6 +59,30 @@ $input-height: 30px;
     padding: 0.5rem 1rem;
 }
 
-.react-autosuggest__suggestion--highlighted{
+.react-autosuggest__suggestion--highlighted {
     background-color: rgb(143, 143, 143);
+}
+
+.file-input {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.file-input + label {
+    cursor: pointer;
+    color: $color-link;
+    display: inline-block;
+}
+
+.file-input:focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+.file-input:focus + label,
+.file-input + label:hover {
+    text-decoration: underline;
 }

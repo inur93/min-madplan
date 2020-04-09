@@ -65,6 +65,12 @@
     },
     "lastname": {
       "type": "string"
+    },
+    "avatar": {
+      "model": "file",
+      "via": "related",
+      "plugin": "upload",
+      "required": false
     }
   }
 }

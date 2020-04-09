@@ -9,7 +9,7 @@ import { GetShoppingListApi } from "./shoppingListsApi";
 import { GetUnitsApi } from "./unitsApi";
 import { GetUsersApi } from "./usersApi";
 import { GetGroupInvitesApi } from "./groupInvitesApi";
-
+import { GetFilesApi } from './filesApi';
 export {
     auth,
     login,
@@ -23,5 +23,6 @@ export {
     GetShoppingListApi,
     GetUnitsApi,
     GetUsersApi,
-    GetGroupInvitesApi
+    GetGroupInvitesApi,
+    GetFilesApi
 }

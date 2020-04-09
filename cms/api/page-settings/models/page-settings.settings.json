@@ -18,6 +18,11 @@
       "type": "component",
       "repeatable": false,
       "component": "pages.profile"
+    },
+    "Login": {
+      "type": "component",
+      "repeatable": false,
+      "component": "pages.login"
     }
   }
 }

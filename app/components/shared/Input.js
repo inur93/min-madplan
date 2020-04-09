@@ -110,3 +110,10 @@ export const ProductItemAutoComplete = function (props) {
 export const SearchInput = function ({ placeholder, onChange, ...otherProps }) {
     return <Input {...otherProps} icon='search' placeholder={placeholder} onChange={e => onChange(e.target.value)} />;
 }
+
+export const InputFile = ({ label, ...props }) => {
+    return <div>
+        <Input id='file' {...props} type='file' name='file' className='file-input' />
+        <label htmlFor='file'>{label}</label>
+    </div>
+}
