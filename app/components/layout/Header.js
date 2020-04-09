@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import Link from 'next/link'
+import React from 'react';
 import { useRouter } from 'next/router';
-import { Segment, Header as HeaderSUI, Dropdown, Button, Progress } from 'semantic-ui-react';
-import { ButtonBack, ButtonMenu } from '../shared/Button';
-import Menu from './Menu';
+import { Segment, Header as HeaderSUI, Dropdown, Progress } from 'semantic-ui-react';
+import { ButtonMenu } from '../shared/Button';
 
 import './header.scss';
 

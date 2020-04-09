@@ -1,6 +1,5 @@
 import Layout, { Content, Actions } from '../components/layout/Layout';
-import { List } from '../components/shared/List';
-import { ButtonAdd, Button, ButtonAction } from '../components/shared/Button';
+import { ButtonAction } from '../components/shared/Button';
 import { auth } from './api';
 import { useShoppingList } from '../hooks/useShoppingList';
 import { ShoppingListOverview } from '../components/shoppingList/ShoppingListOverview';

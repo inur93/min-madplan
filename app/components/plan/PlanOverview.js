@@ -1,6 +1,5 @@
 import { List } from "semantic-ui-react";
 import { getPlanLength, addDays, formatDateForQuery, formatDay } from '../../functions/dateFunctions';
-import './plan-overview.scss';
 import { IconInfo, IconRemove, IconEdit } from "../shared/Icon";
 
 const ListItem = function ({ date, recipe, onClick, onEdit, onRemove, onInfo }) {

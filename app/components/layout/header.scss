@@ -10,9 +10,13 @@
 
     z-index: 10;
 
-    h1 {
+    h1.header.custom-header {
         margin-bottom: 0 !important;
         margin-left: 1rem !important;
+        max-width: calc(100% - 6rem);
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .settings-icon{
@@ -29,5 +33,4 @@
             left: auto;
         }
     }
-    // background-color: blue;
 }

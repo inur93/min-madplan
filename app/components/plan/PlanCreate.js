@@ -1,7 +1,6 @@
 import { Form } from "../shared/Form";
 import { Input } from "../shared/Input";
-import { getWeek, startOfNextWeek, addDays, formatDateForQuery } from '../../functions/dateFunctions';
-import { Button } from "semantic-ui-react";
+import { getWeek, startOfNextWeek, formatDateForQuery } from '../../functions/dateFunctions';
 import { ButtonSuccess } from "../shared/Button";
 
 export function PlanCreate({ onCreate, loading }) {
@@ -9,13 +8,18 @@ export function PlanCreate({ onCreate, loading }) {
     const week = getWeek(nextWeek);
     const defaultDateValue = formatDateForQuery(nextWeek);
     return <Form onSubmit={onCreate}>
-        <Input name="name"
-            required
-            defaultValue={`Uge ${week}`}
-            placeholder="Giv din ugeplan et navn fx 'uge 12'" />
-        <Input name="validFrom"
-            required
-            defaultValue={defaultDateValue} />
+        <Form.Field required>
+            <label>Navn</label>
+            <Input name="name"
+                defaultValue={`Uge ${week}`}
+                placeholder="Giv din ugeplan et navn fx 'uge 12'" />
+        </Form.Field>
+        <Form.Field required>
+            <label>Gældende fra</label>
+            <Input name="validFrom"
+                type='date'
+                defaultValue={defaultDateValue} />
+        </Form.Field>
         <ButtonSuccess disabled={loading} />
     </Form>
 }

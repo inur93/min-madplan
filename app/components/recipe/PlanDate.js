@@ -7,5 +7,5 @@ export function PlanDate({ loading, plan, date }) {
     const selected = plan.find(x => x.date === date);
     return <Message info
         header={formatDay(new Date(date))}
-        content={selected ? selected.recipe.name : 'Vælg en opskrift...'} />
+        content={selected ? selected.recipe.title : 'Vælg en opskrift...'} />
 }

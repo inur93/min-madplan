@@ -23,18 +23,21 @@ const Menu = function ({ visible, onHide }) {
     const { firstname, lastname, selectedGroup, _id } = self || {};
     const groups = useData('groups', GetGroupsApi().find) || [];
 
-    const selectGroup = (id) => async () => {
-        await GetUsersApi().update(_id, {
-            selectedGroup: id
-        });
-        revalidate();
-    }
     const goto = (url) => () => {
         router.push(url);
         onHide();
     }
+    const selectGroup = (id) => async () => {
+        await GetUsersApi().update(_id, {
+            selectedGroup: id
+        });
+        router.push('/');
+        onHide();
 
-    const {fallbackProfileImage} = (settings || {fallbackProfileImage: {}});
+    }
+
+
+    const { fallbackProfileImage } = (settings || { fallbackProfileImage: {} });
     return (<Sidebar as={MenuSUI}
         className="mmp-sidebar"
         animation='overlay'
@@ -58,28 +61,23 @@ const Menu = function ({ visible, onHide }) {
             </MenuSUI.Item>
         <MenuSUI.Item link name="Ugeplan" onClick={goto('/plan')} />
         <MenuSUI.Item name="Opskrifter" onClick={goto('/recipes')} />
-        <MenuSUI.Item>
-            Profil
-        </MenuSUI.Item>
         <MenuSUI.Item >
-
             Grupper
             <MenuSUI.Item onClick={goto('/groups?view=invites')}>
                 Invitationer
                 <Label>{invitesCount.data}</Label>
             </MenuSUI.Item>
-            <Dropdown item text={getSelectedGroupName(groups, selectedGroup)}>
-                <Dropdown.Menu>
-                    {groups.map(group =>
-                        <Dropdown.Item key={group._id} onClick={selectGroup(group._id)}>
-                            {group.name}
-                        </Dropdown.Item>)}
-                </Dropdown.Menu>
-            </Dropdown>
             <MenuSUI.Item onClick={goto('/groups/create')} >
                 Opret gruppe
                     <Icon name="add" />
             </MenuSUI.Item>
+            {groups.map(group =>
+                <MenuSUI.Item key={group._id}
+                    active={selectedGroup === group._id}
+                    onClick={selectGroup(group._id)}>
+                    {group.name}
+                </MenuSUI.Item>
+            )}
         </MenuSUI.Item>
         <MenuSUI.Item name='Log ud' onClick={logout} />
     </Sidebar>);

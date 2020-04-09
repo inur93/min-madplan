@@ -30,11 +30,22 @@ export function useRecipes(defaultState) {
     const [isLoadingSelected, setLoadingSelected] = useState(false);
 
     //data
-    const [title, setTitle] = useState("");
+    const [title, setTitle] = useState("Opskrifter");
     const [show, setVisibility] = useState(getVisibility(defaultState.view));
     const [recipes, setRecipes] = useState([]);
     const [selected, setSelected] = useState(null);
     const [plan, setPlan] = useState(null);
+
+    useEffect(() => {
+        if (show.instructions
+            || show.ingredients
+            || show.view) {
+            setTitle(selected ? selected.title : 'Opskrift');
+        }
+        else {
+            setTitle('Opskrifter');
+        }
+    }, [show, selected]);
 
     //handle search
     useEffect(() => {

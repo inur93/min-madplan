@@ -16,7 +16,7 @@ const validateCookie = (token) => {
         const parsed = parseJwt(token);
         return true;
     } catch (e) {
-        console.log('error in cookie', e);
+        console.error('error in cookie', e);
         return false;
     }
 }

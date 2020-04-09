@@ -14,13 +14,14 @@ const Page = (props) => {
     const [state, handlers, actions] = useRecipes(props);
 
 
-    const { loading, query, date, plan, recipes, selected, show, showSelect } = state;
+    const { loading, title, query, date, plan, recipes, selected, show, showSelect } = state;
     const { setQuery, onClick } = handlers;
 
     return (
-        <Layout loading={loading} title="Opskrifter">
+        <Layout loading={loading} title={'Opskrifter'}>
             {show.planDay && <PlanDate loading={loading} plan={plan.plan} date={date} />}
             {show.search && <SearchInput defaultValue={query} onChange={setQuery} placeholder="Søg efter opskrift..." />}
+            {!show.search && <h1 className='title-narrow'>{title}</h1>}
             <Content>
                 {show.instructions && <Instructions loading={loading} recipe={selected} />}
                 {show.ingredients && <Ingredients loading={loading} recipe={selected} />}
@@ -32,7 +33,7 @@ const Page = (props) => {
             </Content>
             <Actions>
                 {!show.search && <ButtonAction view='view' icon='info' onClick={onClick(actions.showDetails)} />}
-                {!show.search && <ButtonAction view='ingredients'  icon='clipboard list' onClick={onClick(actions.showIngredients)} />}
+                {!show.search && <ButtonAction view='ingredients' icon='clipboard list' onClick={onClick(actions.showIngredients)} />}
                 {!show.search && <ButtonAction view='instructions' icon='numbered list' onClick={onClick(actions.showInstructions)} />}
                 {(showSelect) && <ButtonSuccess onClick={onClick(actions.select)} />}
             </Actions>

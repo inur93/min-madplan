@@ -78,7 +78,6 @@ export function usePlan(defaultState) {
 
     const onClick = (type) => async (data) => {
         let shoppingListId = null;
-        console.log('useplan action', { type, ...data });
         switch (type) {
             case actions.createShoppingList:
                 setLoadingShoppingList(true);
@@ -140,7 +139,7 @@ export function usePlan(defaultState) {
                 routeUpdate(router, { view: views.history });
                 break;
             default:
-                console.error('unknown click command: ', type);
+                console.error('unknown click command: ', {type, data});
                 break;
         }
     }

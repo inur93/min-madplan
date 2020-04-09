@@ -1,10 +1,22 @@
 import { Content, Actions } from "../../components/layout/Layout";
 import { Input } from "../../components/shared/Input";
 import { ButtonSuccess } from "../../components/shared/Button";
-import { ListItemDelete } from "../../components/shared/List";
-import { useGroupCreate } from "../../hooks/useGroupCreate";
-import { Button, List } from "semantic-ui-react";
 
+import { useGroupCreate } from "../../hooks/useGroupCreate";
+import { Button, List, Form } from "semantic-ui-react";
+import { IconRemove } from "../shared/Icon";
+
+
+const ListItem = ({ email, onDelete }) => {
+    return (<List.Item>
+        <List.Content>
+            <List.Header>{email}</List.Header>
+        </List.Content>
+        <List.Content>
+            <IconRemove onClick={onDelete} />
+        </List.Content>
+    </List.Item>)
+}
 export function GroupCreate(firstTime) {
     const [state, handlers, actions] = useGroupCreate(firstTime);
     const { name, email, sharedWith } = state;
@@ -17,29 +29,32 @@ export function GroupCreate(firstTime) {
                     : "Opret en gruppe så du kan dele din madplan og indkøbsliste med din lækkerbisken."
                 }
             </p>
-            <Input name="name"
-                required
-                value={name}
-                onChange={e => setName(e.target.value)}
-                placeholder="Giv din gruppe et navn" />
-
-            <Input value={email}
-                type="email"
-                name='email'
-                onChange={e => setEmail(e.target.value)}
-                placeholder="Tilføj mail på en du vil dele med"
-                labelPosition='right'
-                label={<Button onClick={e => onClick(actions.addEmail)({ e })} >Tilføj</Button>} />
-
-            <h3>Inviterede medlemmer</h3>
-            {sharedWith.length == 0 && <p>Du har endnu ikke inviteret nogen med i gruppen</p>}
-            <List>
-                {sharedWith.map((email, i) =>
-                    <ListItemDelete key={i} title={email} onDelete={() => onClick(actions.removeEmail)(email)} />)}
-            </List>
+            <Form>
+                <Form.Field required>
+                    <label>Navn</label>
+                    <Input name="name"
+                        value={name}
+                        onChange={e => setName(e.target.value)}
+                        placeholder="Giv din gruppe et navn" />
+                </Form.Field>
+                <Form.Field>
+                    <label>Tilføj medlemmer</label>
+                    <Input value={email}
+                        type="email"
+                        name='email'
+                        onChange={e => setEmail(e.target.value)}
+                        placeholder="Tilføj medlemmers email her"
+                        labelPosition='right'
+                        label={<Button primary onClick={e => onClick(actions.addEmail)({ e })} >Tilføj</Button>} />
+                </Form.Field>
+                <h3>Inviterede medlemmer</h3>
+                {sharedWith.length == 0 && <p>Du har endnu ikke inviteret nogen med i gruppen</p>}
+                <List>
+                    {sharedWith.map((email, i) =>
+                        <ListItem key={i} email={email} onDelete={() => onClick(actions.removeEmail)(email)} />)}
+                </List>
+                <ButtonSuccess onClick={onClick(actions.create)} />
+            </Form>
         </Content>
-        <Actions>
-            <ButtonSuccess onClick={onClick(actions.create)} />
-        </Actions>
     </div>)
 }
