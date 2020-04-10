@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { GetUnitsApi } from "../pages/api";
+import { GetUnitsApi } from "../api";
 
 
 

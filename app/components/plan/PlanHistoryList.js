@@ -1,5 +1,5 @@
 import { List } from "semantic-ui-react";
-import {formatDate} from '../../functions/dateFunctions';
+import { formatDate } from '../../functions/dateFunctions';
 export function PlanHistoryList({ list, onClick }) {
     const handleClick = (id) => () => onClick({id});
     return (<List>

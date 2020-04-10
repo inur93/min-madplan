@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { login } from '../pages/api';
+import { login } from '../api';
 
 
 export function useLogin() {

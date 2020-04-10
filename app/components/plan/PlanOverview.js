@@ -1,6 +1,6 @@
 import { List } from "semantic-ui-react";
-import { getPlanLength, addDays, formatDateForQuery, formatDay } from '../../functions/dateFunctions';
-import { IconInfo, IconRemove, IconEdit } from "../shared/Icon";
+import { addDays, formatDateForQuery, formatDay, getPlanLength } from '../../functions/dateFunctions';
+import { IconEdit, IconInfo, IconRemove } from "../shared/Icon";
 
 const ListItem = function ({ date, recipe, onClick, onEdit, onRemove, onInfo }) {
     const isEmpty = !recipe;

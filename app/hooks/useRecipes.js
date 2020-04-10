@@ -1,6 +1,6 @@
-import { GetRecipesApi, GetPlanApi } from "../pages/api";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { GetPlanApi, GetRecipesApi } from "../api";
 import { routeUpdate } from "../functions/routerFunctions";
 
 const actions = {

@@ -1,5 +1,5 @@
-import { Header } from 'semantic-ui-react';
 import Link from 'next/link';
+import { Header } from 'semantic-ui-react';
 import { absUrl } from '../../functions/imageFunctions';
 import './menu-item.scss';
 

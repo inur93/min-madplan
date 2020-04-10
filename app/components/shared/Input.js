@@ -1,6 +1,6 @@
-import { Input as InputSUI, Dropdown } from "semantic-ui-react"
-import Augosuggest from 'react-autosuggest';
 import { useState } from "react";
+import Augosuggest from 'react-autosuggest';
+import { Dropdown, Input as InputSUI } from "semantic-ui-react";
 import './input.scss';
 //type, placeholder
 export const Input = function ({ loading, search, ...inputProps }) {

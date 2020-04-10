@@ -1,15 +1,13 @@
-import MenuContainer from '../components/menu/MenuContainer';
-import MenuItem from '../components/menu/MenuItem';
-import { GetUsersApi, auth, GetPageSettingsApi } from './api';
-import { GroupCreate } from '../components/group/GroupCreate';
-import { Content } from '../components/layout/Layout';
 import { Segment } from 'semantic-ui-react';
-import { useInvitesCount } from '../hooks/useInvitesCount';
+import { auth, GetPageSettingsApi, GetUsersApi } from '../api';
+import { GroupCreate } from '../components/group/GroupCreate';
 import { GroupInvitesWrapped } from '../components/group/GroupInvites';
+import MenuItem from '../components/menu/MenuItem';
+import { useInvitesCount } from '../hooks/useInvitesCount';
 
 const IndexPage = function ({ self, shoppingListImage, planImage, recipesImage }) {
 
-  const {data: count} = useInvitesCount();
+  const { data: count } = useInvitesCount();
   const firstTime = !self.selectedGroup;
   return (
     <main>
@@ -19,7 +17,7 @@ const IndexPage = function ({ self, shoppingListImage, planImage, recipesImage }
         }
       </Segment>}
 
-      {!firstTime && <MenuContainer>
+      {!firstTime && <div className='menu-container'>
         <MenuItem image={shoppingListImage}
           title="Indkøbsliste"
           link="/shopping-list" />
@@ -29,7 +27,7 @@ const IndexPage = function ({ self, shoppingListImage, planImage, recipesImage }
         <MenuItem image={recipesImage}
           title="Opskrifter"
           link="/recipes" />
-      </MenuContainer>
+      </div>
       }
     </main>
   );

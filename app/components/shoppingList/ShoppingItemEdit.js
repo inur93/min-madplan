@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Header, Modal, Button } from 'semantic-ui-react';
+import { Button, Modal } from 'semantic-ui-react';
+import { useUnitOptions } from '../../hooks/useUnitOptions';
 import { Form } from '../shared/Form';
 import { ActionDropdown } from '../shared/Input';
-import { useUnitOptions } from '../../hooks/useUnitOptions';
 
 export function ShoppingItemEdit({ item, onSave, onCancel }) {
     const { name } = item;

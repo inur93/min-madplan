@@ -1,10 +1,10 @@
-import { Form, FormError } from '../components/shared/Form';
-import { Button } from '../components/shared/Button';
 import nextCookie from 'next-cookies';
-import { Segment, Input, Image } from 'semantic-ui-react';
-import { useLogin } from '../hooks/useLogin';
-import { GetPageSettingsApi } from './api';
+import { Image, Input, Segment } from 'semantic-ui-react';
+import { GetPageSettingsApi } from '../api';
+import { Button } from '../components/shared/Button';
+import { Form, FormError } from '../components/shared/Form';
 import { absUrl } from '../functions/imageFunctions';
+import { useLogin } from '../hooks/useLogin';
 
 const Page = function ({ bannerImage }) {
     const [state, handlers] = useLogin();

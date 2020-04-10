@@ -19,9 +19,7 @@ const Form = function ({ children, onSubmit, cover, ...otherProps }) {
 
 Form.Field = FormSUI.Field;
 Form.Select = FormSUI.Select;
-export {
-    Form
-}
+export { Form };
 export const FormField = function (props) {
     return <FormSUI.Input {...props} />;
 }

@@ -1,12 +1,10 @@
-import { GetPlanApi } from "../pages/api";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
-import { routeUpdate } from "../functions/routerFunctions";
-import { useData } from "./useData";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
+import { GetPlanApi } from "../api";
 import { splice } from "../functions/arrayFunctions";
 import { formatDateForQuery } from "../functions/dateFunctions";
-import { format } from "date-fns";
+import { routeUpdate } from "../functions/routerFunctions";
 
 const actions = {
     createShoppingList: 'create-shopping-list',

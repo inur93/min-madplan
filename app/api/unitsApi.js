@@ -1,4 +1,3 @@
-import useSWR from 'swr';
 import { getApi } from './api';
 
 const getPath = (path, query) => `/units/${path || ''}?${query || ''}`;

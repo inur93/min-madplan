@@ -1,9 +1,8 @@
-import { GetShoppingListApi, GetProductItemsApi } from "../pages/api";
-import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { routeUpdate } from "../functions/routerFunctions";
+import { useEffect, useState } from "react";
+import { GetProductItemsApi, GetShoppingListApi } from "../api";
 import { splice } from "../functions/arrayFunctions";
-import { route } from "next/dist/next-server/server/router";
+import { routeUpdate } from "../functions/routerFunctions";
 
 const actions = {
     updateItems: 'updateItems',

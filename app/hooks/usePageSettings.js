@@ -1,4 +1,4 @@
-import { GetPageSettingsApi } from "../pages/api";
+import { GetPageSettingsApi } from "../api";
 import useSWR from "swr";
 
 

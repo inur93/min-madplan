@@ -1,7 +1,7 @@
-import { List, Checkbox, Icon, Loader } from "semantic-ui-react";
-import './shopping-list-view.scss';
 import { useState } from "react";
-import { IconRemove, IconEdit } from "../shared/Icon";
+import { Checkbox, Icon, List, Loader } from "semantic-ui-react";
+import { IconEdit, IconRemove } from "../shared/Icon";
+import './shopping-list-view.scss';
 
 function ListElement({ editMode, item, onCheck, onEdit, onRemove }) {
     const { name, unit, amount } = item;

@@ -1,13 +1,11 @@
-import Layout, { Content, Actions } from "../components/layout/Layout";
-import { useEffect } from "react";
 import { Icon } from "semantic-ui-react";
-import { usePlan } from "../hooks/usePlan";
-import { Button, ButtonAction } from "../components/shared/Button";
-import { PlanView } from "../components/plan/PlanOverview";
-import { PlanHistoryList } from "../components/plan/PlanHistoryList";
-import { useRouter } from "next/router";
+import { auth } from "../api";
+import Layout, { Actions, Content } from "../components/layout/Layout";
 import { PlanCreate } from "../components/plan/PlanCreate";
-import { auth } from "./api";
+import { PlanHistoryList } from "../components/plan/PlanHistoryList";
+import { PlanView } from "../components/plan/PlanOverview";
+import { Button, ButtonAction } from "../components/shared/Button";
+import { usePlan } from "../hooks/usePlan";
 
 const FirstTimeMessage = ({ hasCurrentPlan, loading }) => {
     if (loading) return null;

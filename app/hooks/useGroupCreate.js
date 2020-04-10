@@ -1,7 +1,7 @@
-import { GetGroupsApi, GetUsersApi } from "../pages/api";
 import { useRouter } from "next/router";
-import { useSelf } from "./useSelf";
 import { useState } from "react";
+import { GetGroupsApi, GetUsersApi } from "../api";
+import { useSelf } from "./useSelf";
 
 const actions = {
     create: 'create',

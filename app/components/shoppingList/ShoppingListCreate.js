@@ -1,7 +1,7 @@
-import { Form } from "../shared/Form";
 import { Input } from "semantic-ui-react";
-import { getWeek, setWeek, formatDate } from '../../functions/dateFunctions';
+import { formatDate, getWeek, setWeek } from '../../functions/dateFunctions';
 import { ButtonSuccess } from "../shared/Button";
+import { Form } from "../shared/Form";
 
 
 

@@ -1,6 +1,5 @@
-import useSWR from 'swr';
 import { getApi } from './api';
-import { formatDateForQuery } from '../../functions/dateFunctions';
+import { formatDateForQuery } from '../functions/dateFunctions';
 
 const getPath = (path, query) => `/shopping-lists/${path || ''}?${query || ''}`;
 

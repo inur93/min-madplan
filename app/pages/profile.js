@@ -1,6 +1,6 @@
 import Layout from '../components/layout/Layout';
-import { useSelf } from "../hooks/useSelf";
 import { ProfileEdit } from "../components/profile/ProfileEdit";
+import { useSelf } from "../hooks/useSelf";
 
 
 function Page() {

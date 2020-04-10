@@ -1,7 +1,7 @@
-import { Button as ButtonSUI, ButtonGroup as ButtonGroupSUI } from 'semantic-ui-react';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { Button as ButtonSUI } from 'semantic-ui-react';
 import './button.scss';
-import { useState, useEffect } from 'react';
 
 export const Button = function ({ type, primary, secondary, children, ...otherProps }) {
     const btnType = type || 'submit';

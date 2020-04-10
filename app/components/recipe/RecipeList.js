@@ -1,5 +1,5 @@
-import {List } from 'semantic-ui-react';
-import { IconInfo, IconCheck } from '../shared/Icon';
+import { List } from 'semantic-ui-react';
+import { IconCheck, IconInfo } from '../shared/Icon';
 
 function RecipeListItem({ id, title, onClick, onShowDetails, showActions }) {
     const onSelect = () => onClick({ id });

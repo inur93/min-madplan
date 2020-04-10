@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { GetGroupInvitesApi, GetUsersApi } from "../pages/api";
-import { useSelf } from "./useSelf";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import { GetGroupInvitesApi, GetUsersApi } from "../api";
+import { useSelf } from "./useSelf";
 
 const actions = {
     decline: 'decline',
@@ -45,6 +45,4 @@ export default function useInviteActions(revalidator) {
 }
 
 
-export {
-    actions
-}
+export { actions };

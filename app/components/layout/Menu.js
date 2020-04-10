@@ -1,20 +1,16 @@
-import { Menu as MenuSUI, Sidebar, Segment, Image, Dropdown, Icon, Label } from 'semantic-ui-react';
 import { useRouter } from 'next/router';
-import './menu.scss';
+import { Icon, Image, Label, Menu as MenuSUI, Sidebar } from 'semantic-ui-react';
+import { GetGroupsApi, GetUsersApi, logout } from '../../api';
 import { absUrl } from '../../functions/imageFunctions';
-import { ButtonClose } from '../shared/Button';
-import { useSelf } from '../../hooks/useSelf';
 import { useData } from '../../hooks/useData';
-import { GetGroupsApi, GetUsersApi, logout } from '../../pages/api';
 import { useInvitesCount } from '../../hooks/useInvitesCount';
 import { usePageSettings } from '../../hooks/usePageSettings';
+import { useSelf } from '../../hooks/useSelf';
+import { ButtonClose } from '../shared/Button';
+import './menu.scss';
 
 const fullname = (firstname, lastname) => `${firstname || ""} ${lastname || ""}`;
-const getSelectedGroupName = (groups, current) => {
-    const selected = groups.find(g => g._id == current);
-    if (current && selected) return selected.name;
-    return "Vælg gruppe";
-}
+
 const Menu = function ({ visible, onHide }) {
     const router = useRouter();
     const invitesCount = useInvitesCount();

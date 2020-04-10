@@ -1,7 +1,7 @@
+import { formatDateForQuery, getWeek, startOfNextWeek } from '../../functions/dateFunctions';
+import { ButtonSuccess } from "../shared/Button";
 import { Form } from "../shared/Form";
 import { Input } from "../shared/Input";
-import { getWeek, startOfNextWeek, formatDateForQuery } from '../../functions/dateFunctions';
-import { ButtonSuccess } from "../shared/Button";
 
 export function PlanCreate({ onCreate, loading }) {
     const nextWeek = startOfNextWeek();

@@ -1,6 +1,6 @@
-import { GetGroupsApi, GetUsersApi, GetFilesApi } from "../pages/api";
-import { useData } from "./useData";
 import { useState } from "react";
+import { GetFilesApi, GetGroupsApi, GetUsersApi } from "../api";
+import { useData } from "./useData";
 import { usePageSettings } from "./usePageSettings";
 
 

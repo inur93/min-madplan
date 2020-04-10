@@ -1,8 +1,8 @@
-import Header from './Header';
-import Loading from '../shared/Loading';
-import { Button, Sidebar, Segment } from 'semantic-ui-react';
-import "./layout.scss";
 import { useState } from 'react';
+import { Segment, Sidebar } from 'semantic-ui-react';
+import Loading from '../shared/Loading';
+import Header from './Header';
+import "./layout.scss";
 import Menu from './Menu';
 
 export default function Layout({ children, showBackBtn, title, simple, loading, actions }) {

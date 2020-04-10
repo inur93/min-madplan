@@ -1,6 +1,6 @@
-import { List, ListDescription, Icon } from "semantic-ui-react";
-import { useInvites } from "../../hooks/useInvites";
+import { List, ListDescription } from "semantic-ui-react";
 import useInviteActions from "../../hooks/useInviteActions";
+import { useInvites } from "../../hooks/useInvites";
 import { IconCheck, IconRemove } from "../shared/Icon";
 
 

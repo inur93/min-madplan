@@ -1,13 +1,13 @@
-import Layout, { Content, Actions } from '../components/layout/Layout';
-import { ButtonAction } from '../components/shared/Button';
-import { auth } from './api';
-import { useShoppingList } from '../hooks/useShoppingList';
-import { ShoppingListOverview } from '../components/shoppingList/ShoppingListOverview';
-import { ProductItemAutoComplete } from '../components/shared/Input';
-import { ShoppingListCreate } from '../components/shoppingList/ShoppingListCreate';
 import { Icon } from 'semantic-ui-react';
-import { ShoppingListView } from '../components/shoppingList/ShoppingListView';
+import { auth } from '../api';
+import Layout, { Actions, Content } from '../components/layout/Layout';
+import { ButtonAction } from '../components/shared/Button';
+import { ProductItemAutoComplete } from '../components/shared/Input';
 import { ShoppingItemEdit } from '../components/shoppingList/ShoppingItemEdit';
+import { ShoppingListCreate } from '../components/shoppingList/ShoppingListCreate';
+import { ShoppingListOverview } from '../components/shoppingList/ShoppingListOverview';
+import { ShoppingListView } from '../components/shoppingList/ShoppingListView';
+import { useShoppingList } from '../hooks/useShoppingList';
 
 function MessageEmptyHistory() {
   return <p>Du har ikke noget indkøbsliste endnu.

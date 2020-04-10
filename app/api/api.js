@@ -86,7 +86,7 @@ export const login = async function ({ username, password }) {
 }
 
 export const auth = ctx => {
-    const { jwt: token } = nextCookie(ctx);
+    const { jwt: token } = ServerCookie(ctx);
     if (ctx.req && !token) {
         ctx.res.writeHead(302, { Location: '/login' })
         ctx.res.end();

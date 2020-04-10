@@ -1,9 +1,9 @@
-import { Form } from "../shared/Form";
-import { Input, Message, Image, Segment } from "semantic-ui-react";
-import { ButtonSuccess } from "../shared/Button";
-import { useProfile } from "../../hooks/useProfile";
-import { InputFile } from "../shared/Input";
+import { Image, Input, Message, Segment } from "semantic-ui-react";
 import { absUrl } from "../../functions/imageFunctions";
+import { useProfile } from "../../hooks/useProfile";
+import { ButtonSuccess } from "../shared/Button";
+import { Form } from "../shared/Form";
+import { InputFile } from "../shared/Input";
 import './profile-edit.scss';
 
 export function ProfileEdit({ user }) {

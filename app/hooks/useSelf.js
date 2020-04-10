@@ -1,7 +1,5 @@
 
-
-import { useState, useEffect } from 'react';
-import { GetUsersApi } from '../pages/api/usersApi';
+import { GetUsersApi } from '../api/usersApi';
 import useSWR from 'swr';
 
 export function useSelf() {

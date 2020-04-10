@@ -1,4 +1,3 @@
-import useSWR from 'swr';
 import { getApi } from './api';
 
 
