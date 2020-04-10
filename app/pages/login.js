@@ -1,30 +1,35 @@
 import nextCookie from 'next-cookies';
-import { Image, Input, Segment } from 'semantic-ui-react';
+import { Container, Image, Segment, Transition } from 'semantic-ui-react';
 import { GetPageSettingsApi } from '../api';
-import { Button } from '../components/shared/Button';
-import { Form, FormError } from '../components/shared/Form';
+import { LoginForm } from '../components/auth/LoginForm';
+import { ResetPassword } from '../components/auth/ResetPassword';
 import { absUrl } from '../functions/imageFunctions';
 import { useLogin } from '../hooks/useLogin';
+import { ForgotPassword } from '../components/auth/ForgotPassword';
 
 const Page = function ({ bannerImage }) {
-    const [state, handlers] = useLogin();
+    const [state] = useLogin();
+
     return (
         <div>
             {bannerImage && <Image src={absUrl(bannerImage.url)} fluid />}
 
             <Segment className='login-container'>
-                <Form error={state.error} onSubmit={handlers.onLogin}>
-                    <Form.Field>
-                        <label>Brugernavn</label>
-                        <Input required name='username' placeholder='Brugernavn' />
-                    </Form.Field>
-                    <Form.Field>
-                        <label>Kodeord</label>
-                        <Input required name='password' type='password' placeholder='Kodeord' />
-                    </Form.Field>
-                    <FormError message="Brugernavn eller kodeord er forkert" />
-                    <Button loading={state.loading}>Login</Button>
-                </Form>
+                <Transition animation='fade up' visible={state.showLogin}>
+                    <Container>
+                        <LoginForm />
+                    </Container>
+                </Transition>
+                <Transition animation='fade down' visible={state.showForgotPassword} >
+                    <Container>
+                        <ForgotPassword />
+                    </Container>
+                </Transition>
+                <Transition visible={state.showResetPassword} >
+                    <Container>
+                        <ResetPassword />
+                    </Container>
+                </Transition>
             </Segment>
         </div>
     );

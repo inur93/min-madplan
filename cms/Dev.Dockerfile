@@ -3,6 +3,7 @@ FROM strapi/strapi:3.0.0-beta.18.7-node12
 WORKDIR /cms
 COPY ./package.json ./
 COPY ./yarn.lock ./
+COPY ./providers ./providers
 RUN yarn install
 
 #not necessary if running with a volume containing all source files

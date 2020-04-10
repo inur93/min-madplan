@@ -6,7 +6,6 @@ export const GetPageSettingsApi = (ctx) => {
     return {
         async get(section) {
             const { data } = await api.get('/page-settings');
-            console.log('data', data);
             if(section) return data[section];
             return data;
         },

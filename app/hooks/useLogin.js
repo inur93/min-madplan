@@ -1,30 +1,35 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { login } from '../api';
+import { useEffect, useState } from "react";
 
 
 export function useLogin() {
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
+    const [showLogin, setShowLogin] = useState(false);
+    const [showResetPassword, setShowResetPassword] = useState(false);
+    const [showForgotPassword, setShowForgotPassword] = useState(false);
     const router = useRouter();
 
-    const onLogin = async (data, e) => {
-        setLoading(true);
-        const response = await login(data);
-        if (!response) {
-            setError(true);
+    useEffect(() => {
+        const resetPassword = router.query.code;
+        const forgotPassword = router.query.forgotPassword;
+
+        if (resetPassword) {
+            setShowResetPassword(true);
+            setShowLogin(false);
+            setShowForgotPassword(false);
+        } else if (forgotPassword) {
+            setTimeout(() => setShowForgotPassword(true), 600);
+            setShowLogin(false);
+            setShowResetPassword(false);
         } else {
-            setError(false);
-            router.push("/");
+            setTimeout(() => setShowLogin(true), 600);
+            setShowForgotPassword(false);
+            setShowResetPassword(false);
         }
-        setLoading(false);
-    }
+    }, [router.query.resetPassword, router.query.code])
+
 
     const state = {
-        loading, error
+        showLogin, showResetPassword, showForgotPassword
     }
-    const handlers = {
-        onLogin
-    }
-    return [state, handlers];
+    return [state];
 }

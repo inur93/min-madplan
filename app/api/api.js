@@ -3,6 +3,7 @@ import cookie from 'js-cookie';
 import ServerCookie from 'next-cookies';
 
 function parseJwt(token) {
+    if(!token) return;
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
@@ -85,6 +86,16 @@ export const login = async function ({ username, password }) {
     }
 }
 
+export const forgotPassword = async function ({ email }) {
+    return await getApi().post('/auth/forgot-password', {
+        email,
+    });
+}
+
+export const resetPassword = async function (data) {
+    return await getApi().post('/auth/reset-password', data);
+}
+
 export const auth = ctx => {
     const { jwt: token } = ServerCookie(ctx);
     if (ctx.req && !token) {
@@ -99,6 +110,6 @@ export const auth = ctx => {
 export const logout = () => {
     cookie.remove("jwt");
     cookie.remove('user');
-    Router.push("/login");
+    window.location.href = '/login';
 }
 
