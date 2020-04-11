@@ -2,11 +2,10 @@ import axios from 'axios';
 import cookie from 'js-cookie';
 import ServerCookie from 'next-cookies';
 
-const getBaseUrl = () => {
-    if (process.env.NODE_ENV === 'production') {
-        return 'https://min-madplan.herokuapp.com/';
-    }
-    return process.browser ? 'http://localhost:1337/' : 'http://cms:1337/';
+export const getBaseUrl = () => {
+    return process.browser ?
+        process.env.BASE_URL || 'http://localhost:1337/' :
+        process.env.BASE_URL || 'http://cms:1337/';
 }
 
 
