@@ -1,5 +1,5 @@
 import { Icon } from 'semantic-ui-react';
-import { auth } from '../api';
+import { auth } from '../_api';
 import Layout, { Actions, Content } from '../components/layout/Layout';
 import { ButtonAction } from '../components/shared/Button';
 import { ProductItemAutoComplete } from '../components/shared/Input';

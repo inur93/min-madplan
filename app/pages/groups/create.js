@@ -1,4 +1,4 @@
-import { auth } from "../../api";
+import { auth } from "../../_api";
 import { GroupCreate } from "../../components/group/GroupCreate";
 import Layout from "../../components/layout/Layout";
 

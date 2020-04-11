@@ -1,4 +1,4 @@
-import { getApi } from './api';
+import { getApi } from './_api';
 import { addDays, formatDateForQuery } from '../functions/dateFunctions';
 
 const getPath = (path, query) => `/food-plans/${path || ''}${query ? '?' : ''}${query || ''}`;

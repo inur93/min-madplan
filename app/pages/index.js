@@ -1,5 +1,5 @@
 import { Segment } from 'semantic-ui-react';
-import { auth, GetPageSettingsApi, GetUsersApi } from '../api';
+import { auth, GetPageSettingsApi, GetUsersApi } from '../_api';
 import { GroupCreate } from '../components/group/GroupCreate';
 import { GroupInvitesWrapped } from '../components/group/GroupInvites';
 import MenuItem from '../components/menu/MenuItem';

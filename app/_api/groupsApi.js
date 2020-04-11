@@ -1,4 +1,4 @@
-import { getApi } from './api';
+import { getApi } from './_api';
 
 const getPath = (path, query) => `/groups/${path || ''}?${query || ''}`;
 

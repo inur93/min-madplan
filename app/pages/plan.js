@@ -1,5 +1,5 @@
 import { Icon } from "semantic-ui-react";
-import { auth } from "../api";
+import { auth } from "../_api";
 import Layout, { Actions, Content } from "../components/layout/Layout";
 import { PlanCreate } from "../components/plan/PlanCreate";
 import { PlanHistoryList } from "../components/plan/PlanHistoryList";

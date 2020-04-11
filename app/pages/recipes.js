@@ -1,4 +1,4 @@
-import { auth } from '../api';
+import { auth } from '../_api';
 import Layout, { Actions, Content } from '../components/layout/Layout';
 import { Ingredients } from '../components/recipe/Ingredients';
 import { Instructions } from '../components/recipe/Instructions';

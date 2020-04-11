@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { GetProductItemsApi, GetShoppingListApi } from "../api";
+import { GetProductItemsApi, GetShoppingListApi } from "../_api";
 import { splice } from "../functions/arrayFunctions";
 import { routeUpdate } from "../functions/routerFunctions";
 

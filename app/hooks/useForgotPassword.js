@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { forgotPassword } from "../api";
+import { forgotPassword } from "../_api";
 
 
 export function useForgotPassword() {

@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
-import { GetPlanApi } from "../api";
+import { GetPlanApi } from "../_api";
 import { splice } from "../functions/arrayFunctions";
 import { formatDateForQuery } from "../functions/dateFunctions";
 import { routeUpdate } from "../functions/routerFunctions";

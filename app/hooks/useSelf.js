@@ -1,5 +1,5 @@
 
-import { GetUsersApi } from '../api/usersApi';
+import { GetUsersApi } from '../_api';
 import useSWR from 'swr';
 
 export function useSelf() {

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { Icon, Image, Label, Menu as MenuSUI, Sidebar } from 'semantic-ui-react';
-import { GetGroupsApi, GetUsersApi, logout } from '../../api';
+import { GetGroupsApi, GetUsersApi, logout } from '../../_api';
 import { absUrl } from '../../functions/imageFunctions';
 import { useData } from '../../hooks/useData';
 import { useInvitesCount } from '../../hooks/useInvitesCount';

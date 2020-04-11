@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { resetPassword } from "../api/api";
+import { resetPassword } from "../_api";
 
 
 export function useResetPassword() {

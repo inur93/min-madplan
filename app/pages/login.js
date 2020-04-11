@@ -1,6 +1,6 @@
 import nextCookie from 'next-cookies';
 import { Container, Image, Segment, Transition } from 'semantic-ui-react';
-import { GetPageSettingsApi } from '../api';
+import { GetPageSettingsApi } from '../_api';
 import { LoginForm } from '../components/auth/LoginForm';
 import { ResetPassword } from '../components/auth/ResetPassword';
 import { absUrl } from '../functions/imageFunctions';

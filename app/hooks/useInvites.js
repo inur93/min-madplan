@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { GetGroupInvitesApi } from "../api";
+import { GetGroupInvitesApi } from "../_api";
 
 
 export function useInvites() {
