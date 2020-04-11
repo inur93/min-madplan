@@ -1,4 +1,4 @@
-import { getApi } from './_api';
+import { getApi } from './api';
 
 const getPath = (path, query) => `/users/${path || ''}?${query || ''}`;
 

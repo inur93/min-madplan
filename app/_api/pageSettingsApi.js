@@ -1,4 +1,4 @@
-import { getApi } from './_api';
+import { getApi } from './api';
 
 
 export const GetPageSettingsApi = (ctx) => {

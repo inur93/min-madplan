@@ -1,4 +1,4 @@
-import { getApi } from "./_api";
+import { getApi } from "./api";
 import { auth, login, logout, forgotPassword, resetPassword } from "./authApi";
 import { GetGroupsApi } from "./groupsApi";
 import { GetPageSettingsApi } from './pageSettingsApi';
