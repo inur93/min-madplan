@@ -8,6 +8,8 @@ export function ForgotPassword() {
     const [state, handlers] = useForgotPassword();
     return (
         <Form success={state.success} onSubmit={handlers.onSubmit}>
+            <p>Indtast den mail adresse du har registreret din bruger med.</p> 
+            <p>Hvis mail adressen findes i vores system, vil du få et link hvor du kan nulstille din kode.</p>
             <Form.Field required>
                 <label>Email</label>
                 <Input name='email' placeholder='Email' />

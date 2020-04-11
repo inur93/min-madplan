@@ -25,7 +25,7 @@ export function useLogin() {
             setShowForgotPassword(false);
             setShowResetPassword(false);
         }
-    }, [router.query.resetPassword, router.query.code])
+    }, [router.query.forgotPassword, router.query.code])
 
 
     const state = {
