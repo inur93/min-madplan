@@ -1,3 +1,3 @@
-import { getBaseUrl } from "../_api/api";
 
-export const absUrl = (url) => `${getBaseUrl()}${url}`;
+
+export const absUrl = (url) => `${process.env.BASE_URL || 'http://localhost:1337'}${url}`;

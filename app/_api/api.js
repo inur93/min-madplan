@@ -4,8 +4,8 @@ import ServerCookie from 'next-cookies';
 
 export const getBaseUrl = () => {
     return process.browser ?
-        process.env.BASE_URL || 'http://localhost:1337/' :
-        process.env.BASE_URL || 'http://cms:1337/';
+        process.env.BASE_URL || 'http://localhost:1337' :
+        process.env.BASE_URL || 'http://cms:1337';
 }
 
 

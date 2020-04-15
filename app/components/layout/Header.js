@@ -5,8 +5,9 @@ import { ButtonMenu } from '../shared/Button';
 
 import './header.scss';
 
-const Header = ({ showBackBtn, title, showMenu, loading, ...otherProps }) => {
+const Header = ({ title, actions, showMenu, loading, ...otherProps }) => {
     const { pathname } = useRouter();
+    const showActions = actions && actions.length > 0;
     //indkøbsliste
     //ugeplan
     //opskrifter
@@ -18,15 +19,18 @@ const Header = ({ showBackBtn, title, showMenu, loading, ...otherProps }) => {
                 <HeaderSUI className="custom-header" as='h1' floated='left'>
                     {title}
                 </HeaderSUI>
-                <Dropdown icon="ellipsis vertical"
-                    value=""
-                    className="settings-icon"
-                    floating
-                    size='large'
-                    options={[
-                        { key: 'delete', text: 'Delete', value: 'delete' },
-                        { key: 'edit', text: 'edit', value: 'edit' }
-                    ]} />
+                {showActions &&
+                    <Dropdown icon="ellipsis vertical"
+                        value=""
+                        className="settings-icon"
+                        floating
+                        size='large'>
+                        <Dropdown.Menu>
+                            {actions.map(
+                                x => <Dropdown.Item key={x.label} text={x.label} onClick={x.onClick} />
+                            )}
+                        </Dropdown.Menu>
+                    </Dropdown>}
             </Segment>
             {loading && <Progress percent={100} active size='tiny' color='blue' />}
         </div>)

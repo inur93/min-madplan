@@ -14,10 +14,13 @@ const ListItem = ({ ingredient }) => {
 
 export function Ingredients({ loading, recipe }) {
 
-    if(loading) return <Loader  />;
-    return <List>
-        {recipe.ingredients.map(
-            i => <ListItem key={i._id} ingredient={i} />
-        )}
-    </List>
+    if (loading) return <Loader />;
+    return <div id='ingredients'>
+        <h2>Dette skal du bruge</h2>
+        <List >
+            {recipe.ingredients.map(
+                i => <ListItem key={i._id} ingredient={i} />
+            )}
+        </List>
+    </div>
 }

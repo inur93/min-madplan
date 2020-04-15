@@ -6,9 +6,9 @@ export const GetRecipesApi = (ctx) => {
     const api = getApi(ctx);
 
     return {
-        async find(query){
+        async find(query, start = 0, limit = 10){
 
-            return await (await api.get(getPath("", `_limit=10&title_contains=${query || ""}`))).data;
+            return await (await api.get(getPath("", `_start=${start}&_limit=${limit}&title_contains=${query || ""}`))).data;
         },
         async findOne(id) {
             return await (await api.get(getPath(id))).data;
@@ -18,6 +18,9 @@ export const GetRecipesApi = (ctx) => {
         },
         async update(id, recipe){
             return await (await api.put(getPath(id), recipe)).data;
+        },
+        async count (query){
+            return await (await api.get(getPath('count', `title_contains=${query || ''}`))).data;
         }
     }
 }

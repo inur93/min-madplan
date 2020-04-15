@@ -5,8 +5,10 @@ import { GroupInvitesWrapped } from '../components/group/GroupInvites';
 import MenuItem from '../components/menu/MenuItem';
 import { useInvitesCount } from '../hooks/useInvitesCount';
 
-const IndexPage = function ({ self, shoppingListImage, planImage, recipesImage }) {
+const IndexPage = function (props) {
 
+  console.log('props', props);
+  const { self, shoppingListImage, planImage, recipesImage } = props;
   const { data: count } = useInvitesCount();
   const firstTime = !self.selectedGroup;
   return (
@@ -41,6 +43,7 @@ IndexPage.getInitialProps = async function (ctx) {
     GetPageSettingsApi(ctx).frontPage()
   ]);
 
+  console.log('self', self);
   return {
     self,
     ...frontPage,

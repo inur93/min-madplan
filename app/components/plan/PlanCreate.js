@@ -2,12 +2,14 @@ import { formatDateForQuery, getWeek, startOfNextWeek } from '../../functions/da
 import { ButtonSuccess } from "../shared/Button";
 import { Form } from "../shared/Form";
 import { Input } from "../shared/Input";
+import { usePlanCreate } from '../../hooks/plan/usePlanCreate';
 
-export function PlanCreate({ onCreate, loading }) {
+export function PlanCreate() {
+    const [state, handlers] = usePlanCreate();
     const nextWeek = startOfNextWeek();
     const week = getWeek(nextWeek);
     const defaultDateValue = formatDateForQuery(nextWeek);
-    return <Form onSubmit={onCreate}>
+    return <Form onSubmit={handlers.onCreate}>
         <Form.Field required>
             <label>Navn</label>
             <Input name="name"
@@ -20,6 +22,6 @@ export function PlanCreate({ onCreate, loading }) {
                 type='date'
                 defaultValue={defaultDateValue} />
         </Form.Field>
-        <ButtonSuccess disabled={loading} />
+        <ButtonSuccess loading={state.loading} disabled={state.loading} />
     </Form>
 }

@@ -1,8 +1,9 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { GetProductItemsApi, GetShoppingListApi } from "../_api";
-import { splice } from "../functions/arrayFunctions";
-import { routeUpdate } from "../functions/routerFunctions";
+import { GetProductItemsApi, GetShoppingListApi } from "../../_api";
+import { splice } from "../../functions/arrayFunctions";
+import { routeUpdate } from "../../functions/routerFunctions";
+import useSWR from "swr";
 
 const actions = {
     updateItems: 'updateItems',
@@ -12,6 +13,7 @@ const actions = {
     selectItem: 'selectItem',
 
     createList: 'createList',
+    deleteCurrent: 'delete-current-shopping-list',
 
     showHistory: 'showHistory',
     showView: 'showView',
@@ -33,14 +35,23 @@ export function useShoppingList() {
     const [title, setTitle] = useState('Indkøbsliste');
     const [editSelected, setEditSelected] = useState(false);
     const [show, setShow] = useState({});
-    const [history, setHistory] = useState([]);
+    
     const [selected, setSelected] = useState(null);
     const [selectedItem, setSelectedItem] = useState(null);
-
+    const [contextMenu, setContextMenu] = useState([]);
     //loading
     const [loadingSelected, setLoadingSelected] = useState(false);
-    const [loadingHistory, setLoadingHistory] = useState(false);
-
+    
+    useEffect(() => {
+        const items = [];
+        if(show.view){
+            items.push({
+                label: 'Slet',
+                onClick: onClick(actions.deleteCurrent)
+            })
+        }
+        setContextMenu(items);
+    }, [show]);
     useEffect(() => {
         const load = async () => {
             setLoadingHistory(true);
@@ -59,9 +70,7 @@ export function useShoppingList() {
         else if (show.create) setTitle('Indkøbsliste');
     }, [show, selected])
 
-    useEffect(() => {
-        setShow(getVisibility(router.query.view || views.view));
-    }, [router.query.view])
+  
 
     //selected shopping list
     useEffect(() => {
@@ -77,12 +86,7 @@ export function useShoppingList() {
         load();
     }, [router.query.id]);
 
-    //handler to load suggestions for items to add to shopping list
-    const getSuggestions = async (value) => {
-        const { data } = await productItemsApi.find(value);
-        const suggestions = data.map(({ _id, name, defaultUnit }) => ({ _id, name, unit: defaultUnit }));
-        return [...suggestions, { name: `${value} ` }]; //add a space to enable auto-suggest to trigger change event onClick
-    }
+ 
 
     const updateItemList = async (id, list) => {
         const data = await api.updateShoppingList(id, {
@@ -107,21 +111,7 @@ export function useShoppingList() {
             case actions.editItem:
                 setSelectedItem(selected.items.find(x => x._id === data.id));
                 break;
-            case actions.updateItem:
-                const updatedList = splice(selected.items, x => x._id === data.item._id);
-                updatedList.push(data.item);
-                await updateItemList(selected._id, updatedList);
-                setSelectedItem(null);
-                break;
-            case actions.deleteItem:
-                const { items } = selected;
-                updateItemList(selected._id, items.filter(x => x._id != data._id));
-                break;
-            case actions.showCreate:
-                routeUpdate(router, {
-                    view: views.create
-                })
-                break;
+
             case actions.createList:
                 setLoadingSelected(true);
                 const created = await api.createShoppingList(data);
@@ -137,6 +127,17 @@ export function useShoppingList() {
             case actions.showHistory:
                 routeUpdate(router, { view: views.history });
                 break;
+            case actions.deleteCurrent:
+                setLoadingSelected(true);
+                await api.delete(selected._id);
+                setLoadingSelected(false);
+                router.replace({
+                    pathname: '/shopping-list',
+                    query: {
+                        view: views.history
+                    }
+                })
+                break;
             default:
                 console.error('unknown action', { action, data });
                 break;
@@ -146,6 +147,7 @@ export function useShoppingList() {
     }
 
     const state = {
+        contextMenu,
         title,
         loadingHistory,
         loadingSelected,
@@ -170,13 +172,3 @@ export function useShoppingList() {
 }
 
 
-function getVisibility(view) {
-    const showViews = Object.keys(views).reduce((map, key) => {
-        map[key] = false;
-        return map;
-    }, {});
-
-    showViews[view] = true;
-
-    return showViews;
-}

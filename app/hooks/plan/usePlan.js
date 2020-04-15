@@ -12,6 +12,7 @@ const actions = {
     editPlanDay: 'edit-list-item',
     removePlanDay: 'remove-list-item',
     createPlan: 'create-plan',
+    deleteCurrentPlan: 'delete-current-plan',
 
     showRecipeInfo: 'show-recipe-info',
     showCreate: 'view-create',
@@ -46,6 +47,16 @@ export function usePlan(defaultState) {
     //props
     const [noCurrentPlan, setNoCurrentPlan] = useState(false);
     const [isFirstTime, setFirstTime] = useState(defaultState.firstTime);
+
+    const [contextMenu, setContextMenu] = useState([]);
+
+    useEffect(() => {
+        const items = [];
+        if (show.view) {
+            items.push({ label: 'Slet', onClick: onClick(actions.deleteCurrentPlan) });
+        }
+        setContextMenu(items);
+    }, [show])
 
     useEffect(() => {
         const loadPlan = async (id) => {
@@ -86,7 +97,7 @@ export function usePlan(defaultState) {
                 router.push(getRoute(`/shopping-list?id=${shoppingListId // if new shopping list has been created
                     || currentPlan.shopping_list._id // if plan is fetched by id
                     || currentPlan.shopping_list // if plan object is taken from history list
-            }`));
+                    }`));
 
                 break;
             case actions.editPlanDay:
@@ -136,8 +147,19 @@ export function usePlan(defaultState) {
             case actions.showHistory:
                 routeUpdate(router, { view: views.history });
                 break;
+            case actions.deleteCurrentPlan:
+                setLoadingCurrent(true);
+                await api.delete(currentPlan._id);
+                setLoadingCurrent(false);
+                router.replace({
+                    pathname: '/plan',
+                    query: {
+                        view: views.history
+                    }
+                })
+                break;
             default:
-                console.error('unknown click command: ', {type, data});
+                console.error('unknown click command: ', { type, data });
                 break;
         }
     }
@@ -168,7 +190,8 @@ export function usePlan(defaultState) {
         planHistory: history.data,
         noCurrentPlan,
         title,
-        show
+        show,
+        contextMenu
     }
 
     return [state, onClick, actions];
