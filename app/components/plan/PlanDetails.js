@@ -1,15 +1,16 @@
-import { List } from "semantic-ui-react";
+import { List, Icon } from "semantic-ui-react";
 import { addDays, formatDateForQuery, formatDay, getPlanLength } from '../../functions/dateFunctions';
 import { IconEdit, IconInfo, IconRemove } from "../shared/Icon";
 import { usePlanDetails } from "../../hooks/plan/usePlanDetails";
 import { Loader } from '../shared/Loader';
+import { useState } from "react";
 
 const ListItem = function ({ date, recipe, onEdit, onRemove, onInfo }) {
-
     const isEmpty = !recipe;
     const handleInfo = () => onInfo({ recipe: recipe._id, date });
-    const handleRemove = () => onRemove({ date });
+    const handleRemove = async () => await onRemove({ date });
     const handleEdit = () => onEdit({ recipe: recipe && recipe._id, date });
+
     return (<List.Item>
         <List.Content>
             <List.Header as="a">{formatDay(new Date(date))}</List.Header>

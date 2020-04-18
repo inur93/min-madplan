@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useView, views } from "../useView";
 import { getPlanLength, addDays, formatDateForQuery } from "../../functions/dateFunctions";
 import { splice } from "../../functions/arrayFunctions";
+import { Mutex } from "../../functions/asyncFunctions";
 
 
 
@@ -33,34 +34,39 @@ export function usePlanDetails(idParam = 'id') {
 
     useEffect(() => {
         if (!plan) return;
-        const { length, durationType } = plan;
+        const _plan = plan;
+        const { length, durationType } = _plan;
         let days = new Array(getPlanLength(length, durationType)).fill(null);
-        const baseDate = new Date(plan.validFrom);
-
-        setPlanDays(days.map((val, i) => {
+        const baseDate = new Date(_plan.validFrom);
+        const planDays = days.map((val, i) => {
             const day = addDays(baseDate, i);
             const date = formatDateForQuery(day);
-            const item = plan.plan.find(p => p.date === date) || {};
+            const item = _plan.plan.find(p => {
+                return (p && p.date) === date;
+            }) || {};
             return {
                 ...item,
                 date
             }
-        }));
+        })
+        setPlanDays(planDays);
     }, [plan])
 
     const updatePlanDays = async (list) => {
-        const data = {
-            plan: list
-        }
         const key = ['/plan', plan._id];
-        mutate(key, {...plan, plan: list}, false);
-        mutate(key, api.update(plan._id, data));
+
+        const content = list.map(e => ({ ...e, shopping_list: null, owner: null, items: [] }));
+        //we want to mutate cache with all data
+        mutate(key, { ...plan, plan: content }, false);
+        //the api is only updated with changed values
+        mutate(key, api.update(plan._id, { plan: list }));
+
     }
 
     const state = {
         notFound: !router.query[idParam],
         plan: plan || latest,
-        loading: !plan || creating,
+        loading: !plan || creating || !planDays.length,
         planDays,
         shoppingList: plan && plan.shopping_list
     }
@@ -76,9 +82,7 @@ export function usePlanDetails(idParam = 'id') {
                 }
             })
         },
-        removePlanDay: ({ date }) => {
-            updatePlanDays(splice(plan.plan, x => x.date === date))
-        },
+        removePlanDay: ({ date }) => updatePlanDays(splice(plan.plan, x => x.date === date)),
         infoPlanDay: ({ id, date, recipe }) => {
             router.push({
                 pathname: '/recipes',
@@ -91,12 +95,12 @@ export function usePlanDetails(idParam = 'id') {
             });
         },
         updatePlanDay: ({ id, date, recipe }) => {
-            updatePlanDays([...plan.plan.filter(x => x.date != date), { date, recipe }]);
+            updatePlanDays([...plan.plan.filter(x => x.date != date), { date, recipe: recipe }]);
             goTo.details(id);
         },
         createShoppingList: async () => {
             setCreating(true);
-            const {_id} = await api.createShoppingList(plan._id);
+            const { _id } = await api.createShoppingList(plan._id);
             router.push({
                 pathname: '/shopping-list',
                 query: {
@@ -111,7 +115,7 @@ export function usePlanDetails(idParam = 'id') {
                 pathname: '/shopping-list',
                 query: {
                     view: views.details,
-                    id: plan.shopping_list._id
+                    id: plan.shopping_list
                 }
             })
         },

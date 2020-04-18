@@ -8,7 +8,17 @@ const MODEL_ID_SHOPPING_LIST = 'shopping-list';
  * Read the documentation (https://strapi.io/documentation/3.0.0-beta.x/concepts/controllers.html#core-controllers)
  * to customize this controller
  */
-
+const sanitize = (entity, options) => {
+    const sanitized = sanitizeEntity(entity, options);
+    if(!sanitized.plan) return sanitized;
+    for(let i = 0; i < sanitized.plan.length; i++){
+        if(sanitized.plan[i].recipe){
+            delete sanitized.plan[i].recipe.ingredients;
+            delete sanitized.plan[i].recipe.instructions;
+        }
+    }
+    return sanitized;
+}
 
 module.exports = {
     async find(ctx) {
@@ -24,7 +34,7 @@ module.exports = {
         const entities = await strapi.query(MODEL_ID).model.find(query);
 
         return entities.map(entity =>
-            sanitizeEntity(entity, { model: strapi.models[MODEL_ID] }));
+            sanitize(entity, { model: strapi.models[MODEL_ID] }));
     },
     async create(ctx) {
         let entity;
@@ -34,14 +44,17 @@ module.exports = {
         const data = ctx.request.body;
         data.owner = userId;
         data.group = group;
-        
+
         entity = await strapi.services[MODEL_ID].create(data);
 
-        return sanitizeEntity(entity, { model: strapi.models[MODEL_ID] });
+        return sanitize(entity, { model: strapi.models[MODEL_ID] });
     },
     async findOne(ctx) {
-        const entity = await strapi.services[MODEL_ID].findOne(ctx.params);
-        return sanitizeEntity(entity, { model: strapi.models[MODEL_ID] });
+        const entity = await strapi.query(MODEL_ID).model.findOne(
+            { _id: ctx.params.id }
+        );
+        
+        return sanitize(entity, { model: strapi.models[MODEL_ID] });
     },
     async createShoppingList(ctx) {
         const group = getCurrentGroup(ctx);

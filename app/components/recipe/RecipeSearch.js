@@ -19,7 +19,7 @@ function RecipeListItem({ recipe }) {
     const onCheck = () => planHandlers.updatePlanDay({
         id: router.query.plan,
         date: state.planDay.date,
-        recipe: _id
+        recipe: recipe
     })
     const showInfo = () => goTo.details(_id, true);
     const onSelect = () => state.hide ? showInfo() : onCheck()

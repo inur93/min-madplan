@@ -8,7 +8,7 @@ import { useView, views } from '../hooks/useView';
 
 const Page = () => {
 
-  const [show, edit, goto] = useView();
+  const [show, edit, goto] = useView('/shopping-list');
   const [menu] = useShoppingListContextMenu();
 
   return (

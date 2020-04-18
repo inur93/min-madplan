@@ -6,8 +6,10 @@ import { ShoppingItemEdit } from "./ShoppingItemEdit";
 import { ProductItemAutoComplete } from "../shared/Input";
 import './shopping-list-view.scss';
 import { Loader } from "../shared/Loader";
+import FlipMove from 'react-flip-move';
+import { forwardRef } from "react";
 
-function ListElement({ editMode, item, onCheck, onEdit, onRemove }) {
+const ListElement = forwardRef(({ editMode, item, onCheck, onEdit, onRemove }, ref) => {
     const { name, unit, amount, checked } = item;
 
     const handleCheck = () => onCheck({ item: { ...item, checked: !checked } });
@@ -20,7 +22,7 @@ function ListElement({ editMode, item, onCheck, onEdit, onRemove }) {
         ? `${amount} ${unit || ''} ${name}`
         : name;
 
-    return <List.Item className='shopping-list-view-item'>
+    return <List.Item ref={ref} className='shopping-list-view-item'>
         <List.Content>
             <List.Header onClick={handleEdit}>
                 {fullname}
@@ -32,7 +34,7 @@ function ListElement({ editMode, item, onCheck, onEdit, onRemove }) {
             {!editMode && <Checkbox checked={checked} onChange={handleCheck} />}
         </List.Content>
     </List.Item >
-}
+})
 
 export function ShoppingListDetails() {
     const [state, handlers] = useShoppingListDetails();
@@ -48,14 +50,16 @@ export function ShoppingListDetails() {
             {!products.length && editMode && <p>Skriv i søgefeltet ovenfor for at tilføje noget til indkøbslisten</p>}
             {!products.length && !editMode && <p>Din indkøbsliste er tom, tryk på <Icon name='edit' /> for at tilføje varer til listen</p>}
             <List>
-                {products
-                    .sort(sortByCheckedThenName)
-                    .map((item, i) => <ListElement key={item.name+i}
-                        editMode={editMode}
-                        onCheck={handlers.updateProduct}
-                        onEdit={handlers.editProduct}
-                        onRemove={handlers.removeProduct}
-                        item={item} />)}
+                <FlipMove>
+                    {products
+                        .sort(sortByCheckedThenName)
+                        .map((item, i) => <ListElement key={item._id || item.name}
+                            editMode={editMode}
+                            onCheck={handlers.updateProduct}
+                            onEdit={handlers.editProduct}
+                            onRemove={handlers.removeProduct}
+                            item={item} />)}
+                </FlipMove>
             </List>
         </div>
         {state.product &&

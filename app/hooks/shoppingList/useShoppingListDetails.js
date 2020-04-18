@@ -39,20 +39,17 @@ export function useShoppingListDetails() {
         return [...suggestions, { name: `${value} ` }]; //add a space to enable auto-suggest to trigger change event onClick
     }
 
-    const updateProducts = async (list) => {
-        const data = {
-            ...shoppingList,
-            items: list
-        };
-        const key = ['shopping-lists', data._id];
+    const updateProducts = async (items) => {
+        const key = ['shopping-lists', shoppingList._id];
         if (product) setProduct(null);
-        mutate(key, data, false);
-        mutate(key, api.update(data._id, data));
+        mutate(key, { ...shoppingList, items }, false);
+        mutate(key, api.update(shoppingList._id, { items }));
     }
 
+    const products = ((shoppingList || {}).items || []).filter(x => !!x);
     const state = {
         shoppingList: shoppingList || latest,
-        products: (shoppingList || {}).items || [],
+        products,
         loading: !shoppingList,
         reloading: shoppingListLoading,
         editMode,
@@ -61,11 +58,10 @@ export function useShoppingListDetails() {
 
     const handlers = {
         getSuggestions,
-        addProduct: ({ name }) =>
-            updateProducts([...shoppingList.items, { name }]),
-        updateProduct: ({ item }) => updateProducts([...splice(shoppingList.items, x => x._id === item._id), item]),
-        removeProduct: ({ id }) => updateProducts(shoppingList.items.filter(x => x._id != id)),
-        editProduct: ({ id }) => setProduct(shoppingList.items.find(x => x._id === id)),
+        addProduct: ({ name }) => updateProducts([...products, { name }]),
+        updateProduct: ({ item }) => updateProducts([...splice(products, x => x._id === item._id), item]),
+        removeProduct: ({ id }) => updateProducts(products.filter(x => x._id != id)),
+        editProduct: ({ id }) => setProduct(products.find(x => x._id === id)),
         cancelEditProduct: () => setProduct(null)
     }
     return [state, handlers];

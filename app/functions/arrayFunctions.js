@@ -10,6 +10,7 @@ export const splice = (arr, query, count = 1) => {
 
 
 export const sortByCheckedThenName = (x, y) => {
+    if(!x || !y) return 0;
     if (x.checked) return 1;
     if (y.checked) return -1;
 
