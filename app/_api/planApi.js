@@ -14,9 +14,7 @@ export const GetPlanApi = (ctx) => {
             return null;
         },
         async find() {
-            const data = await (await api.get(getPath("", `_limit=10&_sort=validFrom_asc`))).data || [];
-            const {shopping_list, owner, group, ...partial } = data;
-            return partial;
+            return await (await api.get(getPath("", `_limit=10&_sort=validFrom_asc`))).data || [];
         },
         async findOne(id) {
             return await (await api.get(getPath(id))).data;
@@ -25,9 +23,7 @@ export const GetPlanApi = (ctx) => {
             return await (await api.post(getPath(), plan)).data;
         },
         async update(id, plan) {
-            const data = await (await api.put(getPath(id), plan)).data;
-            const {shopping_list, owner, group, ...partial} = data;
-            return partial;
+            return await (await api.put(getPath(id), plan)).data;
         },
         async createShoppingList(id) {
             return await (await api.post(getPath(`${id}/shopping-list`))).data;

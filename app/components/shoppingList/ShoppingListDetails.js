@@ -42,6 +42,7 @@ export function ShoppingListDetails() {
 
     return (<Loader loading={loading}>
         <div>
+            <h2>{state.shoppingList.name}</h2>
             {editMode && <ProductItemAutoComplete
                 getSuggestions={handlers.getSuggestions}
                 onSelect={handlers.addProduct}

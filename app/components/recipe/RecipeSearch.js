@@ -1,15 +1,16 @@
-import { List, Button } from 'semantic-ui-react';
-import { IconCheck, IconInfo } from '../shared/Icon';
-import { useRecipeSearch } from '../../hooks/recipe/useRecipeSearch';
-import { Loader } from '../shared/Loader';
-import { SearchInput } from '../shared/Input';
-import { useView } from '../../hooks/useView';
-import { usePlanDay } from '../../hooks/plan/usePlanDay';
-import { PlanDate } from './PlanDate';
 import { useRouter } from 'next/router';
+import FlipMove from 'react-flip-move';
+import { Button, List } from 'semantic-ui-react';
+import { usePlanDay } from '../../hooks/plan/usePlanDay';
 import { usePlanDetails } from '../../hooks/plan/usePlanDetails';
+import { useRecipeSearch } from '../../hooks/recipe/useRecipeSearch';
+import { useView } from '../../hooks/useView';
+import { IconCheck, IconInfo } from '../shared/Icon';
+import { SearchInput } from '../shared/Input';
+import { Loader } from '../shared/Loader';
+import { forwardRef } from 'react';
 
-function RecipeListItem({ recipe }) {
+const RecipeListItem = forwardRef(({ recipe }, ref) => {
     const { _id, title } = recipe;
     const [state] = usePlanDay('plan', 'date');
     const router = useRouter();
@@ -23,7 +24,7 @@ function RecipeListItem({ recipe }) {
     })
     const showInfo = () => goTo.details(_id, true);
     const onSelect = () => state.hide ? showInfo() : onCheck()
-    return (<List.Item >
+    return (<List.Item ref={ref} >
         <List.Content>
             <List.Header onClick={onSelect}>{title}</List.Header>
         </List.Content>
@@ -32,7 +33,7 @@ function RecipeListItem({ recipe }) {
             {!state.hide && <IconCheck onClick={onCheck} />}
         </List.Content>
     </List.Item>)
-}
+});
 
 export function RecipeSearch() {
     const [state, handlers] = useRecipeSearch();
@@ -41,9 +42,16 @@ export function RecipeSearch() {
         <p>{state.results.length} ud af {state.count}</p>
         <Loader loading={state.loading}>
             <List className='recipe-list' selection verticalAlign='middle'>
-                {state.results.map(r => <RecipeListItem recipe={r} />)}
+                <FlipMove>
+                    {state.results.map(r => <RecipeListItem key={r._id} recipe={r} />)}
+                </FlipMove>
             </List>
-    <Button disabled={state.isLoadingMore || state.isReachingEnd} loading={state.isLoadingMore} fluid onClick={handlers.loadMore}>{state.isReachingEnd ? 'der er ikke flere resultater' : 'indlæs flere'}</Button>
+            <Button disabled={state.isLoadingMore || state.isReachingEnd}
+                loading={state.isLoadingMore}
+                fluid
+                onClick={handlers.loadMore}>
+                {state.isReachingEnd ? 'der er ikke flere resultater' : 'indlæs flere'}
+            </Button>
         </Loader>
     </div>)
 }

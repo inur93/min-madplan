@@ -10,11 +10,11 @@ export function useShoppingListContextMenu() {
     const [show, edit, goTo] = useView('/shopping-list');
 
     const menu = [];
-    if (show.view) {
+    if (show.details) {
         menu.push({
             label: 'Slet',
             onClick: async () => {
-                goTo(views.history);
+                goTo.history();
                 await api.delete(router.query.id);
                 mutate('shopping-lists');
             }

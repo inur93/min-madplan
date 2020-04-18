@@ -51,7 +51,7 @@ function getShow(view) {
         }, {});
 
     showViews[view] = true;
-
+    showViews.view = view;
     return showViews;
 }
 

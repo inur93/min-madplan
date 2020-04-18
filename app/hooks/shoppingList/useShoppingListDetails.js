@@ -11,10 +11,7 @@ export function useShoppingListDetails() {
 
     const router = useRouter();
     const [show, editMode, goTo] = useView('/shopping-list');
-
     const [product, setProduct] = useState(null);
-
-    const { data: latest } = useSWR('shopping-list/latest', api.latest);
 
     const {
         data: shoppingList,
@@ -23,13 +20,6 @@ export function useShoppingListDetails() {
         router.query.id ? ['shopping-lists', router.query.id] : null,
         (url, id) => api.findOne(id)
     );
-
-    useEffect(() => {
-        if (!router.query.id && !router.query.view && latest) {
-            goTo.details(latest._id);
-        }
-    }, [router.query.id, router.query.view, latest]);
-
 
     //handlers   
     //handler to load suggestions for items to add to shopping list
@@ -48,7 +38,7 @@ export function useShoppingListDetails() {
 
     const products = ((shoppingList || {}).items || []).filter(x => !!x);
     const state = {
-        shoppingList: shoppingList,
+        shoppingList: shoppingList || {},
         products,
         loading: !shoppingList,
         reloading: shoppingListLoading,

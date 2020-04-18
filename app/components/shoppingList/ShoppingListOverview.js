@@ -24,13 +24,13 @@ const ShoppinglistListItem = function ({ item, onClick }) {
 
 export function ShoppingListOverview() {
     const [state] = useShoppingListHistory();
-    const [show, edit, goTo] = useView('shopping-list');
+    const [show, edit, goTo] = useView('/shopping-list');
     return (
         <Loader loading={state.loading}>
             {!state.history.length && <MessageEmptyHistory />}
             <List>
                 {state.history.map(list =>
-                    <ShoppinglistListItem key={list.name}
+                    <ShoppinglistListItem key={list._id}
                         item={list}
                         onClick={() => goTo.details(list._id)} />)}
             </List>

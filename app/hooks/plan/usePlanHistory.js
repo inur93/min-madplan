@@ -8,7 +8,7 @@ export function usePlanHistory() {
     const {
         data: history,
         isValidating
-    } = useSWR('/plans', api.find);
+    } = useSWR('/food-plans', api.find);
 
     const state = {
         history: history || [],

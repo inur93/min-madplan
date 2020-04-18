@@ -12,7 +12,7 @@ const Page = () => {
   const [menu] = useShoppingListContextMenu();
 
   return (
-    <Layout title={'Indkøbsliste'} actions={menu}>
+    <Layout title={'Indkøbslister'} actions={menu}>
       <Content>
         {show.details && <ShoppingListDetails />}
         {show.history && <ShoppingListOverview />}

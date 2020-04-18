@@ -51,10 +51,10 @@ const Menu = function ({ visible, onHide }) {
             <ButtonClose onClick={onHide} />
 
         </div>
-        <MenuSUI.Item link onClick={goto('/shopping-list')}>
+        <MenuSUI.Item link onClick={goto('/shopping-list?view=history')}>
             Indkøbsliste
             </MenuSUI.Item>
-        <MenuSUI.Item link name="Ugeplan" onClick={goto('/plan')} />
+        <MenuSUI.Item link name="Ugeplan" onClick={goto('/plan?view=history')} />
         <MenuSUI.Item name="Opskrifter" onClick={goto('/recipes?view=search')} />
         <MenuSUI.Item >
             Grupper
