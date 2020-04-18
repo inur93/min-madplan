@@ -48,7 +48,7 @@ export function useShoppingListDetails() {
 
     const products = ((shoppingList || {}).items || []).filter(x => !!x);
     const state = {
-        shoppingList: shoppingList || latest,
+        shoppingList: shoppingList,
         products,
         loading: !shoppingList,
         reloading: shoppingListLoading,

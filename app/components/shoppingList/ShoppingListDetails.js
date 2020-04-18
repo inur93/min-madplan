@@ -53,7 +53,7 @@ export function ShoppingListDetails() {
                 <FlipMove>
                     {products
                         .sort(sortByCheckedThenName)
-                        .map((item, i) => <ListElement key={item._id || item.name}
+                        .map((item, i) => <ListElement key={item.name}
                             editMode={editMode}
                             onCheck={handlers.updateProduct}
                             onEdit={handlers.editProduct}

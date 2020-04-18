@@ -1,9 +1,11 @@
 import cookie from 'js-cookie';
-import ServerCookie from 'next-cookies';
+import { getJwtToken, validateToken } from '../functions/tokenFunctions';
 import { getApi } from './api';
 
 const setUserAndToken = (user, token) => {
-    cookie.set("user", user && JSON.stringify(user), { expires: 7 });
+    if (user) {
+        cookie.set("user", JSON.stringify(user), { expires: 7 });
+    }
     if (token) {
         cookie.set("jwt", token, { expires: 7 });
     }
@@ -32,15 +34,18 @@ export const forgotPassword = async function ({ email }) {
 export const resetPassword = async function (data) {
     return await getApi().post('/auth/reset-password', data);
 }
-
+//use only server side
 export const auth = ctx => {
-    const { jwt: token } = ServerCookie(ctx);
-    if (ctx.req && !token) {
+    const token = getJwtToken(ctx);
+
+    if (!token) {
         ctx.res.writeHead(302, { Location: '/login' })
         ctx.res.end();
-        return false;
+    } else if (validateToken(token)) {
+        cookie.set('jwt', token, { expires: 7 });
+    } else {
+        cookie.remove('jwt');
     }
-    cookie.set('jwt', token, { expires: 7 });
     return token;
 }
 

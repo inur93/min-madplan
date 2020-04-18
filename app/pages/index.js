@@ -6,8 +6,6 @@ import MenuItem from '../components/menu/MenuItem';
 import { useInvitesCount } from '../hooks/useInvitesCount';
 
 const IndexPage = function (props) {
-
-  console.log('props', props);
   const { self, shoppingListImage, planImage, recipesImage } = props;
   const { data: count } = useInvitesCount();
   const firstTime = !self.selectedGroup;
