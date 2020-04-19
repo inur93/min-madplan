@@ -1,19 +1,14 @@
-import { auth } from '../_api';
+import { useRouter } from 'next/router';
 import Layout, { Actions, Content } from '../components/layout/Layout';
-import { Ingredients } from '../components/recipe/Ingredients';
-import { Instructions } from '../components/recipe/Instructions';
 import { PlanDate } from '../components/recipe/PlanDate';
 import { RecipeDetails } from '../components/recipe/RecipeDetails';
-import { RecipeList, RecipeSearch } from '../components/recipe/RecipeSearch';
+import { RecipeSearch } from '../components/recipe/RecipeSearch';
 import { ButtonAction, ButtonSuccess } from '../components/shared/Button';
-import { SearchInput } from '../components/shared/Input';
-import { useRecipes } from '../hooks/useRecipes';
-import { useView, views } from '../hooks/useView';
 import { usePlanDetails } from '../hooks/plan/usePlanDetails';
-import { useRouter } from 'next/router';
+import { useView } from '../hooks/useView';
 
-const Page = (props) => {
-    const [show, edit, goTo] = useView('/recipes');
+const Page = () => {
+    const [show] = useView('/recipes');
     const router = useRouter();
     const [planState, planHandlers] = usePlanDetails('plan');
 
@@ -42,7 +37,7 @@ const Page = (props) => {
             <Actions>
                 {show.details && <ButtonAction icon='info' onClick={toHash('stats')} />}
                 {show.details && <ButtonAction icon='clipboard list' onClick={toHash('ingredients')} />}
-                {show.details && <ButtonAction icon='numbered list' onClick={toHash('instructions')}/>}
+                {show.details && <ButtonAction icon='numbered list' onClick={toHash('instructions')} />}
                 {show.details && !planState.notFound && <ButtonSuccess onClick={selectPlan} />}
             </Actions>
         </Layout>
