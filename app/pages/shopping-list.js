@@ -41,5 +41,6 @@ const Page = () => {
 
 Page.getInitialProps = async function (ctx) {
   auth(ctx);
+  return {}
 }
 export default Page;

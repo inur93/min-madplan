@@ -21,6 +21,7 @@ export default function Layout({ children, title, loading, actions }) {
                     <div className="mmp-content">
                         {children}
                     </div>
+                    <p style={{display: 'none'}}>{process.env.BASE_URL}</p>
                 </Segment>
             </Sidebar.Pusher>
         </Sidebar.Pushable>

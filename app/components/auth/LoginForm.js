@@ -8,11 +8,11 @@ export function LoginForm() {
         <Form error={state.error} onSubmit={handlers.onLogin}>
             <Form.Field>
                 <label>Brugernavn</label>
-                <Input required name='username' placeholder='Brugernavn' />
+                <Input required name='username' placeholder='Brugernavn' autoComplete='username' />
             </Form.Field>
             <Form.Field>
                 <label>Kodeord</label>
-                <Input required name='password' type='password' placeholder='Kodeord' />
+                <Input required name='password' type='password' placeholder='Kodeord'  autoComplete='current-password'/>
             </Form.Field>
             <Message error message="Brugernavn eller kodeord er forkert" />
             <Button primary loading={state.loading}>Login</Button>

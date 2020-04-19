@@ -17,6 +17,7 @@ function Page() {
 
 Page.getInitialProps = async (ctx) => {
     auth(ctx);
+    return {};
 }
 
 export default Page;

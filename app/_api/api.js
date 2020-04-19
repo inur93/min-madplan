@@ -1,7 +1,12 @@
 import axios from 'axios';
 import { getJwtToken, validateToken } from '../functions/tokenFunctions';
+import { isProduction } from '../functions/environmentFunctions';
 
 export const getBaseUrl = () => {
+    if(isProduction()){
+        //TODO figure out a way to do it from env variables
+        return 'https://min-madplan.herokuapp.com';
+    }
     return process.browser ?
         (process.env.BASE_URL || 'http://localhost:1337') :
         (process.env.BASE_URL || 'http://cms:1337');
