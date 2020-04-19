@@ -41,10 +41,12 @@ export const auth = ctx => {
     if (!token) {
         ctx.res.writeHead(302, { Location: '/login' })
         ctx.res.end();
+        return null;
     } else if (validateToken(token)) {
         cookie.set('jwt', token, { expires: 7 });
     } else {
         cookie.remove('jwt');
+        return null;
     }
     return token;
 }
