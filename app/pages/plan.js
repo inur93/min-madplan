@@ -8,6 +8,7 @@ import { usePlanDetails } from "../hooks/plan/usePlanDetails";
 import { usePlanHelp } from "../hooks/plan/usePlanHelp";
 import { useView, views } from "../hooks/useView";
 import { HelpBox } from "../components/shared/HelpBox";
+import { auth } from "../functions/authFunctions";
 
 function Page() {
     const [show, edit, goTo] = useView('/plan');
@@ -28,6 +29,10 @@ function Page() {
             <ButtonAction view={views.create} icon='calendar plus outline' onClick={goTo.create} />
         </Actions>
     </Layout>)
+}
+
+Page.getInitialProps = async function (ctx) {
+    auth(ctx);
 }
 
 export default Page;

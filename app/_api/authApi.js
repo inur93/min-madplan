@@ -39,23 +39,6 @@ export const GetAuthApi = (ctx) => {
     }
 }
 
-//use only server side
-export const auth = ctx => {
-    const token = getJwtToken(ctx);
-
-    if (!token) {
-        ctx.res.writeHead(302, { Location: '/login' })
-        ctx.res.end();
-        return null;
-    } else if (validateToken(token)) {
-        cookie.set('jwt', token, { expires: 7 });
-    } else {
-        cookie.remove('jwt');
-        return null;
-    }
-    return token;
-}
-
 export const logout = () => {
     cookie.remove("jwt");
     cookie.remove('user');

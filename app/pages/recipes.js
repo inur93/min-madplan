@@ -6,6 +6,7 @@ import { RecipeSearch } from '../components/recipe/RecipeSearch';
 import { ButtonAction, ButtonSuccess } from '../components/shared/Button';
 import { usePlanDetails } from '../hooks/plan/usePlanDetails';
 import { useView } from '../hooks/useView';
+import { auth } from '../functions/authFunctions';
 
 const Page = () => {
     const [show] = useView('/recipes');
@@ -44,12 +45,8 @@ const Page = () => {
     )
 }
 
+Page.getInitialProps = async function (ctx) {
+    auth(ctx);
+}
+
 export default Page;
-
-/**
- *  {show.instructions && <Instructions loading={loading} recipe={selected} />}
-                {show.ingredients && <Ingredients loading={loading} recipe={selected} />}
-                {show.view && <RecipeDetails loading={loading} recipe={selected} />}
-
-
- */

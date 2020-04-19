@@ -7,7 +7,7 @@ import { getJwtToken, validateToken } from '../functions/tokenFunctions';
 import { useLogin } from '../hooks/useLogin';
 import { GetPageSettingsApi, GetUsersApi } from '../_api';
 
-const Page = function ({ bannerImage }) {
+function Page({ bannerImage }) {
     const [state] = useLogin();
 
     return (
@@ -35,20 +35,9 @@ const Page = function ({ bannerImage }) {
     );
 }
 
-const LoginPage = Page;
-
-LoginPage.getInitialProps = async ctx => {
-    const jwt = getJwtToken(ctx);
-
-    if (validateToken(jwt)) {
-        if (await GetUsersApi().self()) {
-            ctx.res.writeHead(302, { Location: '/' })
-            ctx.res.end();
-        }
-    }
-
-    
-    const { bannerImage } = await GetPageSettingsApi(ctx).get('Login');
+Page.getInitialProps = async () => {
+    const { bannerImage } = await GetPageSettingsApi().get('Login');
     return { bannerImage }
 }
-export default LoginPage;
+
+export default Page;

@@ -2,6 +2,7 @@ import GroupInvites from '../components/group/GroupInvites';
 import Layout from '../components/layout/Layout';
 import useInviteActions from '../hooks/useInviteActions';
 import { useInvites } from '../hooks/useInvites';
+import { auth } from '../functions/authFunctions';
 
 function Page() {
     const [invites, revalidate] = useInvites();
@@ -12,6 +13,10 @@ function Page() {
             onAccept={onClick(actions.accept)}
             onDecline={onClick(actions.decline)} />
     </Layout>
+}
+
+Page.getInitialProps = async (ctx) => {
+    auth(ctx);
 }
 
 export default Page;

@@ -5,6 +5,7 @@ import { ShoppingListDetails } from '../components/shoppingList/ShoppingListDeta
 import { ShoppingListOverview } from '../components/shoppingList/ShoppingListOverview';
 import { useShoppingListContextMenu } from '../hooks/shoppingList/useShoppingListContextMenu';
 import { useView, views } from '../hooks/useView';
+import { auth } from '../functions/authFunctions';
 
 const Page = () => {
 
@@ -37,23 +38,8 @@ const Page = () => {
     </Layout >
   )
 }
-/*
- <Button icon='history' onClick={onClick(actions.showHistory)} />
-        <Button icon='edit' onClick={() => setEditSelected(!editSelected)} />
-        <Button icon='add' onClick={onClick(actions.showCreate)} />
-*/
 
+Page.getInitialProps = async function (ctx) {
+  auth(ctx);
+}
 export default Page;
-
-
-/*
- <Item.Group link>
-    <Item>
-      <Item.Image size='tiny' src='/images/avatar/large/stevie.jpg' />
-
-      <Item.Content>
-        <Item.Header>Stevie Feliciano</Item.Header>
-        <Item.Description>{paragraph}</Item.Description>
-      </Item.Content>
-    </Item>
-*/

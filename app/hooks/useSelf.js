@@ -4,10 +4,13 @@ import useSWR from 'swr';
 
 export function useSelf() {
     const api = GetUsersApi();
-    const self = useSWR('/me', path => {
+    const {
+        data: self,
+        revalidate
+    } = useSWR('/me', path => {
         return api.self().catch((error) => {
             console.error('error', error);
         })
     });
-    return [self.data, self.revalidate];
+    return [self, revalidate];
 }

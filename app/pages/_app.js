@@ -14,13 +14,4 @@ function App({ Component, pageProps }) {
     </SWRConfig>)
 }
 
-// App.getInitialProps = async (ctx) => {
-//     let token;
-//     if (ctx.pathname !== '/login') {
-//         token = auth(ctx);
-//     }
-//     console.log('token', { token });
-//     return { token }
-// }
-
 export default App;
