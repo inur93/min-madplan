@@ -35,17 +35,18 @@ const IndexPage = function (props) {
 
 IndexPage.getInitialProps = async function (ctx) {
   //make sure user is logged in - will automatically be redirected to login if not
-
-  if (!auth(ctx)) {
-    return {};
-  }
+  auth(ctx);
 
   const [self, frontPage] = await Promise.all([
     GetUsersApi(ctx).self(),
     GetPageSettingsApi(ctx).frontPage()
   ]);
 
-  console.log('self', self);
+  if (!self) {
+    ctx.res.writeHead(302, { Location: '/login' })
+    ctx.res.end();
+  }
+
   return {
     self,
     ...frontPage,
