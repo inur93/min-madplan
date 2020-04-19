@@ -7,18 +7,17 @@ export const getBaseUrl = () => {
         (process.env.BASE_URL || 'http://cms:1337');
 }
 
-export const getApi = (ctx) => axios.create({
+export const getApi = (ctx, excludeToken) => axios.create({
     baseURL: getBaseUrl(),
     transformRequest: [function (data, headers) {
         const jwt = getJwtToken(ctx);
-        if (validateToken(jwt)) {
+        if (!excludeToken && validateToken(jwt)) {
             headers.common['Authorization'] = `Bearer ${jwt}`;
         }
         return data;
     }, axios.defaults.transformRequest[0]],
     transformResponse: [function (data, response) {
         //handle errors
-
         return JSON.parse(data)
     }
     ]

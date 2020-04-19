@@ -5,7 +5,7 @@ import { ResetPassword } from '../components/auth/ResetPassword';
 import { absUrl } from '../functions/imageFunctions';
 import { getJwtToken, validateToken } from '../functions/tokenFunctions';
 import { useLogin } from '../hooks/useLogin';
-import { GetPageSettingsApi } from '../_api';
+import { GetPageSettingsApi, GetUsersApi } from '../_api';
 
 const Page = function ({ bannerImage }) {
     const [state] = useLogin();
@@ -41,15 +41,14 @@ LoginPage.getInitialProps = async ctx => {
     const jwt = getJwtToken(ctx);
 
     if (validateToken(jwt)) {
-        ctx.res.writeHead(302, { Location: '/' })
-        ctx.res.end()
-        return;
+        if (await GetUsersApi().self()) {
+            ctx.res.writeHead(302, { Location: '/' })
+            ctx.res.end();
+        }
     }
 
+    
     const { bannerImage } = await GetPageSettingsApi(ctx).get('Login');
-    return {
-        jwt,
-        bannerImage
-    }
+    return { bannerImage }
 }
 export default LoginPage;

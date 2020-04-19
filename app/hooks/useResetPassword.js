@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { resetPassword } from "../_api";
+import { GetAuthApi } from "../_api";
 
 
 export function useResetPassword() {
+    const api = GetAuthApi();
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
@@ -12,7 +13,7 @@ export function useResetPassword() {
         const code = router.query.code;
         if (!code) return; //TODO error message
         setLoading(true);
-        await resetPassword({
+        await api.resetPassword({
             code,
             ...data
         });
