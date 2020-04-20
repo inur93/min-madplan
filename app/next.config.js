@@ -14,6 +14,8 @@ module.exports = withSass(withCss(withSourceMaps({
         }
       }
     })
+    //expose base url to code running client side.
+    config.env.BASE_URL = process.env.BASE_URL;
     return config
   }
 })))
