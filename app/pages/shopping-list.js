@@ -6,15 +6,18 @@ import { ShoppingListOverview } from '../components/shoppingList/ShoppingListOve
 import { useShoppingListContextMenu } from '../hooks/shoppingList/useShoppingListContextMenu';
 import { useView, views } from '../hooks/useView';
 import { auth } from '../functions/authFunctions';
+import { useHelp } from '../hooks/shared/useHelp';
+import { HelpBox } from '../components/shared/HelpBox';
 
 const Page = () => {
 
   const [show, edit, goto] = useView('/shopping-list');
   const [menu] = useShoppingListContextMenu();
-
+  const [help, dismiss] = useHelp();
   return (
     <Layout title={'Indkøbslister'} actions={menu}>
       <Content>
+        <HelpBox help={help} dismiss={dismiss} />
         {show.details && <ShoppingListDetails />}
         {show.history && <ShoppingListOverview />}
         {show.create && <ShoppingListCreate />}
@@ -30,10 +33,11 @@ const Page = () => {
           icon='edit'
           onClick={goto.edit}
         />}
-        <ButtonAction view={views.create}
-          icon='add'
-          onClick={goto.create}
-        />
+        {show.history &&
+          <ButtonAction view={views.create}
+            icon='add'
+            onClick={goto.create}
+          />}
       </Actions>
     </Layout >
   )

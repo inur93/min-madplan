@@ -15,7 +15,7 @@ export const GetUsersApi = (ctx) => {
 
         },
         async update(id, data) {
-            return await (await api.put(getPath(id), data));
+            return await (await api.put(getPath(id), data)).data;
         }
     }
 }

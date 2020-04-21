@@ -8,10 +8,21 @@ import './shopping-list-view.scss';
 import { Loader } from "../shared/Loader";
 import FlipMove from 'react-flip-move';
 import { forwardRef } from "react";
+import { useRouter } from "next/router";
 
+const mapRecipeNames = (recipes) => {
+    if (!recipes || recipes.length == 0) return '';
+    const distinct = [...new Set(recipes.map(r => r.recipe))];
+    return distinct.map((r, i) => {
+        if (distinct.length <= 1) return r;
+        if (distinct.length - 1 == i) return r;
+        if (r.length > 15) return r.substring(0, 15) + '\u2026';
+        return r;
+    }).join(', ')
+}
 const ListElement = forwardRef(({ editMode, item, onCheck, onEdit, onRemove }, ref) => {
     const { name, unit, amount, checked } = item;
-
+    const router = useRouter();
     const handleCheck = () => onCheck({ item: { ...item, checked: !checked } });
     const handleRemove = () => onRemove({ id: item._id });
     const handleEdit = () => editMode
@@ -22,11 +33,17 @@ const ListElement = forwardRef(({ editMode, item, onCheck, onEdit, onRemove }, r
         ? `${amount} ${unit || ''} ${name}`
         : name;
 
+    const showRecipeNames = false;// (item && item.extra);
     return <List.Item ref={ref} className='shopping-list-view-item'>
         <List.Content>
             <List.Header onClick={handleEdit}>
                 {fullname}
             </List.Header>
+            {showRecipeNames &&
+                <List.Description >
+                    {mapRecipeNames(item.extra.recipes)}
+                </List.Description>
+            }
         </List.Content>
         <List.Content>
             {editMode && <IconEdit onClick={handleEdit} />}

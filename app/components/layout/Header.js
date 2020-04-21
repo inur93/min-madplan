@@ -4,10 +4,13 @@ import { Segment, Header as HeaderSUI, Dropdown, Progress } from 'semantic-ui-re
 import { ButtonMenu } from '../shared/Button';
 
 import './header.scss';
+import { useHelpButton } from '../../hooks/shared/useHelp';
 
 const Header = ({ title, actions, showMenu, loading, ...otherProps }) => {
     const { pathname } = useRouter();
-    const showActions = actions && actions.length > 0;
+    const [hasHelp, showHelp] = useHelpButton();
+
+    const showActions = hasHelp || (actions || []).length > 0;
     //indkøbsliste
     //ugeplan
     //opskrifter
@@ -29,6 +32,7 @@ const Header = ({ title, actions, showMenu, loading, ...otherProps }) => {
                             {actions.map(
                                 x => <Dropdown.Item key={x.label} text={x.label} onClick={x.onClick} />
                             )}
+                            <Dropdown.Item text='Hjælp' onClick={showHelp} />
                         </Dropdown.Menu>
                     </Dropdown>}
             </Segment>
