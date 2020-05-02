@@ -1,0 +1,10 @@
+{
+    "build": {
+        "env": {
+            "BASE_URL": "@base_url"
+        }
+    },
+    "env": {
+        "BASE_URL": "@base_url"
+    }
+}

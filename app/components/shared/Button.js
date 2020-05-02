@@ -31,7 +31,7 @@ export const ButtonAction = function ({ view, toggle, toggled, ...props }) {
     const router = useRouter();
     const [active, setActive] = useState(false);
     useEffect(() => {
-        const isActive = (v, toggled) => {
+        const isActive = (h, v, toggled) => {
             if (toggle) {
                 if (view) {
                     return toggled && v === view;

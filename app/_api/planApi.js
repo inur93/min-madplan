@@ -7,10 +7,10 @@ export const GetPlanApi = (ctx) => {
     const api = getApi(ctx);
 
     return {
-        async findCurrent() {
+        async latest() {
             const yesterday = addDays(new Date(), -1);
             const data = await (await api.get(getPath("", `validFrom_gt=${formatDateForQuery(yesterday)}`))).data;
-            if(data && data.length > 0) return data[0];
+            if (data && data.length > 0) return data[0];
             return null;
         },
         async find() {
@@ -27,6 +27,9 @@ export const GetPlanApi = (ctx) => {
         },
         async createShoppingList(id) {
             return await (await api.post(getPath(`${id}/shopping-list`))).data;
+        },
+        async delete(id) {
+            return await (await api.delete(getPath(id))).data;
         }
     }
 }

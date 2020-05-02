@@ -13,7 +13,7 @@ export function ProfileEdit({ user }) {
     if (!user) return null;
     return <Form success={state.saved} onSubmit={handlers.onSave}>
         <Segment>
-            <Image src={state.image || absUrl(state.fallbackImage.url)} size='small' circular centered />
+            <Image src={state.image || state.fallbackImage} size='small' circular centered />
             <div className='image-actions'>
                 <InputFile label='Vælg billede' onChange={handlers.onImageChange} />
                 {state.image && <a onClick={handlers.removeImage}>fjern billede</a>}

@@ -1,9 +1,9 @@
-import { auth } from "../../_api";
 import { GroupCreate } from "../../components/group/GroupCreate";
 import Layout from "../../components/layout/Layout";
+import { auth } from "../../functions/authFunctions";
 
 
-function Page({ firstTime }) {
+function Page() {
 
     return (
         <Layout title="Opret gruppe">
@@ -14,9 +14,7 @@ function Page({ firstTime }) {
 
 Page.getInitialProps = async function (ctx) {
     auth(ctx);
-    const { firstTime } = ctx.query;
-    return {
-        firstTime: firstTime == 'true'
-    }
+    return {}
 }
+
 export default Page;

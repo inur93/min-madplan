@@ -30,8 +30,11 @@
       "model": "group"
     },
     "food_plan": {
-      "via": "shopping_list",
-      "model": "food-plan"
+      "model": "food-plan",
+      "via": "shopping_list"
+    },
+    "extra": {
+      "type": "json"
     }
   }
 }

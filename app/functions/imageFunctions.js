@@ -1,5 +1,6 @@
 
-const baseUrl = (process.env.NODE_ENV === 'production'
-    ? 'https://min-madplan.herokuapp.com'
-    : 'http://localhost:1337');
-export const absUrl = (url) => `${baseUrl}${url}`;
+
+export const absUrl = (url) => `${process.env.BASE_URL || 'http://localhost:1337'}${url}`;
+
+//Remove unallowed characters and make image name unique to avoid conflicts when saving file.
+export const sanitizeImageName = (name) => `${name.replace(' ', '-')}_${new Date().getTime()}`;

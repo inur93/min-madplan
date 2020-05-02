@@ -32,7 +32,7 @@ export function useGroupCreate(firstTime) {
                     await usersApi.update(self._id, {
                         selectedGroup: group._id
                     });
-                    router.push(`/plan?firstTime=true`);
+                    router.push(`/plan?view=history`);
                 } else {
                     router.push('/');
                 }

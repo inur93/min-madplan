@@ -5,15 +5,15 @@ import { Form } from '../shared/Form';
 import { ActionDropdown } from '../shared/Input';
 
 export function ShoppingItemEdit({ item, onSave, onCancel }) {
-    const { name } = item;
+    const { key, name } = item;
     const [amount, setAmount] = useState(item.amount);
     const [unit, setUnit] = useState(item.unit);
     const [unitOptions] = useUnitOptions();
     const handleSave = () => {
         onSave({
-            item: {
-                ...item,
-                amount: amount,
+            key,
+            change: {
+                amount,
                 unit
             }
         });

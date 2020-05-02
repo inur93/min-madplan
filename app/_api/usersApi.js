@@ -7,10 +7,15 @@ export const GetUsersApi = (ctx) => {
 
     return {
         async self() {
-            return await (await api.get(getPath("me"))).data;
+            try {
+                return await (await api.get(getPath("me"))).data;
+            } catch (e) {
+                return null;
+            }
+
         },
         async update(id, data) {
-            return await (await api.put(getPath(id), data));
+            return await (await api.put(getPath(id), data)).data;
         }
     }
 }

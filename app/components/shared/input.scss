@@ -33,6 +33,7 @@ $input-height: 30px;
 .react-autosuggest__suggestions-container {
     width: calc(100% - 2em);
     background-color: white;
+    z-index: 1000;
 }
 
 .react-autosuggest__suggestions-container--open {

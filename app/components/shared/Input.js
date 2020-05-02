@@ -2,6 +2,7 @@ import { useState } from "react";
 import Augosuggest from 'react-autosuggest';
 import { Dropdown, Input as InputSUI } from "semantic-ui-react";
 import './input.scss';
+import { useRouter } from "next/router";
 //type, placeholder
 export const Input = function ({ loading, search, ...inputProps }) {
     const Input = <InputSUI fluid className="custom-input" {...inputProps} />;
@@ -107,8 +108,20 @@ export const ProductItemAutoComplete = function (props) {
     return <AutoComplete {...props} renderSuggestion={renderProductItem} getSuggestionValue={getProductItemValue} />;
 }
 
-export const SearchInput = function ({ placeholder, onChange, ...otherProps }) {
-    return <Input {...otherProps} icon='search' placeholder={placeholder} onChange={e => onChange(e.target.value)} />;
+export const SearchInput = function ({ placeholder, ...otherProps }) {
+    const router = useRouter();
+    const onChange = e => router.replace({
+        pathname: router.pathname,
+        query: {
+            ...router.query,
+            query: e.target.value
+        }
+    });
+    return <Input {...otherProps}
+        icon='search'
+        onChange={onChange}
+        placeholder={placeholder}
+    />;
 }
 
 export const InputFile = ({ label, ...props }) => {

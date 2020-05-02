@@ -1,5 +1,5 @@
 import { getApi } from "./api";
-import { auth, login, logout, forgotPassword, resetPassword } from "./authApi";
+import { logout } from "./authApi";
 import { GetGroupsApi } from "./groupsApi";
 import { GetPageSettingsApi } from './pageSettingsApi';
 import { GetPlanApi } from './planApi';
@@ -10,12 +10,11 @@ import { GetUnitsApi } from "./unitsApi";
 import { GetUsersApi } from "./usersApi";
 import { GetGroupInvitesApi } from "./groupInvitesApi";
 import { GetFilesApi } from './filesApi';
+import { GetAuthApi } from './authApi';
+
 export {
-    auth,
-    login,
     logout,
-    forgotPassword,
-    resetPassword,
+    GetAuthApi,
     getApi,
     GetGroupsApi,
     GetPageSettingsApi,

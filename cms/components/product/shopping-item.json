@@ -23,6 +23,9 @@
     "checked": {
       "type": "boolean",
       "default": false
+    },
+    "extra": {
+      "type": "json"
     }
   }
 }

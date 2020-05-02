@@ -2,7 +2,7 @@
   "connection": "default",
   "collectionName": "product_items",
   "info": {
-    "name": "productItem"
+    "name": "Product Item"
   },
   "options": {
     "increments": true,
@@ -17,7 +17,15 @@
       "type": "string"
     },
     "category": {
-      "type": "string"
+      "type": "enumeration",
+      "enum": [
+        "vegetables",
+        "candy",
+        "meat",
+        "dairy",
+        "alchohol",
+        "coldCuts"
+      ]
     }
   }
 }

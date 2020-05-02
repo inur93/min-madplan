@@ -71,6 +71,9 @@
       "via": "related",
       "plugin": "upload",
       "required": false
+    },
+    "helpComplete": {
+      "type": "json"
     }
   }
 }

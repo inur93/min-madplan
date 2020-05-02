@@ -1,68 +1,39 @@
-import { Icon } from "semantic-ui-react";
-import { auth } from "../_api";
 import Layout, { Actions, Content } from "../components/layout/Layout";
 import { PlanCreate } from "../components/plan/PlanCreate";
-import { PlanHistoryList } from "../components/plan/PlanHistoryList";
-import { PlanView } from "../components/plan/PlanOverview";
+import { PlanDetails } from "../components/plan/PlanDetails";
+import { PlanHistory } from "../components/plan/PlanHistory";
 import { Button, ButtonAction } from "../components/shared/Button";
-import { usePlan } from "../hooks/usePlan";
+import { usePlanContextMenu } from "../hooks/plan/usePlanContextMenu";
+import { usePlanDetails } from "../hooks/plan/usePlanDetails";
+import { useView, views } from "../hooks/useView";
+import { HelpBox } from "../components/shared/HelpBox";
+import { auth } from "../functions/authFunctions";
+import { useHelp } from "../hooks/shared/useHelp";
 
-const FirstTimeMessage = ({ hasCurrentPlan, loading }) => {
-    if (loading) return null;
-    if (hasCurrentPlan) {
-        return (<p>Tilføj de retter du ønsker at lave den kommende uge.
-    Når du er færdig tryk på {<Icon name="cart plus" />} for at oprette en indkøbsliste med alt det du har brug for.
-        </p>)
-    }
-    return (<p>Hej med dig! Opret din første madplan ved at klikke på {<Icon name="calendar plus outline" />}</p>)
-}
-
-const NoCurrentPlanMessage = ({ loading }) => {
-    if (loading) return null;
-    return (<p>
-        Du har ikke nogen madplan for den kommende uge, opret en ved at trykke på {<Icon name='calendar plus outline' />}.
-    </p>)
-}
-
-function Page(props) {
-    const [state, onClick, actions] = usePlan(props);
-
-    const { title, currentPlan, planHistory,
-        loading, isFirstTime, noCurrentPlan, show } = state;
-
-    const { shopping_list } = currentPlan || {};
-
-    return (<Layout loading={loading} title={title}>
+function Page() {
+    const [show, edit, goTo] = useView('/plan');
+    const [state, handlers] = usePlanDetails();
+    const [menu] = usePlanContextMenu();
+    const [help, dismiss] = useHelp();
+    return (<Layout title={'Ugeplan'} actions={menu}>
         <Content>
-            {isFirstTime && <FirstTimeMessage hasCurrentPlan={!noCurrentPlan} loading={loading} />}
-            {(noCurrentPlan && !isFirstTime) && <NoCurrentPlanMessage loading={loading} />}
-
-            {show.create && <PlanCreate loading={loading} onCreate={onClick(actions.createPlan)} />}
-            {show.view && currentPlan && <PlanView
-                plan={currentPlan}
-                onClick={onClick(actions.editPlanDay)}
-                onRemove={onClick(actions.removePlanDay)}
-                onInfo={onClick(actions.showRecipeInfo)} />}
-            {show.history && <PlanHistoryList list={planHistory} onClick={onClick(actions.showPlan)} />}
+            <HelpBox help={help} dismiss={dismiss} />
+            {show.create && <PlanCreate />}
+            {show.details && <PlanDetails />}
+            {show.history && <PlanHistory />}
         </Content>
         <Actions>
-            <ButtonAction view='history' disabled={loading} icon='history' onClick={onClick(actions.showHistory)} />
-            {(show.view && shopping_list) && <Button disabled={loading} icon='shopping cart' onClick={onClick(actions.openCurrentShoppingList)} />}
-            {(show.view && !shopping_list) && <Button disabled={loading} icon='add to cart' onClick={onClick(actions.createShoppingList)} />}
-            <ButtonAction view='create' disabled={loading} icon='calendar plus outline' onClick={onClick(actions.showCreate)} />
+            <ButtonAction view={views.history} icon='history' onClick={goTo.history} />
+            {(show.details && state.shoppingList) && <Button icon='shopping cart' onClick={handlers.openShoppingList} />}
+            {(show.details && !state.shoppingList) && <Button icon='add to cart' onClick={handlers.createShoppingList} />}
+            {show.history && <ButtonAction view={views.create} icon='calendar plus outline' onClick={goTo.create} />}
         </Actions>
     </Layout>)
 }
 
-Page.getInitialProps = (ctx) => {
-    const { id, view, firstTime } = ctx.query;
+Page.getInitialProps = async function (ctx) {
     auth(ctx);
-
-    return {
-        planId: id,
-        view,
-        firstTime: !!firstTime
-    }
+    return {};
 }
 
 export default Page;

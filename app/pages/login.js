@@ -1,13 +1,13 @@
-import nextCookie from 'next-cookies';
 import { Container, Image, Segment, Transition } from 'semantic-ui-react';
-import { GetPageSettingsApi } from '../_api';
+import { ForgotPassword } from '../components/auth/ForgotPassword';
 import { LoginForm } from '../components/auth/LoginForm';
 import { ResetPassword } from '../components/auth/ResetPassword';
 import { absUrl } from '../functions/imageFunctions';
+import { getJwtToken, validateToken } from '../functions/tokenFunctions';
 import { useLogin } from '../hooks/useLogin';
-import { ForgotPassword } from '../components/auth/ForgotPassword';
+import { GetPageSettingsApi, GetUsersApi } from '../_api';
 
-const Page = function ({ bannerImage }) {
+function Page({ bannerImage }) {
     const [state] = useLogin();
 
     return (
@@ -35,20 +35,9 @@ const Page = function ({ bannerImage }) {
     );
 }
 
-const LoginPage = Page;
-
-LoginPage.getInitialProps = async ctx => {
-    const cookies = nextCookie(ctx);
-    const jwt = cookies.jwt;
-    const { bannerImage } = await GetPageSettingsApi(ctx).get('Login');
-    if (ctx.req && jwt) {
-        ctx.res.writeHead(302, { Location: '/' })
-        ctx.res.end()
-        return
-    }
-    return {
-        jwt,
-        bannerImage
-    }
+Page.getInitialProps = async () => {
+    const { bannerImage } = await GetPageSettingsApi().get('Login');
+    return { bannerImage }
 }
-export default LoginPage;
+
+export default Page;

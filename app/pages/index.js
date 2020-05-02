@@ -1,14 +1,18 @@
 import { Segment } from 'semantic-ui-react';
-import { auth, GetPageSettingsApi, GetUsersApi } from '../_api';
 import { GroupCreate } from '../components/group/GroupCreate';
 import { GroupInvitesWrapped } from '../components/group/GroupInvites';
 import MenuItem from '../components/menu/MenuItem';
 import { useInvitesCount } from '../hooks/useInvitesCount';
+import { useSelf } from '../hooks/useSelf';
+import { GetPageSettingsApi } from '../_api';
+import { auth } from '../functions/authFunctions';
 
-const IndexPage = function ({ self, shoppingListImage, planImage, recipesImage }) {
-
+const IndexPage = function (props) {
+  const { shoppingListImage, planImage, recipesImage } = props;
   const { data: count } = useInvitesCount();
-  const firstTime = !self.selectedGroup;
+  const [self] = useSelf();
+  const firstTime = (self && !self.selectedGroup);
+
   return (
     <main>
       {firstTime && <Segment>
@@ -34,15 +38,10 @@ const IndexPage = function ({ self, shoppingListImage, planImage, recipesImage }
 }
 
 IndexPage.getInitialProps = async function (ctx) {
-  auth(ctx); //make sure user is logged in - will automatically be redirected to login if not
-
-  const [self, frontPage] = await Promise.all([
-    GetUsersApi(ctx).self(),
-    GetPageSettingsApi(ctx).frontPage()
-  ]);
+  auth(ctx);
+  const frontPage = await GetPageSettingsApi().get('frontPage');
 
   return {
-    self,
     ...frontPage,
   };
 }

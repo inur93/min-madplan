@@ -1,56 +1,53 @@
-import { auth } from '../_api';
+import { useRouter } from 'next/router';
 import Layout, { Actions, Content } from '../components/layout/Layout';
-import { Ingredients } from '../components/recipe/Ingredients';
-import { Instructions } from '../components/recipe/Instructions';
 import { PlanDate } from '../components/recipe/PlanDate';
 import { RecipeDetails } from '../components/recipe/RecipeDetails';
-import { RecipeList } from '../components/recipe/RecipeList';
+import { RecipeSearch } from '../components/recipe/RecipeSearch';
 import { ButtonAction, ButtonSuccess } from '../components/shared/Button';
-import { SearchInput } from '../components/shared/Input';
-import { useRecipes } from '../hooks/useRecipes';
+import { usePlanDetails } from '../hooks/plan/usePlanDetails';
+import { useView } from '../hooks/useView';
+import { auth } from '../functions/authFunctions';
 
-const Page = (props) => {
+const Page = () => {
+    const [show] = useView('/recipes');
+    const router = useRouter();
+    const [planState, planHandlers] = usePlanDetails('plan');
 
-    const [state, handlers, actions] = useRecipes(props);
+    const selectPlan = () => {
+        planHandlers.updatePlanDay({
+            id: router.query.plan,
+            date: router.query.date,
+            recipe: router.query.id
+        })
+    }
 
-
-    const { loading, title, query, date, plan, recipes, selected, show, showSelect } = state;
-    const { setQuery, onClick } = handlers;
-
+    const toHash = (hash) => () => {
+        router.replace({
+            pathname: router.pathname,
+            query: router.query,
+            hash
+        })
+    }
     return (
-        <Layout loading={loading} title={'Opskrifter'}>
-            {show.planDay && <PlanDate loading={loading} plan={plan.plan} date={date} />}
-            {show.search && <SearchInput defaultValue={query} onChange={setQuery} placeholder="Søg efter opskrift..." />}
-            {!show.search && <h1 className='title-narrow'>{title}</h1>}
+        <Layout title={'Opskrifter'}>
+            <PlanDate />
             <Content>
-                {show.instructions && <Instructions loading={loading} recipe={selected} />}
-                {show.ingredients && <Ingredients loading={loading} recipe={selected} />}
-                {show.view && <RecipeDetails loading={loading} recipe={selected} />}
-                {show.search && <RecipeList recipes={recipes}
-                    showActions={show.planDay}
-                    onClick={onClick(actions.select)}
-                    onShowDetails={onClick(actions.showDetails)} />}
+                {show.search && <RecipeSearch />}
+                {show.details && <RecipeDetails />}
             </Content>
             <Actions>
-                {!show.search && <ButtonAction view='view' icon='info' onClick={onClick(actions.showDetails)} />}
-                {!show.search && <ButtonAction view='ingredients' icon='clipboard list' onClick={onClick(actions.showIngredients)} />}
-                {!show.search && <ButtonAction view='instructions' icon='numbered list' onClick={onClick(actions.showInstructions)} />}
-                {(showSelect) && <ButtonSuccess onClick={onClick(actions.select)} />}
+                {show.details && <ButtonAction icon='info' onClick={toHash('stats')} />}
+                {show.details && <ButtonAction icon='clipboard list' onClick={toHash('ingredients')} />}
+                {show.details && <ButtonAction icon='numbered list' onClick={toHash('instructions')} />}
+                {show.details && !planState.notFound && <ButtonSuccess onClick={selectPlan} />}
             </Actions>
         </Layout>
     )
 }
-Page.getInitialProps = async (ctx) => {
-    const { id, view, plan, date, firstTime, query } = ctx.query;
-    auth(ctx);
 
-    return {
-        id,
-        view,
-        firstTime: !!firstTime,
-        plan,
-        date,
-        query
-    }
+Page.getInitialProps = async function (ctx) {
+    auth(ctx);
+    return {};
 }
+
 export default Page;

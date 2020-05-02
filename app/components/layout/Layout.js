@@ -4,20 +4,24 @@ import Loading from '../shared/Loading';
 import Header from './Header';
 import "./layout.scss";
 import Menu from './Menu';
+import { useLayout } from '../../hooks/useLayout';
 
-export default function Layout({ children, showBackBtn, title, simple, loading, actions }) {
-    const [showMenu, setShowMenu] = useState(false);
+export default function Layout({ children, title, loading, actions }) {
+    const [state, handlers] = useLayout();
     return (<div className='app-window'>
         <Loading />
         <Sidebar.Pushable as={Segment}>
-            {!simple && <Header loading={loading} className="mmp-header" showMenu={() => setShowMenu(true)} showBackBtn={showBackBtn} title={title} />}
-
-            <Menu visible={showMenu} onHide={() => setShowMenu(false)} />
-            <Sidebar.Pusher dimmed={showMenu}>
+            <Header loading={loading}
+                showMenu={handlers.showMenu}
+                title={title}
+                actions={actions} />
+            <Menu visible={state.showMenu} onHide={handlers.hideMenu} />
+            <Sidebar.Pusher dimmed={state.showMenu}>
                 <Segment basic>
                     <div className="mmp-content">
                         {children}
                     </div>
+                    <p style={{display: 'none'}}>{process.env.BASE_URL}</p>
                 </Segment>
             </Sidebar.Pusher>
         </Sidebar.Pushable>
