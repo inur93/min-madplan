@@ -18,15 +18,21 @@ export function useProfile(self) {
     const [group, setGroup] = useState(null);
     const [saved, setSaved] = useState(false);
 
+    const [error, setError] = useState("");
+
     const saveImage = async () => {
-        if (!clearAvatar && image) {
-            const data = new FormData();
-            data.append('ref', 'user');
-            data.append('refId', self._id);
-            data.append('field', 'avatar');
-            data.append('files', image);
-            data.append('source', 'users-permissions');
-            return fileApi.upload(data);
+        try {
+            if (!clearAvatar && image) {
+                const data = new FormData();
+                data.append('ref', 'user');
+                data.append('refId', self._id);
+                data.append('field', 'avatar');
+                data.append('files', image);
+                data.append('source', 'users-permissions');
+                return fileApi.upload(data);
+            }
+        }catch(e){
+            setError(e.message);
         }
     }
     const onSave = async (updates) => {
@@ -59,6 +65,7 @@ export function useProfile(self) {
     }
 
     const state = {
+        error,
         groups,
         saved,
         image: image ? URL.createObjectURL(image) : (clearAvatar ? null : (self && self.avatar && absUrl(self.avatar.url))),

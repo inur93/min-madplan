@@ -36,6 +36,7 @@ export function ProfileEdit({ user }) {
                 fluid
                 placeholder='Vælg en gruppe...' />
         </Form.Field>
+        <p>{state.error}</p>
         <ButtonSuccess />
 
         <Message success
