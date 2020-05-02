@@ -10,7 +10,7 @@ export function useShoppingListHistory() {
     const {
         data: history,
         isValidating
-    } = useSWR('shopping-lists', api.find);
+    } = useSWR('/shopping-lists', api.find);
 
     const state = {
         loading: !history,

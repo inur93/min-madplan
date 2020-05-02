@@ -45,8 +45,8 @@
       "model": "group"
     },
     "shopping_list": {
-      "model": "shopping-list",
-      "via": "food_plan"
+      "via": "food_plan",
+      "model": "shopping-list"
     }
   }
 }

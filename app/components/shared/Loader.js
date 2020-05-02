@@ -7,7 +7,7 @@ export function Loader({ loading, children }) {
     if (loading) return <LoaderSUI active size='massive' >
         loading...
         </LoaderSUI>
-    return (<div>
+    return (<div className='cover-height'>
         {children}
     </div>)
 }

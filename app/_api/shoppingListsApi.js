@@ -31,6 +31,9 @@ export const GetShoppingListApi = (ctx) => {
         },
         async delete(id) {
             return await (await api.delete(getPath(id))).data;
+        },
+        async refresh(id) {
+            return await (await api.put(getPath(`${id}/refresh`))).data;
         }
     }
 }

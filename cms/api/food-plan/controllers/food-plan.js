@@ -1,7 +1,7 @@
 'use strict';
 
-const { sanitizeEntity, buildQuery, parseMultipartData } = require('strapi-utils');
-const { getUserId, getCurrentGroup, groupBy, sum } = require('../../../config/functions/helperFunctions');
+const { sanitizeEntity } = require('strapi-utils');
+const { getUserId, getCurrentGroup, mergeShoppingListItems } = require('../../../config/functions/helperFunctions');
 const MODEL_ID = "food-plan";
 const MODEL_ID_SHOPPING_LIST = 'shopping-list';
 const MODEL_ID_UNITS = 'unit';
@@ -63,89 +63,27 @@ module.exports = {
         const { _id, name, plan, validFrom } = await strapi.services[MODEL_ID].findOne(ctx.params);
         const units = await strapi.services[MODEL_ID_UNITS].find();
 
-        const conversionTable = units.reduce((map, value) => {
-            map[value.name] = value.conversionTable || {};
-            return map;
-        }, {});
-
         //get list of ingredients list and attach recipe name on each ingredient
-        const rawList = plan.map(
-            p => p.recipe
-                && p.recipe.ingredients
-                    .map(i => ({ recipe: p.recipe.title, ...i }))
+        const ingredientsGroupedOnPlan = plan.map(
+            p => p.recipe && p.recipe.ingredients
+                .map(i => ({
+                    ...i,
+                    recipe: p.recipe.title,
+                    date: p.date
+                }))
         );
         // flatten ingredients list to 1 dimension
-        let ingredients = [].concat(...rawList);
-
-        //group the ingredients by name in case same ingredient exists on multiple recipes.
-        const itemsGroupedByName = groupBy(ingredients.map(i => ({
-            name: i.name,
-            unit: i.unit,
-            amount: i.amount,
-            recipe: i.recipe
-        })), x => ({ name: x.name }));
-
-        //make conversions for each group if ingredient is weighed with different units
-        const itemsGrouped = itemsGroupedByName.map(group => {
-
-            //merge values if possible
-            group.values = group.values.reduce((arr, item) => {
-                const same = arr.find(x => x.unit === item.unit);
-                const target = arr.find(x => (conversionTable[x.unit] || {})[item.unit]);
-                const source = arr.find(x => (conversionTable[item.unit] || {})[x.unit]);
-                let selectedAmount;
-                let selectedItem;
-
-                if (same) {
-                    selectedAmount = item.amount;
-                    selectedItem = same;
-                } else if (target) {
-                    selectedAmount = item.amount / conversionTable[target.unit][item.unit];
-                    selectedItem = target;
-                } else if (source) {
-                    selectedAmount = conversionTable[item.unit][source.unit] * item.amount;
-                    selectedItem = source;
-                } else {
-                    selectedItem = {
-                        name: item.name,
-                        unit: item.unit,
-                        extra: { recipes: [] },
-                        amount: 0
-                    };
-                    selectedAmount = item.amount;
-                    arr.push(selectedItem);
-                }
-
-                selectedItem.extra.recipes.push({ recipe: item.recipe, amount: item.amount, unit: item.unit });
-                selectedItem.amount += selectedAmount;
-                return arr;
-            }, []);
-            return group;
-        });
-
-        //unwind merged items
-        const items = itemsGrouped.reduce((arr, group) => {
-            const unwind = group.values.map(value => {
-                //TODO try to optimize chosen unit fx use kg if more than 1000 g.
-                return {
-                    name: group.key.name,
-                    unit: value.unit,
-                    extra: value.extra,
-                    amount: value.amount
-                }
-            })
-            return arr.concat(unwind);
-        }, [])
-            //removes salt and pepper etc which is not specified with an amount
-            .filter(x => x.amount != 0);
-
+        let items = mergeShoppingListItems([].concat(...ingredientsGroupedOnPlan), units);
 
         const shoppingList = {
             validFrom,
             name,
             group,
             owner: userId,
-            items,
+            extra: {
+                recipes: plan.filter(x => x.recipe).map(x => x.recipe.title),
+                items
+            },
             food_plan: _id
         }
         const entity = await strapi.services[MODEL_ID_SHOPPING_LIST].create(shoppingList);

@@ -57,7 +57,8 @@ export function usePlanDetails(idParam = 'id') {
 
         const content = list.map(e => ({ ...e, shopping_list: null, owner: null, items: [] }));
         //we want to mutate cache with all data
-        mutate(key, { ...plan, plan: content }, false);
+        plan.plan = content;
+        mutate(key, plan, false);
         //the api is only updated with changed values
         mutate(key, api.update(plan._id, { plan: list }));
 
@@ -87,10 +88,10 @@ export function usePlanDetails(idParam = 'id') {
             router.push({
                 pathname: '/recipes',
                 query: {
-                    view: views.history,
+                    view: views.details,
                     id: recipe,
                     plan: id,
-                    date: formatDateForQuery(date)
+                    date: date
                 }
             });
         },

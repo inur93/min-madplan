@@ -1,21 +1,26 @@
-import { List, Icon } from "semantic-ui-react";
-import { addDays, formatDateForQuery, formatDay, getPlanLength } from '../../functions/dateFunctions';
-import { IconEdit, IconInfo, IconRemove } from "../shared/Icon";
+import { useState, useEffect } from "react";
+import { List } from "semantic-ui-react";
+import { formatDay } from '../../functions/dateFunctions';
 import { usePlanDetails } from "../../hooks/plan/usePlanDetails";
+import { IconEdit, IconInfo, IconRemove } from "../shared/Icon";
 import { Loader } from '../shared/Loader';
-import { useState } from "react";
 
 const ListItem = function ({ date, recipe, onEdit, onRemove, onInfo }) {
-    const isEmpty = !recipe;
+    const [isEmpty, setEmpty] = useState(true);
     const handleInfo = () => onInfo({ recipe: recipe._id, date });
-    const handleRemove = async () => await onRemove({ date });
+    const handleRemove = async () => {
+        setEmpty(true);
+        await onRemove({ date })
+    };
     const handleEdit = () => onEdit({ recipe: recipe && recipe._id, date });
-
+    useEffect(() => {
+        setEmpty(!recipe);
+    }, [recipe]);
     return (<List.Item>
         <List.Content>
             <List.Header as="a">{formatDay(new Date(date))}</List.Header>
             <List.Header onClick={handleEdit} className={isEmpty ? 'mmp-empty' : ''} >
-                {isEmpty ?
+                {(isEmpty || !recipe) ?
                     "Tilføj en opskrift..."
                     : recipe.title
                 }

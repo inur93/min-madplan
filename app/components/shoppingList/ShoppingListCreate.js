@@ -1,5 +1,5 @@
 import { Input } from "semantic-ui-react";
-import { formatDate, getWeek, setWeek } from '../../functions/dateFunctions';
+import { formatDate, getWeek, setWeek, startOfNextWeek } from '../../functions/dateFunctions';
 import { ButtonSuccess } from "../shared/Button";
 import { Form } from "../shared/Form";
 import { useShoppingListCreate } from "../../hooks/shoppingList/useShoppingListCreate";
@@ -10,7 +10,8 @@ export function ShoppingListCreate() {
     const [state, handlers] = useShoppingListCreate();
     const nextWeek = getWeek(new Date()) + 1;
     const defaultName = `Uge ${nextWeek}`;
-    const defaultValidFrom = formatDate(setWeek(new Date(), nextWeek - 1));
+
+    const defaultValidFrom = formatDate(startOfNextWeek());
     return (
         <Form id="create-shopping-list" onSubmit={handlers.onCreate}>
             <Form.Field required>

@@ -47,6 +47,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "PUT",
+      "path": "/shopping-lists/:id/refresh",
+      "handler": "shopping-list.refresh",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }

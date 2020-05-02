@@ -37,7 +37,8 @@ function useView(pagePath, defaultView) {
         edit: () => updateQuery({
             ...router.query,
             edit: !edit
-        })
+        }),
+        param: (params) => updateQuery(params, true)
 
     }
     return [show, edit, goto];

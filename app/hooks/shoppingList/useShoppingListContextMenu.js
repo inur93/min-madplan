@@ -14,9 +14,19 @@ export function useShoppingListContextMenu() {
         menu.push({
             label: 'Slet',
             onClick: async () => {
-                goTo.history();
                 await api.delete(router.query.id);
-                mutate('shopping-lists');
+                mutate('/shopping-lists');
+                goTo.history();
+            }
+        }, {
+            label: 'Grupper opskrift',
+            onClick: async () => {
+                goTo.param({ sortBy: 'recipe' })
+            }
+        }, {
+            label: 'Grupper vare',
+            onClick: async () => {
+                goTo.param({ sortBy: 'item' })
             }
         })
     }

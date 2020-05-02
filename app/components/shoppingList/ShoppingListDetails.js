@@ -1,49 +1,55 @@
-import { Checkbox, List, Icon } from "semantic-ui-react";
-import { sortByCheckedThenName } from "../../functions/arrayFunctions";
-import { useShoppingListDetails } from "../../hooks/shoppingList/useShoppingListDetails";
-import { IconEdit, IconRemove } from "../shared/Icon";
-import { ShoppingItemEdit } from "./ShoppingItemEdit";
-import { ProductItemAutoComplete } from "../shared/Input";
-import './shopping-list-view.scss';
-import { Loader } from "../shared/Loader";
-import FlipMove from 'react-flip-move';
 import { forwardRef } from "react";
-import { useRouter } from "next/router";
+import FlipMove from 'react-flip-move';
+import { Checkbox, Icon, List, Progress } from "semantic-ui-react";
+import { useShoppingListDetails } from "../../hooks/shoppingList/useShoppingListDetails";
+import { ErrorMessage } from "../shared/ErrorMessage";
+import { IconEdit, IconRemove } from "../shared/Icon";
+import { ProductItemAutoComplete } from "../shared/Input";
+import { Loader } from "../shared/Loader";
+import './shopping-list-view.scss';
+import { ShoppingItemEdit } from "./ShoppingItemEdit";
+import { InfoMessage } from "../shared/InfoMessage";
+import { Page } from "../shared/Page";
+import { ScrollView } from "../shared/ScrollView";
 
-const mapRecipeNames = (recipes) => {
-    if (!recipes || recipes.length == 0) return '';
-    const distinct = [...new Set(recipes.map(r => r.recipe))];
-    return distinct.map((r, i) => {
-        if (distinct.length <= 1) return r;
-        if (distinct.length - 1 == i) return r;
-        if (r.length > 15) return r.substring(0, 15) + '\u2026';
-        return r;
-    }).join(', ')
-}
-const ListElement = forwardRef(({ editMode, item, onCheck, onEdit, onRemove }, ref) => {
-    const { name, unit, amount, checked } = item;
-    const router = useRouter();
-    const handleCheck = () => onCheck({ item: { ...item, checked: !checked } });
-    const handleRemove = () => onRemove({ id: item._id });
+const ListElementGroup = forwardRef(({ item, ...props }, ref) => {
+    if (item.grouped) {
+        return <List.Item ref={ref}>
+            <List.Content className='nested'>
+                <List.Header>
+                    {item.name}
+                </List.Header>
+                {!item.hideDate &&
+                    <List.Description >
+                        {item.date}
+                    </List.Description>
+                }
+                <List.List>
+                    <FlipMove id={`flip-${item.key}`}>
+                        {item.items.map(x => <ListElement {...props} key={x.key} item={x} />)}
+                    </FlipMove>
+                </List.List>
+            </List.Content>
+        </List.Item>
+    }
+    return <ListElement ref={ref} {...props} item={item} />;
+})
+const ListElement = forwardRef(({ editMode, item, handlers }, ref) => {
+    const { checked } = item;
+    const handleCheck = () => handlers.updateProduct({
+        key: item.key,
+        change: { checked: !checked }
+    });
+    const handleRemove = () => handlers.removeProduct({ key: item.key });
     const handleEdit = () => editMode
-        ? onEdit({ id: item._id })
+        ? handlers.editProduct({ key: item.key })
         : handleCheck();
 
-    let fullname = amount
-        ? `${amount} ${unit || ''} ${name}`
-        : name;
-
-    const showRecipeNames = false;// (item && item.extra);
     return <List.Item ref={ref} className='shopping-list-view-item'>
         <List.Content>
             <List.Header onClick={handleEdit}>
-                {fullname}
+                {item.label}
             </List.Header>
-            {showRecipeNames &&
-                <List.Description >
-                    {mapRecipeNames(item.extra.recipes)}
-                </List.Description>
-            }
         </List.Content>
         <List.Content>
             {editMode && <IconEdit onClick={handleEdit} />}
@@ -55,31 +61,33 @@ const ListElement = forwardRef(({ editMode, item, onCheck, onEdit, onRemove }, r
 
 export function ShoppingListDetails() {
     const [state, handlers] = useShoppingListDetails();
-    const { editMode, loading, products } = state;
+    const { editMode, loading, shoppingListItems } = state;
 
+    if (state.error) return <ErrorMessage error={state.error} />;
     return (<Loader loading={loading}>
-        <div>
-            <h2>{state.shoppingList.name}</h2>
+        {state.shouldUpdate && <InfoMessage
+            message={state.message}
+            dismiss={handlers.dismissUpdate} />}
+        <Page title={state.shoppingList.name} loading={state.reloading}>
             {editMode && <ProductItemAutoComplete
                 getSuggestions={handlers.getSuggestions}
                 onSelect={handlers.addProduct}
                 placeholder="Hvad skal du handle?" />
             }
-            {!products.length && editMode && <p>Skriv i søgefeltet ovenfor for at tilføje noget til indkøbslisten</p>}
-            {!products.length && !editMode && <p>Din indkøbsliste er tom, tryk på <Icon name='edit' /> for at tilføje varer til listen</p>}
-            <List>
-                <FlipMove>
-                    {products
-                        .sort(sortByCheckedThenName)
-                        .map((item, i) => <ListElement key={item.name}
-                            editMode={editMode}
-                            onCheck={handlers.updateProduct}
-                            onEdit={handlers.editProduct}
-                            onRemove={handlers.removeProduct}
-                            item={item} />)}
-                </FlipMove>
-            </List>
-        </div>
+            {!shoppingListItems.length && editMode && <p>Skriv i søgefeltet ovenfor for at tilføje noget til indkøbslisten</p>}
+            {!shoppingListItems.length && !editMode && <p>Din indkøbsliste er tom, tryk på <Icon name='edit' /> for at tilføje varer til listen</p>}
+            <ScrollView>
+                <List>
+                    <FlipMove id="shopping-list-flip">
+                        {shoppingListItems.map((item, i) =>
+                            <ListElementGroup key={item.key}
+                                editMode={editMode}
+                                handlers={handlers}
+                                item={item} />)}
+                    </FlipMove>
+                </List>
+            </ScrollView>
+        </Page>
         {state.product &&
             <ShoppingItemEdit item={state.product}
                 onSave={handlers.updateProduct}
