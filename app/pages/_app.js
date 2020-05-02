@@ -19,7 +19,6 @@ function App({ Component, pageProps }) {
             timerId = setTimeout(() => setSlow(false), 15000);
         }
     }}>
-        {isSlow && <p>Der er dårlig forbindelse i øjeblikket</p>}
         <Component {...pageProps} />
     </SWRConfig>)
 }

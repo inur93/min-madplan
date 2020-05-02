@@ -2,6 +2,7 @@ import { List, ListDescription } from "semantic-ui-react";
 import useInviteActions from "../../hooks/useInviteActions";
 import { useInvites } from "../../hooks/useInvites";
 import { IconCheck, IconRemove } from "../shared/Icon";
+import { Loader } from "../shared/Loader";
 
 
 function Invite({ invite, onAccept, onDecline }) {
@@ -34,14 +35,14 @@ export default function GroupInvites({ loading, invites, onAccept, onDecline }) 
 }
 
 export function GroupInvitesWrapped() {
-    const [invites, revalidate] = useInvites();
-    const [state, handlers, actions] = useInviteActions(revalidate);
+    const [state, revalidate] = useInvites();
+    const [, handlers, actions] = useInviteActions(revalidate);
     const { onClick } = handlers;
 
-    return <div>
-        {(invites && invites.length > 0) && <p>Du har en invititation liggende. Godkend invitationen for at komme i gang og planlægge madplanen for næste uge.</p>}
-        <GroupInvites invites={invites}
-        onAccept={onClick(actions.accept)}
-        onDecline={onClick(actions.decline)} />
-    </div>
+    return <Loader loading={state.loading} >
+        {(state.invites && state.invites.length > 0) && <p>Du har en invititation liggende. Godkend invitationen for at komme i gang og planlægge madplanen for næste uge.</p>}
+        <GroupInvites invites={state.invites}
+            onAccept={onClick(actions.accept)}
+            onDecline={onClick(actions.decline)} />
+    </Loader>
 }

@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { GetGroupInvitesApi, GetUsersApi } from "../_api";
 import { useSelf } from "./useSelf";
+import { mutate } from "swr";
 
 const actions = {
     decline: 'decline',
@@ -32,6 +33,7 @@ export default function useInviteActions(revalidator) {
                 }
                 setLoading(false);
         }
+        mutate('/invites/count');
         if (revalidator) revalidator();
     }
 
