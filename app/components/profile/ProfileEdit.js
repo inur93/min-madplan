@@ -37,7 +37,7 @@ export function ProfileEdit({ user }) {
                 placeholder='Vælg en gruppe...' />
         </Form.Field>
         <p>{state.error}</p>
-        <ButtonSuccess />
+        <ButtonSuccess disabled={state.loading} />
 
         <Message success
             header='Dine ændringer er gemt' />

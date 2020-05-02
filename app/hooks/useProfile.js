@@ -17,6 +17,7 @@ export function useProfile(self) {
     const [clearAvatar, setClearAvatar] = useState(false);
     const [group, setGroup] = useState(null);
     const [saved, setSaved] = useState(false);
+    const [saving, setSaving] = useState(false);
 
     const [error, setError] = useState("");
 
@@ -31,11 +32,12 @@ export function useProfile(self) {
                 data.append('source', 'users-permissions');
                 return fileApi.upload(data);
             }
-        }catch(e){
+        } catch (e) {
             setError(e.message);
         }
     }
     const onSave = async (updates) => {
+        setSaving(true);
         const data = { ...updates };
         if (group) data.selectedGroup = group;
         if (clearAvatar) data.avatar = null; //clear image
@@ -45,6 +47,7 @@ export function useProfile(self) {
         ])
         mutate('/me');
         setSaved(true);
+        setSaving(false);
         setTimeout(() => setSaved(false), 3000);
     }
 
@@ -66,6 +69,7 @@ export function useProfile(self) {
 
     const state = {
         error,
+        loading: saving,
         groups,
         saved,
         image: image ? URL.createObjectURL(image) : (clearAvatar ? null : (self && self.avatar && absUrl(self.avatar.url))),
