@@ -37,18 +37,22 @@ export function useProfile(self) {
         }
     }
     const onSave = async (updates) => {
-        setSaving(true);
-        const data = { ...updates };
-        if (group) data.selectedGroup = group;
-        if (clearAvatar) data.avatar = null; //clear image
-        await Promise.all([
-            api.update(self._id, data),
-            saveImage()
-        ])
-        mutate('/me');
-        setSaved(true);
-        setSaving(false);
-        setTimeout(() => setSaved(false), 3000);
+        try {
+            setSaving(true);
+            const data = { ...updates };
+            if (group) data.selectedGroup = group;
+            if (clearAvatar) data.avatar = null; //clear image
+            await Promise.all([
+                api.update(self._id, data),
+                saveImage()
+            ])
+            mutate('/me');
+            setSaved(true);
+            setSaving(false);
+            setTimeout(() => setSaved(false), 3000);
+        }catch(e){
+            setError(e.message);
+        }
     }
 
     const onImageChange = (e) => {
