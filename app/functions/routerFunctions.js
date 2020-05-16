@@ -14,3 +14,9 @@ export const routeUpdate = (router, params) => {
         shallow: true
     });
 }
+
+export function toQueryStr(obj) {
+    return Object.keys(obj).reduce((query, key) => {
+        return `${key}=${obj[key]}&${query}`;
+    }, "");
+}

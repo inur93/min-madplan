@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { getJwtToken, validateToken } from '../functions/tokenFunctions';
-import { isProduction } from '../functions/environmentFunctions';
 
 export const getBaseUrl = () => {
     

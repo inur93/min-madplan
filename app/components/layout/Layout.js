@@ -4,7 +4,7 @@ import Loading from '../shared/Loading';
 import Header from './Header';
 import "./layout.scss";
 import Menu from './Menu';
-import { useLayout } from '../../hooks/useLayout';
+import { useLayout } from '../../hooks/shared/useLayout';
 
 export default function Layout({ children, title, loading, actions }) {
     const [state, handlers] = useLayout();

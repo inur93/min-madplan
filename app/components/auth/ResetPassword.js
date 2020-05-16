@@ -1,5 +1,5 @@
 import { Message, Input } from "semantic-ui-react";
-import { useResetPassword } from "../../hooks/useResetPassword";
+import { useResetPassword } from "../../hooks/auth/useResetPassword";
 import { Button } from "../shared/Button";
 import { Form } from "../shared/Form";
 

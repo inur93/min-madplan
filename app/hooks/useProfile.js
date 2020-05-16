@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { GetFilesApi, GetGroupsApi, GetUsersApi } from "../_api";
 import { useData } from "./useData";
-import { usePageSettings } from "./usePageSettings";
+import { usePageSettings } from "./shared/usePageSettings";
 import { sanitizeImageName, absUrl } from "../functions/imageFunctions";
 import { mutate } from "swr";
 

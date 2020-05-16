@@ -1,7 +1,7 @@
-import { GetPlanApi } from "../../_api";
 import { useRouter } from "next/router";
 import { mutate } from "swr";
-import { useView, views } from "../useView";
+import { GetPlanApi } from "../../_api";
+import { useView } from "../shared/useView";
 
 
 export function usePlanContextMenu() {

@@ -5,7 +5,7 @@ import { RecipeDetails } from '../components/recipe/RecipeDetails';
 import { RecipeSearch } from '../components/recipe/RecipeSearch';
 import { ButtonAction, ButtonSuccess } from '../components/shared/Button';
 import { usePlanDetails } from '../hooks/plan/usePlanDetails';
-import { useView } from '../hooks/useView';
+import { useView } from '../hooks/shared/useView';
 import { auth } from '../functions/authFunctions';
 
 const Page = () => {

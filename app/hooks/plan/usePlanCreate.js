@@ -1,6 +1,6 @@
 import { GetPlanApi } from "../../_api";
-import { useLoading } from "../useLoading";
-import { useView } from "../useView";
+import { useLoading } from "../shared/useLoading";
+import { useView } from "../shared/useView";
 
 
 export function usePlanCreate() {

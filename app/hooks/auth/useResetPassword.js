@@ -1,21 +1,29 @@
-import { useState, useEffect } from "react";
-import { GetAuthApi } from "../_api";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { GetAuthApi } from "../../_api";
 
 
-export function useForgotPassword() {
+export function useResetPassword() {
     const api = GetAuthApi();
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
     let timer;
     const onSubmit = async (data) => {
+        const code = router.query.code;
+        if (!code) return; //TODO error message
         setLoading(true);
-        await api.forgotPassword(data);
+        await api.resetPassword({
+            code,
+            ...data
+        });
         setLoading(false);
         setSuccess(true);
         timer = setTimeout(() => {
             setSuccess(false);
+            router.push('/login');
             timer = null;
-        }, 8000);
+        }, 3000);
     }
 
     useEffect(() => timer && clearTimeout(timer), []);

@@ -2,7 +2,7 @@ import { Segment } from 'semantic-ui-react';
 import { GroupCreate } from '../components/group/GroupCreate';
 import { GroupInvitesWrapped } from '../components/group/GroupInvites';
 import MenuItem from '../components/menu/MenuItem';
-import { useInvitesCount } from '../hooks/useInvitesCount';
+import { useInvitesCount } from '../hooks/invites/useInvitesCount';
 import { useSelf } from '../hooks/useSelf';
 import { GetPageSettingsApi } from '../_api';
 import { auth } from '../functions/authFunctions';
@@ -24,10 +24,10 @@ const IndexPage = function (props) {
       {!firstTime && <div className='menu-container'>
         <MenuItem image={shoppingListImage}
           title="Indkøbsliste"
-          link="/shopping-list" />
+          link="/shopping-list?view=history" />
         <MenuItem image={planImage}
           title="Ugeplan"
-          link="/plan" />
+          link="/plan?view=history" />
         <MenuItem image={recipesImage}
           title="Opskrifter"
           link="/recipes" />

@@ -15,16 +15,30 @@ export const GetAuthApi = (ctx) => {
     const api = getApi(ctx, true);
     return {
         async login({ username, password }) {
+            let message;
+            let success = false;
             try {
                 let { data } = await api.post('/auth/local', {
                     identifier: username,
                     password
                 });
-                if (!data) return false;
-                setUserAndToken(data.user, data.jwt);
-                return true;
+                if (data) {
+                    setUserAndToken(data.user, data.jwt);
+                    success = true;
+                }
             } catch (err) {
-                return false;
+                switch (err.response.status) {
+                    case 400:
+                        message = 'Dit brugernavn eller kodeord er forkert';
+                        break;
+                    default:
+                        message = 'Der skete en ukendt fejl. Prøv igen.';
+                        break;
+                }
+            }
+            return {
+                success,
+                message
             }
         },
         async forgotPassword({ email }) {

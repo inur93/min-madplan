@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { GetGroupInvitesApi, GetUsersApi } from "../_api";
-import { useSelf } from "./useSelf";
+import { GetGroupInvitesApi, GetUsersApi } from "../../_api";
+import { useSelf } from "../useSelf";
 import { mutate } from "swr";
 
 const actions = {

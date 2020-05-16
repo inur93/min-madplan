@@ -3,8 +3,8 @@ import { Icon, Image, Label, Menu as MenuSUI, Sidebar } from 'semantic-ui-react'
 import { GetGroupsApi, GetUsersApi, logout } from '../../_api';
 import { absUrl } from '../../functions/imageFunctions';
 import { useData } from '../../hooks/useData';
-import { useInvitesCount } from '../../hooks/useInvitesCount';
-import { usePageSettings } from '../../hooks/usePageSettings';
+import { useInvitesCount } from '../../hooks/invites/useInvitesCount';
+import { usePageSettings } from '../../hooks/shared/usePageSettings';
 import { useSelf } from '../../hooks/useSelf';
 import { ButtonClose } from '../shared/Button';
 import './menu.scss';
@@ -14,7 +14,7 @@ const fullname = (firstname, lastname) => `${firstname || ""} ${lastname || ""}`
 const Menu = function ({ visible, onHide }) {
     const router = useRouter();
     const invitesCount = useInvitesCount();
-    const [self, revalidate] = useSelf();
+    const [self] = useSelf();
     const settings = usePageSettings('profile');
     const { firstname, lastname, selectedGroup, _id } = self || {};
     const groups = useData('groups', GetGroupsApi().find) || [];

@@ -1,7 +1,7 @@
-import { useLoading } from "../useLoading";
+import { useLoading } from "../shared/useLoading";
 import { GetShoppingListApi } from "../../_api";
 import { useRouter } from "next/router";
-import { useView, views } from "../useView";
+import { useView, views } from "../shared/useView";
 
 
 export function useShoppingListCreate() {
