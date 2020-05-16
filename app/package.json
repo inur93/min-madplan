@@ -20,7 +20,8 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "test": "jest --config ./jest.config.js"
+    "test": "jest --config ./jest.config.js",
+    "test:watch": "yarn test --watchAll"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.9.6",

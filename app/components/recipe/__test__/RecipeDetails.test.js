@@ -18,14 +18,16 @@ afterEach(() => {
 })
 
 it("render headers, ingredients and instructions", () => {
+    const title = 'første test opskrift';
+    const ingredients = [
+        { _id: '1', name: 'kartofler', unit: 'kg', amount: 1 },
+        { _id: '2', name: 'sukker', unit: 'g', amount: 2 }
+    ]
     useRecipeDetails.mockReturnValue([{
         loading: false,
         recipe: {
-            title: 'første test opskrift',
-            ingredients: [
-                { _id: '1', name: 'kartofler', unit: 'kg', amount: 1 },
-                { _id: '2', name: 'sukker', unit: 'g', amount: 2 }
-            ],
+            title,
+            ingredients,
             instructions: "En beskrivelse af hvordan man koger kartofler."
         }
     }])
@@ -33,6 +35,18 @@ it("render headers, ingredients and instructions", () => {
         .create(<RecipeDetails />)
         .toJSON();
     expect(tree).toMatchSnapshot();
+
+    //do additional tests that verify the content
+    render(<RecipeDetails />, container);
+
+    const header = container.querySelector("#stats h2").textContent;
+    expect(header).toBe(title);
+
+    const ingredientElements = container.querySelectorAll("#ingredients .list .header");
+
+    expect(ingredientElements[0].textContent).toBe("1 kg kartofler");
+    expect(ingredientElements[1].textContent).toBe("2 g sukker");
+
 })
 
 

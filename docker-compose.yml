@@ -12,7 +12,6 @@ services:
   build:
    context: ./cms
    dockerfile: Dev.Dockerfile
-#  command: sh -c "chokidar_usepolling=1 NODE_OPTIONS=--inspect=0.0.0.0:9230 node node_modules/.bin/strapi develop"
   command: sh -c "chokidar_usepolling=1 node --inspect=0.0.0.0:9230 node_modules/.bin/strapi develop"
   ports:
    - 1337:1337
@@ -23,7 +22,7 @@ services:
   links:
    - db
      
- nextjs:
+ app:
   image: min-madplan/webapp
   build:
    context: ./app
@@ -39,6 +38,16 @@ services:
    - STRAPI_URL=http://cms:1337
   links:
    - cms
+ app_test:
+  image: min-madplan/webapp
+  build:
+   context: ./app
+   dockerfile: Dev.Dockerfile
+  command: sh -c "yarn test:watch"
+  volumes:
+   - ./app:/app
+   - /app/node_modules
+ 
   
 volumes: 
  mongo-db:
