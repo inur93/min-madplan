@@ -4,7 +4,7 @@ import { ShoppingListCreate } from '../components/shoppingList/ShoppingListCreat
 import { ShoppingListDetails } from '../components/shoppingList/ShoppingListDetails';
 import { ShoppingListOverview } from '../components/shoppingList/ShoppingListOverview';
 import { useShoppingListContextMenu } from '../hooks/shoppingList/useShoppingListContextMenu';
-import { useView, views } from '../hooks/useView';
+import { useView, views } from '../hooks/shared/useView';
 import { auth } from '../functions/authFunctions';
 import { useHelp } from '../hooks/shared/useHelp';
 import { HelpBox } from '../components/shared/HelpBox';

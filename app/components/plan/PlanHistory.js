@@ -1,6 +1,6 @@
 import { List, Icon } from "semantic-ui-react";
 import { formatDate } from '../../functions/dateFunctions';
-import { useView } from "../../hooks/useView";
+import { useView } from "../../hooks/shared/useView";
 import { Loader } from "../shared/Loader";
 import { usePlanHistory } from "../../hooks/plan/usePlanHistory";
 

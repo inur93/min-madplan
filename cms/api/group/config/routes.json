@@ -41,9 +41,25 @@
       }
     },
     {
+      "method": "PUT",
+      "path": "/groups/:id/leave",
+      "handler": "group.leave",
+      "config": {
+        "policies": []
+      }
+    },
+    {
       "method": "DELETE",
       "path": "/groups/:id",
       "handler": "group.delete",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/groups/:id/invite",
+      "handler": "group.invite",
       "config": {
         "policies": []
       }

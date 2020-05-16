@@ -1,24 +1,8 @@
-import { List, ListDescription } from "semantic-ui-react";
-import useInviteActions from "../../hooks/useInviteActions";
-import { useInvites } from "../../hooks/useInvites";
-import { IconCheck, IconRemove } from "../shared/Icon";
+import { List } from "semantic-ui-react";
+import useInviteActions from "../../hooks/invites/useInviteActions";
+import { useInvites } from "../../hooks/invites/useInvites";
 import { Loader } from "../shared/Loader";
-
-
-function Invite({ invite, onAccept, onDecline }) {
-    const handleAccept = () => onAccept({ id: invite._id });
-    const handleDecline = () => onDecline({ id: invite._id });
-    return <List.Item>
-        <List.Content>
-            <List.Header>{invite.group.name}</List.Header>
-            <ListDescription>{invite.from.firstname}</ListDescription>
-        </List.Content>
-        <List.Content>
-            <IconCheck onClick={handleAccept} />
-            <IconRemove onClick={handleDecline} />
-        </List.Content>
-    </List.Item>
-}
+import { Invite } from "./Invite";
 
 export default function GroupInvites({ loading, invites, onAccept, onDecline }) {
 

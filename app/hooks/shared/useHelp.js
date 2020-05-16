@@ -1,4 +1,4 @@
-import { useView } from "../useView";
+import { useView } from "./useView";
 import { useSelf } from "../useSelf";
 import { GetUsersApi } from "../../_api";
 import { mutate } from "swr";

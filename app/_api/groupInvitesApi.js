@@ -1,4 +1,5 @@
 import { getApi } from './api';
+import { toQueryStr } from '../functions/routerFunctions';
 
 const getPath = (path, query) => `/group-invites/${path || ''}?${query || ''}`;
 
@@ -6,11 +7,8 @@ export const GetGroupInvitesApi = (ctx) => {
     const api = getApi(ctx);
 
     return {
-        async myInvites() {
-            return await (await api.get(getPath())).data;
-        },
-        async find() {
-            return await (await api.get(getPath())).data;
+        async find(query) {
+            return await (await api.get(getPath('', toQueryStr(query)))).data;
         },
         async accept(id) {
             return await (await api.put(getPath(`${id}/accept`))).data;
@@ -18,8 +16,8 @@ export const GetGroupInvitesApi = (ctx) => {
         async decline(id) {
             return await (await api.put(getPath(`${id}/decline`))).data;
         },
-        async count() {
-            return await (await api.get(getPath(`count`))).data;
+        async count(query) {
+            return await (await api.get(getPath(`count`, toQueryStr(query)))).data;
         }
     }
 }

@@ -9,13 +9,21 @@ const MODEL_ID_GROUPS = 'group';
  * to customize this controller
  */
 
+function doesRequestIncludeMe(ctx) {
+    const myEmail = getUserEmail(ctx);
+    const myId = getUserId(ctx);
+    //validate request
+    if (myEmail !== ctx.query.email && ctx.query.from !== myId.toString()) {
+        return false;
+    }
+    return true;
+}
+
 module.exports = {
     async find(ctx) {
-        const myEmail = getUserEmail(ctx);
-        const entities = await strapi.services[MODEL_ID].find({
-            'email': myEmail,
-            'status': 'sent'
-        });
+        if (!doesRequestIncludeMe(ctx)) return null;
+
+        const entities = await strapi.services[MODEL_ID].find(ctx.query);
         return entities.map(e =>
             sanitizeEntity(e, { model: strapi.models[MODEL_ID] }));
     },
@@ -27,7 +35,7 @@ module.exports = {
             strapi.query(MODEL_ID_GROUPS).update(
                 { _id: invite.group },
                 {
-                    $push: { users: userId }
+                    $addToSet: { users: userId }
                 }),
             strapi.query(MODEL_ID).update(
                 { _id: invite._id },
@@ -51,10 +59,9 @@ module.exports = {
         return sanitizeEntity(update, { model: strapi.models[MODEL_ID] });
     },
     async count(ctx) {
-        const email = getUserEmail(ctx);
-        return await strapi.services[MODEL_ID].count({
-            email,
-            status: 'sent'
-        });
+        if (!doesRequestIncludeMe(ctx)) {
+            return null;
+        }
+        return await strapi.services[MODEL_ID].count(ctx.query);
     }
 };

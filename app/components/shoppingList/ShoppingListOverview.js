@@ -1,7 +1,7 @@
 import { Icon, List } from 'semantic-ui-react';
 import { formatDate } from '../../functions/dateFunctions';
 import { useShoppingListHistory } from '../../hooks/shoppingList/useShoppingListHistory';
-import { useView } from '../../hooks/useView';
+import { useView } from '../../hooks/shared/useView';
 import { Loader } from '../shared/Loader';
 
 function MessageEmptyHistory() {

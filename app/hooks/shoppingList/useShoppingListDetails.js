@@ -3,8 +3,9 @@ import { GetShoppingListApi, GetProductItemsApi } from "../../_api"
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { splice, sortByCheckedThenName, groupBy } from "../../functions/arrayFunctions";
-import { useView } from "../useView";
+import { useView } from "../shared/useView";
 import { transformAmount } from "../../functions/unitFunctions";
+import { useSort } from "../shared/useSort";
 
 export function useShoppingListDetails() {
     const api = GetShoppingListApi();
@@ -16,6 +17,7 @@ export function useShoppingListDetails() {
     const [shoppingListItems, setShoppingListItems] = useState([]);
     const [shouldUpdate, setShouldUpdate] = useState(false);
     const [reloading, setReloading] = useState(false);
+    const [sortBy] = useSort('shoppinglist');
 
     const {
         data: shoppingList,
@@ -43,7 +45,7 @@ export function useShoppingListDetails() {
     useEffect(() => {
         if (!shoppingList) return;
         const items = ((shoppingList || {}).extra || {}).items || [];
-        switch (router.query.sortBy) {
+        switch (sortBy) {
             case 'item':
                 setShoppingListItems(groupByIngredient(items));
                 break;
@@ -52,7 +54,7 @@ export function useShoppingListDetails() {
                 setShoppingListItems(groupByRecipe(items));
                 break;
         }
-    }, [shoppingList, router.query.sortBy]);
+    }, [shoppingList, sortBy]);
     //handlers   
     //handler to load suggestions for items to add to shopping list
     const getSuggestions = async (value) => {

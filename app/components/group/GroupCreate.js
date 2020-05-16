@@ -2,7 +2,7 @@ import { Content, Actions } from "../../components/layout/Layout";
 import { Input } from "../../components/shared/Input";
 import { ButtonSuccess } from "../../components/shared/Button";
 
-import { useGroupCreate } from "../../hooks/useGroupCreate";
+import { useGroupCreate } from "../../hooks/groups/useGroupCreate";
 import { Button, List, Form } from "semantic-ui-react";
 import { IconRemove } from "../shared/Icon";
 

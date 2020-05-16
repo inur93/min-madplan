@@ -3,16 +3,15 @@ import { ForgotPassword } from '../components/auth/ForgotPassword';
 import { LoginForm } from '../components/auth/LoginForm';
 import { ResetPassword } from '../components/auth/ResetPassword';
 import { absUrl } from '../functions/imageFunctions';
-import { getJwtToken, validateToken } from '../functions/tokenFunctions';
-import { useLogin } from '../hooks/useLogin';
-import { GetPageSettingsApi, GetUsersApi } from '../_api';
+import { useLogin } from '../hooks/auth/useLogin';
+import { GetPageSettingsApi } from '../_api';
 
 function Page({ bannerImage }) {
     const [state] = useLogin();
 
     return (
         <div>
-            {bannerImage && <Image src={absUrl(bannerImage.url)} fluid />}
+            {bannerImage && <Image size='big' centered src={absUrl(bannerImage.url)} />}
 
             <Segment className='login-container'>
                 <Transition animation='fade up' visible={state.showLogin}>

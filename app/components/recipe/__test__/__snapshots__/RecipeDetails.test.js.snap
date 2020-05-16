@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render headers, ingredients and instructions 1`] = `
+<div
+  className="cover-height"
+>
+  <div
+    className="page-component"
+  >
+    <div
+      className="flex row"
+    >
+      <div
+        className="ui small inline loader shrink"
+      />
+    </div>
+    <div
+      className="scroll-view"
+    >
+      <div
+        id="stats"
+      >
+        <h2>
+          første test opskrift
+        </h2>
+        <p>
+          Denne side skal bl.a. indeholde hvor lang tid opskriften tager og evt andre nyttige information. I mellemtiden brug 
+          <i
+            aria-hidden="true"
+            className="numbered list icon"
+            onClick={[Function]}
+          />
+           og 
+          <i
+            aria-hidden="true"
+            className="clipboard list icon"
+            onClick={[Function]}
+          />
+           for at se fremgangsmåde og ingredienser.
+        </p>
+      </div>
+      <div
+        id="ingredients"
+      >
+        <h2>
+          Dette skal du bruge
+        </h2>
+        <div
+          className="ui list"
+          role="list"
+        >
+          <div
+            className="item"
+            onClick={[Function]}
+            role="listitem"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="header"
+              >
+                1 kg kartofler
+              </div>
+            </div>
+          </div>
+          <div
+            className="item"
+            onClick={[Function]}
+            role="listitem"
+          >
+            <div
+              className="content"
+            >
+              <div
+                className="header"
+              >
+                2 g sukker
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        id="instructions"
+      >
+        <h2>
+          Sådan gør du
+        </h2>
+        <p>
+          En beskrivelse af hvordan man koger kartofler.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`render loading while waiting for recipe 1`] = `
+<div
+  className="ui massive active text loader"
+>
+  loading...
+</div>
+`;

@@ -4,7 +4,7 @@ import { Button, List } from 'semantic-ui-react';
 import { usePlanDay } from '../../hooks/plan/usePlanDay';
 import { usePlanDetails } from '../../hooks/plan/usePlanDetails';
 import { useRecipeSearch } from '../../hooks/recipe/useRecipeSearch';
-import { useView } from '../../hooks/useView';
+import { useView } from '../../hooks/shared/useView';
 import { IconCheck, IconInfo } from '../shared/Icon';
 import { SearchInput } from '../shared/Input';
 import { Loader } from '../shared/Loader';

@@ -5,7 +5,7 @@ import { PlanHistory } from "../components/plan/PlanHistory";
 import { Button, ButtonAction } from "../components/shared/Button";
 import { usePlanContextMenu } from "../hooks/plan/usePlanContextMenu";
 import { usePlanDetails } from "../hooks/plan/usePlanDetails";
-import { useView, views } from "../hooks/useView";
+import { useView, views } from "../hooks/shared/useView";
 import { HelpBox } from "../components/shared/HelpBox";
 import { auth } from "../functions/authFunctions";
 import { useHelp } from "../hooks/shared/useHelp";

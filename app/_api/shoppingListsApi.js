@@ -27,7 +27,11 @@ export const GetShoppingListApi = (ctx) => {
         },
 
         async findOne(id) {
-            return await (await api.get(getPath(id))).data
+            const data = await (await api.get(getPath(id))).data
+            if(data && !data.extra){
+                data.extra = {items: []};
+            }
+            return data;
         },
         async delete(id) {
             return await (await api.delete(getPath(id))).data;

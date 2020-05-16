@@ -1,5 +1,5 @@
 import { Input, Message } from "semantic-ui-react";
-import { useForgotPassword } from "../../hooks/useForgotPassword";
+import { useForgotPassword } from "../../hooks/auth/useForgotPassword";
 import { Button } from "../shared/Button";
 import { Form } from "../shared/Form";
 

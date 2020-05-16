@@ -3,7 +3,7 @@ import { GetRecipesApi, GetPlanApi } from "../../_api";
 import useSWR, { useSWRPages } from "swr";
 import { List } from "semantic-ui-react";
 import { IconInfo, IconCheck } from "../../components/shared/Icon";
-import { useView } from "../useView";
+import { useView } from "../shared/useView";
 import { usePlanDetails } from "../plan/usePlanDetails";
 import { usePlanDay } from "../plan/usePlanDay";
 import { useEffect, useState } from "react";

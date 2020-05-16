@@ -7,7 +7,10 @@ export const GetGroupsApi = (ctx) => {
 
     return {
         async find() {
-            return await(await api.get(getPath())).data;
+            return await (await api.get(getPath())).data;
+        },
+        async leave(id) {
+            return await (await api.put(getPath(`${id}/leave`))).data;
         },
         async findOne(id) {
             return await (await api.get(getPath(id))).data;
