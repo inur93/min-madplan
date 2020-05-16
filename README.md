@@ -16,3 +16,5 @@ Before going further make sure:
 * that heroku client is installed fx by running `heroku -v`
 
 to be continued...
+
+test ci
