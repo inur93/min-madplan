@@ -1,67 +1,28 @@
-const responseHandler = (resolver) => (err, result) => {
-    if (resolver) resolver(result);
-    if (err) {
-        console.log('an error occurred', err);
-    }
-}
+
 class DataCleaner {
 
-    productCollection;
-    ingredientsCollection;
-    unitsCollection;
     units;
-    recipesCollection;
-    constructor(db) {
-        this.rawCollection = db.collection('raw_recipes');
-
-        this.recipesCollection = db.collection('recipes_clean');
-        this.productCollection = db.collection('product_clean');
-        this.ingredientsCollection = db.collection('ingredients');
-        this.unitsCollection = db.collection('possible_units');
+    constructor(_units) {
+        this.units = _units;
     }
 
-    preprocessRawData = () => {
-        console.log('processing raw recipes...');
-        const self = this;
-        let resolver;
-        const run = () => {
-            this.rawCollection.find({}).toArray(function (err, docs) {
-                docs.forEach(doc => self.parseRecipe(doc));
-                resolver();
-            });
-        }
-        this.unitsCollection.find({}).toArray(function (err, docs) {
-            self.units = docs.map(x => x._id);
-            run();
-        })
-
-        return new Promise((resolve) => resolver = resolve);
-    }
-
-    parseRecipe = (doc) => {
+    cleanRecipe = (doc) => {
         const self = this;
         const title = doc.title.trim();
-        const ingredients = self.parseIngredients(doc);
-        const stats = self.parseStats(doc);
+        const ingredients = self.parseIngredients(doc.ingredients);
+        const stats = self.parseStats(doc.stats);
         const instructions = doc.instructions.trim();
 
-        self.productCollection.insertMany(ingredients.map(x => ({
-            _id: x.name,
-            unit: x.unit,
-            name: x.name,
-            category: x.category
-        })), responseHandler())
-        self.recipesCollection.insertOne({
-            _id: title,
+        return {
             title,
             stats,
-            ingredients,
-            instructions
-        }, responseHandler());
+            instructions,
+            ingredients
+        }
     }
 
-    parseStats = (doc) => {
-        const parts = doc.stats.split('\n');
+    parseStats = (rawStats) => {
+        const parts = rawStats.split('\n');
 
         const findStats = (index, list, amount, amountUnit, hours, minutes) => {
             if (amount && minutes || index > list.length - 1) {
@@ -99,12 +60,11 @@ class DataCleaner {
         return findStats(0, parts);
     }
 
-    parseIngredients = (doc) => {
-        let possibleUnits = [];
-        let possibleIngredients = [];
+    parseIngredients = (rawIngredients) => {
+        let ingredients = [];
         const self = this;
-        for (let i in doc.ingredients) {
-            let ingredient = doc.ingredients[i].trim();
+        for (let i in rawIngredients) {
+            let ingredient = rawIngredients[i].trim();
             // check if contains additional description
             // amount might be with ',' 
 
@@ -119,8 +79,7 @@ class DataCleaner {
                 const data = {
                     amount,
                     unit,
-                    name: '',
-                    category: 'food'
+                    name: ''
                 }
                 //can only be name
                 if (index > list.length - 1) {
@@ -151,22 +110,10 @@ class DataCleaner {
             const obj = processParts(0, ingredient.split(' '));
             obj.description = desc;
 
-            //obj._id = obj.name;
-            // if (obj.unit && !possibleUnits.includes(obj.unit)) {
-            //     possibleUnits.push(obj.unit);
-            // }
-            possibleIngredients.push(obj);
+            ingredients.push(obj);
         }
 
-        //uncomments to get items only
-        // this.ingredientsCollection.insertMany(possibleIngredients, function (err, response) {
-        //     if (err) {
-        //         console.log('error', err);
-        //     }
-        // });
-
-        return possibleIngredients;
-
+        return ingredients;
     }
 }
 

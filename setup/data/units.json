@@ -1,0 +1,94 @@
+[
+    {
+        "name": "stk",
+        "order": 100,
+        "conversionTable": {
+            "ds": 1,
+            "pk": 1
+        }
+    },
+    {
+        "name": "dl",
+        "order": 160,
+        "conversionTable": {
+            "l": 0.1
+        }
+    },
+    {
+        "name": "l",
+        "order": 150,
+        "conversionTable": {
+            "dl": 10
+        }
+    },
+    {
+        "name": "ds",
+        "order": 250,
+        "conversionTable": {
+            "stk": 1,
+            "pk": 1
+        }
+    },
+    {
+        "name": "pk",
+        "order": 290,
+        "conversionTable": {
+            "stk": 1,
+            "ds": 1
+        }
+    },
+    {
+        "name": "tsk",
+        "order": 310,
+        "conversionTable": {
+            "spsk": 0.33
+        }
+    },
+    {
+        "name": "spsk",
+        "order": 300,
+        "conversionTable": {
+            "tsk": 3
+        }
+    },
+    {
+        "name": "kg",
+        "order": 200,
+        "conversionTable": {
+            "g": 1000
+        }
+    },
+    {
+        "name": "g",
+        "order": 210,
+        "conversionTable": {
+            "kg": 0.001
+        }
+    },
+    {
+        "conversionTable": {
+            "håndfuld": 1
+        },
+        "name": "håndfulde",
+        "order": 500
+    },
+    {
+        "conversionTable": {
+            "håndfulde": 1
+        },
+        "name": "håndfuld",
+        "order": 550
+    },
+    {
+        "conversionTable": {},
+        "name": "fed",
+        "order": 600
+    },
+    {
+        "conversionTable": {
+            "ds": 1
+        },
+        "name": "dåse",
+        "order": 160
+    }
+]

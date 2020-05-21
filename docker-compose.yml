@@ -47,7 +47,15 @@ services:
   volumes:
    - ./app:/app
    - /app/node_modules
- 
+ setup:
+  image: min-madplan/setup
+  build:
+   context: './setup'
+  volumes:
+   - ./setup:/setup
+   - /setup/node_modules 
+  links:
+     - db
   
 volumes: 
  mongo-db:

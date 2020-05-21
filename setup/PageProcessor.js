@@ -11,7 +11,6 @@ const types = {
 
 class PageProcessor {
 
-
     urls = [];
     ingredients = [];
     title = "";
@@ -27,8 +26,7 @@ class PageProcessor {
         tag: ""
     }
     readingType = null;
-
-
+    
     parser;
     constructor() {
         const self = this;

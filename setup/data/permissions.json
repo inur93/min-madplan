@@ -1,0 +1,386 @@
+[
+    {
+        "type": "application",
+        "controller": "shopping-list",
+        "action": "create",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "shopping-list",
+        "action": "find",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "shopping-list",
+        "action": "update",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "shopping-list",
+        "action": "delete",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "users-permissions",
+        "controller": "user",
+        "action": "me",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "users-permissions",
+        "controller": "userspermissions",
+        "action": "init",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "users-permissions",
+        "controller": "auth",
+        "action": "register",
+        "enabled": true,
+        "policy": "",
+        "role": "Public"
+    },
+    {
+        "type": "application",
+        "controller": "shopping-list",
+        "action": "findone",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "shopping-list",
+        "action": "find",
+        "enabled": true,
+        "policy": "",
+        "role": "Public"
+    },
+    {
+        "type": "upload",
+        "controller": "upload",
+        "action": "upload",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "users-permissions",
+        "controller": "auth",
+        "action": "connect",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "users-permissions",
+        "controller": "user",
+        "action": "update",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "users-permissions",
+        "controller": "auth",
+        "action": "callback",
+        "enabled": true,
+        "policy": "",
+        "role": "Public"
+    },
+    {
+        "type": "users-permissions",
+        "controller": "auth",
+        "action": "emailconfirmation",
+        "enabled": true,
+        "policy": "",
+        "role": "Public"
+    },
+    {
+        "type": "users-permissions",
+        "controller": "auth",
+        "action": "changepassword",
+        "enabled": true,
+        "policy": "",
+        "role": "Public"
+    },
+    {
+        "type": "users-permissions",
+        "controller": "auth",
+        "action": "connect",
+        "enabled": true,
+        "policy": "",
+        "role": "Public"
+    },
+    {
+        "type": "users-permissions",
+        "controller": "auth",
+        "action": "forgotpassword",
+        "enabled": true,
+        "policy": "",
+        "role": "Public"
+    },
+    {
+        "type": "users-permissions",
+        "controller": "user",
+        "action": "me",
+        "enabled": true,
+        "policy": "",
+        "role": "Public"
+    },
+    {
+        "type": "users-permissions",
+        "controller": "userspermissions",
+        "action": "init",
+        "enabled": true,
+        "policy": "",
+        "role": "Public"
+    },
+    {
+        "type": "application",
+        "controller": "unit",
+        "action": "find",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "unit",
+        "action": "find",
+        "enabled": true,
+        "policy": "",
+        "role": "Public"
+    },
+    {
+        "type": "application",
+        "controller": "recipe",
+        "action": "find",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "recipe",
+        "action": "findone",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "recipe",
+        "action": "count",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "recipe",
+        "action": "find",
+        "enabled": true,
+        "policy": "",
+        "role": "Public"
+    },
+    {
+        "type": "application",
+        "controller": "product-item",
+        "action": "find",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "product-item",
+        "action": "find",
+        "enabled": true,
+        "policy": "",
+        "role": "Public"
+    },
+    {
+        "type": "application",
+        "controller": "food-plan",
+        "action": "findone",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "food-plan",
+        "action": "count",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "food-plan",
+        "action": "update",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "food-plan",
+        "action": "create",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "food-plan",
+        "action": "find",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "food-plan",
+        "action": "delete",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "group",
+        "action": "find",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "group",
+        "action": "findone",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "group",
+        "action": "create",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "group",
+        "action": "update",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "group",
+        "action": "delete",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "food-plan",
+        "action": "createshoppinglist",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "page-settings",
+        "action": "find",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "page-settings",
+        "action": "find",
+        "enabled": true,
+        "policy": "",
+        "role": "Public"
+    },
+    {
+        "type": "application",
+        "controller": "page-settings",
+        "action": "findone",
+        "enabled": true,
+        "policy": "",
+        "role": "Public"
+    },
+    {
+        "type": "application",
+        "controller": "group-invite",
+        "action": "find",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "group-invite",
+        "action": "count",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "group-invite",
+        "action": "accept",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "group-invite",
+        "action": "decline",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "shopping-list",
+        "action": "refresh",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    },
+    {
+        "type": "application",
+        "controller": "group",
+        "action": "leave",
+        "enabled": true,
+        "policy": "",
+        "role": "Authenticated"
+    }
+]
