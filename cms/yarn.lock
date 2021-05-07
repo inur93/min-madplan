@@ -8504,12 +8504,6 @@ strapi-plugin-users-permissions@3.0.0-beta.18.7:
     strapi-utils "3.0.0-beta.18.7"
     uuid "^3.1.0"
 
-"strapi-provider-email-sendgrid-custom@file:./providers/strapi-provider-email-sendgrid-custom":
-  version "3.0.0-beta.19.5"
-  dependencies:
-    "@sendgrid/mail" "6.4.0"
-    lodash "^4.17.11"
-
 strapi-provider-email-sendgrid@^3.0.0-beta.19.5:
   version "3.0.0-beta.19.5"
   resolved "https://registry.yarnpkg.com/strapi-provider-email-sendgrid/-/strapi-provider-email-sendgrid-3.0.0-beta.19.5.tgz#447621ffc0e86bc2a49d3f770971f9bc6d7122c5"
@@ -9053,9 +9047,9 @@ typedarray@^0.0.6:
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
 ua-parser-js@^0.7.18:
-  version "0.7.21"
-  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.21.tgz#853cf9ce93f642f67174273cc34565ae6f308777"
-  integrity sha512-+O8/qh/Qj8CgC6eYBVBykMrNtp5Gebn4dlGD/kKXVkJNDwyrAwSIqwz8CDf+tsAIWVycKcku6gIXJ0qwx/ZXaQ==
+  version "0.7.28"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.28.tgz#8ba04e653f35ce210239c64661685bf9121dec31"
+  integrity sha512-6Gurc1n//gjp9eQNXjD9O3M/sMwVtN5S8Lv9bvOYBfKfDNiIIhqiyi01vMBO45u4zkDE420w/e0se7Vs+sIg+g==
 
 uglify-js@3.4.x:
   version "3.4.10"
