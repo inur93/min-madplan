@@ -14,7 +14,7 @@
   "main": "./lib",
   "dependencies": {
     "@sendgrid/mail": "6.4.0",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.21"
   },
   "strapi": {
     "isProvider": true
