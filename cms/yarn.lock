@@ -8504,12 +8504,6 @@ strapi-plugin-users-permissions@3.0.0-beta.18.7:
     strapi-utils "3.0.0-beta.18.7"
     uuid "^3.1.0"
 
-"strapi-provider-email-sendgrid-custom@file:./providers/strapi-provider-email-sendgrid-custom":
-  version "3.0.0-beta.19.5"
-  dependencies:
-    "@sendgrid/mail" "6.4.0"
-    lodash "^4.17.11"
-
 strapi-provider-email-sendgrid@^3.0.0-beta.19.5:
   version "3.0.0-beta.19.5"
   resolved "https://registry.yarnpkg.com/strapi-provider-email-sendgrid/-/strapi-provider-email-sendgrid-3.0.0-beta.19.5.tgz#447621ffc0e86bc2a49d3f770971f9bc6d7122c5"
@@ -9158,9 +9152,9 @@ uri-js@^4.2.2:
     punycode "^2.1.0"
 
 urijs@^1.19.0:
-  version "1.19.2"
-  resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.2.tgz#f9be09f00c4c5134b7cb3cf475c1dd394526265a"
-  integrity sha512-s/UIq9ap4JPZ7H1EB5ULo/aOUbWqfDi7FKzMC2Nz+0Si8GiT1rIEaprt8hy3Vy2Ex2aJPpOQv4P4DuOZ+K1c6w==
+  version "1.19.10"
+  resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.10.tgz#8e2fe70a8192845c180f75074884278f1eea26cb"
+  integrity sha512-EzauQlgKuJgsXOqoMrCiePBf4At5jVqRhXykF3Wfb8ZsOBMxPcfiVBcsHXug4Aepb/ICm2PIgqAUGMelgdrWEg==
 
 urix@^0.1.0:
   version "0.1.0"
